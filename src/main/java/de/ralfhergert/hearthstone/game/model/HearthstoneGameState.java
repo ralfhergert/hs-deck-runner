@@ -28,6 +28,10 @@ public class HearthstoneGameState extends GameState<HearthstoneGameState> {
 		return players;
 	}
 
+	public Player getPlayer(PlayerOrdinal ordinal) {
+		return players[ordinal.ordinal()];
+	}
+
 	public void setPlayers(Player[] players) {
 		this.players = players;
 	}

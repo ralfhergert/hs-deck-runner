@@ -1,6 +1,8 @@
 package de.ralfhergert.hearthstone.game.model;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.EmptyStackException;
 import java.util.List;
 import java.util.Stack;
@@ -76,6 +78,15 @@ public class Player {
 		return this;
 	}
 
+	public StartingHandState getStartingHandState() {
+		return startingHandState;
+	}
+
+	public Player setStartingHandState(StartingHandState startingHandState) {
+		this.startingHandState = startingHandState;
+		return this;
+	}
+
 	public Card removeTopCardFromLibrary() {
 		try {
 			return library.pop();
@@ -84,12 +95,60 @@ public class Player {
 		}
 	}
 
+	public Player addToLibrary(Collection<Card> cards) {
+		library.addAll(cards);
+		return this;
+	}
+
+	public Player shuffleLibrary() {
+		Collections.shuffle(library);
+		return this;
+	}
+
 	public List<Card> getHand() {
 		return hand;
 	}
 
+	public List<Card> removeAllFromHand() {
+		final List<Card> cards = new ArrayList<>(hand);
+		hand.clear();
+		return cards;
+	}
+
 	public void addToHand(Card card) {
 		hand.add(card);
+	}
+
+	public int getNumberOfManaCrystals() {
+		return numberOfManaCrystals;
+	}
+
+	public void setNumberOfManaCrystals(int numberOfManaCrystals) {
+		this.numberOfManaCrystals = numberOfManaCrystals;
+	}
+
+	public int getAvailableMana() {
+		return availableMana;
+	}
+
+	public void setAvailableMana(int availableMana) {
+		this.availableMana = availableMana;
+	}
+
+	public int getCrystalsLockedNextTurn() {
+		return crystalsLockedNextTurn;
+	}
+
+	public void setCrystalsLockedNextTurn(int crystalsLockedNextTurn) {
+		this.crystalsLockedNextTurn = crystalsLockedNextTurn;
+	}
+
+	public boolean isHeroPowerAvailable() {
+		return heroPowerAvailable;
+	}
+
+	public void setHeroPowerAvailable(boolean heroPowerAvailable) {
+		this.heroPowerAvailable = heroPowerAvailable;
 	}
 
 	public int getCurrentFatigueDamage() {
