@@ -4,6 +4,7 @@ import de.ralfhergert.generic.game.model.Action;
 import de.ralfhergert.hearthstone.game.model.GameOutcome;
 import de.ralfhergert.hearthstone.game.model.HearthstoneGameState;
 import de.ralfhergert.hearthstone.game.model.Player;
+import de.ralfhergert.hearthstone.game.model.PlayerOrdinal;
 import de.ralfhergert.hearthstone.game.model.Turn;
 
 /**
@@ -30,7 +31,10 @@ public class CreateGameAction implements Action<HearthstoneGameState> {
 		state.setPlayers(players);
 		state.setTurn(Turn.DrawStartingHand);
 		state.setOutcome(GameOutcome.Undecided);
-		return state;
+
+		return state
+			.apply(new DrawCardsAction(PlayerOrdinal.One, 4))
+			.apply(new DrawCardsAction(PlayerOrdinal.Two, 3));
 	}
 
 	@Override

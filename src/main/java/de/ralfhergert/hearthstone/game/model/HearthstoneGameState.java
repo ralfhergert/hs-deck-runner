@@ -16,6 +16,12 @@ public class HearthstoneGameState extends GameState<HearthstoneGameState> {
 
 	public HearthstoneGameState(HearthstoneGameState parent, Action<HearthstoneGameState> action) {
 		super(parent, action);
+		if (parent != null) {
+			players[0] = new Player(parent.players[0]);
+			players[1] = new Player(parent.players[1]);
+			turn = parent.turn;
+			outcome = parent.outcome;
+		}
 	}
 
 	public Player[] getPlayers() {
@@ -40,5 +46,15 @@ public class HearthstoneGameState extends GameState<HearthstoneGameState> {
 
 	public void setOutcome(GameOutcome outcome) {
 		this.outcome = outcome;
+	}
+
+	public void setPlayerAsLoser(PlayerOrdinal playerOrdinal) {
+		if (outcome == GameOutcome.Undecided) {
+			outcome = playerOrdinal == PlayerOrdinal.One ? GameOutcome.Player2Wins : GameOutcome.Player1Wins;
+		} else if (outcome == GameOutcome.Player1Wins && playerOrdinal == PlayerOrdinal.One) {
+			outcome = GameOutcome.Draw;
+		} else if (outcome == GameOutcome.Player2Wins && playerOrdinal == PlayerOrdinal.Two) {
+			outcome = GameOutcome.Draw;
+		}
 	}
 }
