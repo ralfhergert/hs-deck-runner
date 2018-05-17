@@ -41,10 +41,11 @@ public class DrawCardsAction implements Action<HearthstoneGameState> {
 					// fatigue damage was lethal. end the game.
 					state.setPlayerAsLoser(playerOrdinal);
 				}
-			}
-			// try to add the card to the hand.
-			if (player.getHand().size() < 10) {
-				player.addToHand(card);
+			} else {
+				// try to add the card to the hand.
+				if (player.getHand().size() < 10) {
+					player.addToHand(card);
+				}
 			}
 		}
 		return state;
