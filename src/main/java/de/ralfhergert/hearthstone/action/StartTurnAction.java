@@ -25,7 +25,7 @@ public class StartTurnAction implements Action<HearthstoneGameState> {
 	public HearthstoneGameState applyTo(HearthstoneGameState previousState) {
 		final HearthstoneGameState state = new HearthstoneGameState(previousState, this);
 		state.setTurn(playerOrdinal == PlayerOrdinal.One ? Turn.Player1Turn : Turn.Player2Turn);
-		state.onEvent(new StartTurnEvent(playerOrdinal));
+		state.onEvent(new StartTurnEvent(state, playerOrdinal));
 		final Player player = state.getPlayer(playerOrdinal);
 		player.setNumberOfManaCrystals(1 + player.getNumberOfManaCrystals());
 		player.setAvailableMana(player.getNumberOfManaCrystals() - player.getCrystalsLockedNextTurn());

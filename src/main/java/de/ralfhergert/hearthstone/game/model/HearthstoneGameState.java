@@ -69,4 +69,13 @@ public class HearthstoneGameState extends GameState<HearthstoneGameState> implem
 		players[0].onEvent(event);
 		players[1].onEvent(event);
 	}
+
+	public Player getOwner(HeroPower heroPower) {
+		for (Player player : players) {
+			if (player.isOwnerOf(heroPower)) {
+				return player;
+			}
+		}
+		return null;
+	}
 }

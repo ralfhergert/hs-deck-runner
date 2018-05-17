@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.EmptyStackException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Stack;
 
 /**
@@ -34,7 +35,7 @@ public class Player implements GameEventListener {
 	private int power;
 	private int armor;
 
-	private boolean heroPowerAvailable;
+	private HeroPower heroPower;
 
 	private boolean isImmune;
 	private boolean isFrozen;
@@ -65,7 +66,7 @@ public class Player implements GameEventListener {
 		hitPoints = player.hitPoints;
 		power = player.power;
 		armor = player.armor;
-		heroPowerAvailable = player.heroPowerAvailable;
+		heroPower = player.heroPower != null ? new HeroPower(player.heroPower) : null;
 		isImmune = player.isImmune;
 		isFrozen = player.isFrozen;
 		weapon = new Weapon(player.weapon);
@@ -146,12 +147,13 @@ public class Player implements GameEventListener {
 		this.crystalsLockedNextTurn = crystalsLockedNextTurn;
 	}
 
-	public boolean isHeroPowerAvailable() {
-		return heroPowerAvailable;
+	public HeroPower getHeroPower() {
+		return heroPower;
 	}
 
-	public void setHeroPowerAvailable(boolean heroPowerAvailable) {
-		this.heroPowerAvailable = heroPowerAvailable;
+	public Player setHeroPower(HeroPower heroPower) {
+		this.heroPower = heroPower;
+		return this;
 	}
 
 	public int getCurrentFatigueDamage() {
@@ -185,6 +187,11 @@ public class Player implements GameEventListener {
 		battlefield.forEach(minion -> minion.onEvent(event));
 		graveyard.forEach(card -> card.onEvent(event));
 		secrets.forEach(secret -> secret.onEvent(event));
+		heroPower.onEvent(event);
 		weapon.onEvent(event);
+	}
+
+	public boolean isOwnerOf(HeroPower heroPower) {
+		return Objects.equals(this.heroPower, heroPower);
 	}
 }
