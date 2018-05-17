@@ -1,6 +1,7 @@
 package de.ralfhergert.hearthstone.action;
 
 import de.ralfhergert.generic.game.model.Action;
+import de.ralfhergert.hearthstone.event.StartGameEvent;
 import de.ralfhergert.hearthstone.game.model.HearthstoneGameState;
 import de.ralfhergert.hearthstone.game.model.PlayerOrdinal;
 import de.ralfhergert.hearthstone.game.model.StartingHandState;
@@ -14,6 +15,7 @@ public class StartGameAction implements Action<HearthstoneGameState> {
 	@Override
 	public HearthstoneGameState applyTo(HearthstoneGameState previousState) {
 		final HearthstoneGameState state = new HearthstoneGameState(null, this);
+		state.onEvent(new StartGameEvent());
 		return state.apply(new StartTurnAction(PlayerOrdinal.One));
 	}
 

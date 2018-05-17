@@ -1,5 +1,8 @@
 package de.ralfhergert.hearthstone.game.model;
 
+import de.ralfhergert.hearthstone.event.GameEvent;
+import de.ralfhergert.hearthstone.event.GameEventListener;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -10,7 +13,7 @@ import java.util.Stack;
 /**
  * Represents the current game state a player can be in.
  */
-public class Player {
+public class Player implements GameEventListener {
 
 	private String name;
 
@@ -172,5 +175,16 @@ public class Player {
 			}
 		}
 		return hitPoints <= 0;
+	}
+
+	@Override
+	public void onEvent(GameEvent event) {
+		// forward the event.
+		library.forEach(card -> card.onEvent(event));
+		hand.forEach(card -> card.onEvent(event));
+		battlefield.forEach(minion -> minion.onEvent(event));
+		graveyard.forEach(card -> card.onEvent(event));
+		secrets.forEach(secret -> secret.onEvent(event));
+		weapon.onEvent(event);
 	}
 }

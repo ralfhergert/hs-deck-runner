@@ -2,11 +2,13 @@ package de.ralfhergert.hearthstone.game.model;
 
 import de.ralfhergert.generic.game.model.Action;
 import de.ralfhergert.generic.game.model.GameState;
+import de.ralfhergert.hearthstone.event.GameEvent;
+import de.ralfhergert.hearthstone.event.GameEventListener;
 
 /**
  * Holds the current state of a game of Hearthstone.
  */
-public class HearthstoneGameState extends GameState<HearthstoneGameState> {
+public class HearthstoneGameState extends GameState<HearthstoneGameState> implements GameEventListener {
 
 	private Player[] players = new Player[2];
 
@@ -60,5 +62,11 @@ public class HearthstoneGameState extends GameState<HearthstoneGameState> {
 		} else if (outcome == GameOutcome.Player2Wins && playerOrdinal == PlayerOrdinal.Two) {
 			outcome = GameOutcome.Draw;
 		}
+	}
+
+	@Override
+	public void onEvent(GameEvent event) {
+		players[0].onEvent(event);
+		players[1].onEvent(event);
 	}
 }

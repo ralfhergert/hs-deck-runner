@@ -1,6 +1,7 @@
 package de.ralfhergert.hearthstone.action;
 
 import de.ralfhergert.generic.game.model.Action;
+import de.ralfhergert.hearthstone.event.StartTurnEvent;
 import de.ralfhergert.hearthstone.game.model.HearthstoneGameState;
 import de.ralfhergert.hearthstone.game.model.Player;
 import de.ralfhergert.hearthstone.game.model.PlayerOrdinal;
@@ -23,7 +24,8 @@ public class StartTurnAction implements Action<HearthstoneGameState> {
 	@Override
 	public HearthstoneGameState applyTo(HearthstoneGameState previousState) {
 		final HearthstoneGameState state = new HearthstoneGameState(previousState, this);
-		state.setTurn(Turn.Player1Turn);
+		state.setTurn(playerOrdinal == PlayerOrdinal.One ? Turn.Player1Turn : Turn.Player2Turn);
+		state.onEvent(new StartTurnEvent(playerOrdinal));
 		final Player player = state.getPlayer(playerOrdinal);
 		player.setNumberOfManaCrystals(1 + player.getNumberOfManaCrystals());
 		player.setAvailableMana(player.getNumberOfManaCrystals() - player.getCrystalsLockedNextTurn());
