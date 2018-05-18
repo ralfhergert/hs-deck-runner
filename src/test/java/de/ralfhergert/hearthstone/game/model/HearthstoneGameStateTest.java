@@ -12,8 +12,8 @@ public class HearthstoneGameStateTest {
 
 	@Test
 	public void ensurePlayersHeroPowerBecomeAvailableWhenStartingPlayersTurn() {
-		final Player player1 = new Player().setHeroPower(new HeroPower((TargetFinder)null));
-		final Player player2 = new Player().setHeroPower(new HeroPower((TargetFinder)null));
+		final Player player1 = new Player().setHeroPower(new HeroPower(2, null));
+		final Player player2 = new Player().setHeroPower(new HeroPower(2, null));
 		final HearthstoneGameState startState = new CreateGameAction(player1, player2).applyTo(null);
 		// after creating the game both player's hero powers should still be unavailable.
 		Assert.assertEquals("player1 heroPower should be unavailable", false, startState.getPlayer(PlayerOrdinal.One).getHeroPower().isAvailable());

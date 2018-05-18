@@ -34,6 +34,17 @@ public class HearthstoneGameState extends GameState<HearthstoneGameState> implem
 		return players[ordinal.ordinal()];
 	}
 
+	/**
+	 * @return the player who is on turn currently.
+	 */
+	public Player getActivePlayer() {
+		switch (turn) {
+			case Player1Turn: return players[0];
+			case Player2Turn: return players[1];
+			default: return null;
+		}
+	}
+
 	public void setPlayers(Player[] players) {
 		this.players = players;
 	}

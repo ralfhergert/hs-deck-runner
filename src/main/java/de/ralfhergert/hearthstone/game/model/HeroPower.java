@@ -1,5 +1,7 @@
 package de.ralfhergert.hearthstone.game.model;
 
+import de.ralfhergert.hearthstone.effect.Effect;
+import de.ralfhergert.hearthstone.effect.TargetedEffect;
 import de.ralfhergert.hearthstone.event.GameEvent;
 import de.ralfhergert.hearthstone.event.GameEventListener;
 import de.ralfhergert.hearthstone.event.StartTurnEvent;
@@ -13,20 +15,31 @@ import java.util.Objects;
  */
 public class HeroPower implements GameEventListener {
 
-	private final TargetFinder targetFinder;
+	private final int manaCost;
+	private final Effect effect;
 
 	private boolean isAvailable;
 
-	public HeroPower(TargetFinder targetFinder) {
-		this.targetFinder = targetFinder;
+	public HeroPower(int manaCost, Effect effect) {
+		this.manaCost = manaCost;
+		this.effect = effect;
 	}
 
 	/**
 	 * Copy-Constructor
 	 */
 	public HeroPower(HeroPower other) {
-		targetFinder = other.targetFinder;
+		manaCost = other.manaCost;
+		effect = other.effect;
 		isAvailable = other.isAvailable;
+	}
+
+	public int getManaCost() {
+		return manaCost;
+	}
+
+	public Effect getEffect() {
+		return effect;
 	}
 
 	public boolean isAvailable() {
@@ -41,14 +54,14 @@ public class HeroPower implements GameEventListener {
 	 * Should return true, when this hero power needs to be applied onto target.
 	 */
 	public boolean isTargeted() {
-		return targetFinder != null;
+		return effect instanceof TargetedEffect;
 	}
 
 	/**
 	 * If the hero power is applicable to targets this method should identify all of them.
 	 */
 	public List<Target> getPossibleTargets(HearthstoneGameState state) {
-		return (targetFinder != null) ? targetFinder.findPossibleTargets(state) : new ArrayList<>();
+		return (effect instanceof TargetedEffect) ? ((TargetedEffect)effect).getPossibleTargets(state) : new ArrayList<>();
 	}
 
 	@Override
