@@ -16,9 +16,9 @@ public class HearthstoneGameState extends GameState<HearthstoneGameState> implem
 
 	private Player[] players = new Player[2];
 
-	private Turn turn;
+	private Turn turn = Turn.DrawStartingHand;
 
-	private GameOutcome outcome;
+	private GameOutcome outcome = GameOutcome.Undecided;
 
 	private List<GeneralEffect> queuedEffects = new ArrayList<>();
 
@@ -52,8 +52,9 @@ public class HearthstoneGameState extends GameState<HearthstoneGameState> implem
 		}
 	}
 
-	public void setPlayers(Player[] players) {
+	public HearthstoneGameState setPlayers(Player... players) {
 		this.players = players;
+		return this;
 	}
 
 	public Turn getTurn() {

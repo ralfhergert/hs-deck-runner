@@ -14,7 +14,7 @@ import java.util.Stack;
 /**
  * Represents the current game state a player can be in.
  */
-public class Player implements Character,GameEventListener {
+public class Player extends Character<Player> implements GameEventListener {
 
 	private String name;
 
@@ -32,14 +32,7 @@ public class Player implements Character,GameEventListener {
 	private int availableMana;
 	private int crystalsLockedNextTurn;
 
-	private int hitPoints;
-	private int power;
-	private int armor;
-
 	private HeroPower heroPower;
-
-	private boolean isImmune;
-	private boolean isFrozen;
 
 	private Weapon weapon;
 
@@ -51,9 +44,7 @@ public class Player implements Character,GameEventListener {
 	 * Copy-constructor
 	 */
 	public Player(Player player) {
-		if (player == null) {
-			throw new IllegalArgumentException("player can not be null");
-		}
+		super(player);
 		name = player.name;
 		startingHandState = player.startingHandState;
 		library.addAll(player.library);
@@ -64,12 +55,7 @@ public class Player implements Character,GameEventListener {
 		numberOfManaCrystals = player.numberOfManaCrystals;
 		availableMana = player.availableMana;
 		crystalsLockedNextTurn = player.crystalsLockedNextTurn;
-		hitPoints = player.hitPoints;
-		power = player.power;
-		armor = player.armor;
 		heroPower = player.heroPower != null ? new HeroPower(player.heroPower) : null;
-		isImmune = player.isImmune;
-		isFrozen = player.isFrozen;
 		weapon = new Weapon(player.weapon);
 		currentFatigueDamage = player.currentFatigueDamage;
 	}
@@ -165,25 +151,6 @@ public class Player implements Character,GameEventListener {
 		this.currentFatigueDamage = currentFatigueDamage;
 	}
 
-	@Override
-	public int getHitPoints() {
-		return hitPoints;
-	}
-
-	/**
-	 * @return true is the dealt damage was lethal.
-	 */
-	public int takeDamage(final int damage) {
-		if (!isImmune) {
-			// deal the damage to the armor first.
-			armor -= damage;
-			if (armor < 0) { // if the armor could not absorb the damage.
-				hitPoints -= armor;
-				armor = 0;
-			}
-		}
-		return hitPoints;
-	}
 
 	@Override
 	public void onEvent(GameEvent event) {

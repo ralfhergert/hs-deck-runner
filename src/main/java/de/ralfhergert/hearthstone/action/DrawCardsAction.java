@@ -32,7 +32,7 @@ public class DrawCardsAction implements Action<HearthstoneGameState> {
 	@Override
 	public HearthstoneGameState applyTo(HearthstoneGameState previousState) {
 		final HearthstoneGameState state = new HearthstoneGameState(previousState, this);
-		final Player player = state.getPlayers()[playerOrdinal.ordinal()];
+		final Player player = state.getPlayer(playerOrdinal);
 		for (int i = 0; i < numberOfCards; i++) {
 			Card card = player.removeTopCardFromLibrary();
 			if (card == null) {
