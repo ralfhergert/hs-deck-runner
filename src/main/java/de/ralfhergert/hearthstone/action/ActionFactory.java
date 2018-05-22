@@ -1,6 +1,7 @@
 package de.ralfhergert.hearthstone.action;
 
 import de.ralfhergert.generic.game.model.Action;
+import de.ralfhergert.hearthstone.atomic.ExecuteQueuedEffectsAtomic;
 import de.ralfhergert.hearthstone.game.model.HearthstoneGameState;
 import de.ralfhergert.hearthstone.game.model.HeroPower;
 import de.ralfhergert.hearthstone.game.model.Player;
@@ -24,7 +25,9 @@ public class ActionFactory {
 	public List<Action<HearthstoneGameState>> createAllApplicableActions(HearthstoneGameState state) {
 		final List<Action<HearthstoneGameState>> foundActions = new ArrayList<>();
 
-		if (state.getTurn() == Turn.DrawStartingHand) {
+		if (!state.getQueuedEffects().isEmpty()) {
+			foundActions.add(new ExecuteQueuedEffectsAtomic());
+		} else if (state.getTurn() == Turn.DrawStartingHand) {
 			for (PlayerOrdinal playerOrdinal : PlayerOrdinal.values()) {
 				if (state.getPlayers()[playerOrdinal.ordinal()].getStartingHandState() == StartingHandState.Undecided) {
 					foundActions.add(new KeepStartingHandAction(playerOrdinal));

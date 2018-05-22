@@ -37,7 +37,7 @@ public class DrawCardsAction implements Action<HearthstoneGameState> {
 			Card card = player.removeTopCardFromLibrary();
 			if (card == null) {
 				player.setCurrentFatigueDamage(1 + player.getCurrentFatigueDamage());
-				if (player.dealDamage(player.getCurrentFatigueDamage())) {
+				if (player.takeDamage(player.getCurrentFatigueDamage()) < 1) {
 					// fatigue damage was lethal. end the game.
 					state.setPlayerAsLoser(playerOrdinal);
 				}

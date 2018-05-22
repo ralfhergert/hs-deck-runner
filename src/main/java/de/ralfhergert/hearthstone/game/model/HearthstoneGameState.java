@@ -2,8 +2,12 @@ package de.ralfhergert.hearthstone.game.model;
 
 import de.ralfhergert.generic.game.model.Action;
 import de.ralfhergert.generic.game.model.GameState;
+import de.ralfhergert.hearthstone.effect.GeneralEffect;
 import de.ralfhergert.hearthstone.event.GameEvent;
 import de.ralfhergert.hearthstone.event.GameEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Holds the current state of a game of Hearthstone.
@@ -16,6 +20,8 @@ public class HearthstoneGameState extends GameState<HearthstoneGameState> implem
 
 	private GameOutcome outcome;
 
+	private List<GeneralEffect> queuedEffects = new ArrayList<>();
+
 	public HearthstoneGameState(HearthstoneGameState parent, Action<HearthstoneGameState> action) {
 		super(parent, action);
 		if (parent != null) {
@@ -23,6 +29,7 @@ public class HearthstoneGameState extends GameState<HearthstoneGameState> implem
 			players[1] = new Player(parent.players[1]);
 			turn = parent.turn;
 			outcome = parent.outcome;
+			queuedEffects.addAll(parent.queuedEffects);
 		}
 	}
 
@@ -81,9 +88,26 @@ public class HearthstoneGameState extends GameState<HearthstoneGameState> implem
 		players[1].onEvent(event);
 	}
 
+	public List<GeneralEffect> getQueuedEffects() {
+		return queuedEffects;
+	}
+
+	public void clearQueuedEffects() {
+		queuedEffects.clear();
+	}
+
 	public Player getOwner(HeroPower heroPower) {
 		for (Player player : players) {
 			if (player.isOwnerOf(heroPower)) {
+				return player;
+			}
+		}
+		return null;
+	}
+
+	public Player getOwner(Minion minion) {
+		for (Player player : players) {
+			if (player.isOwnerOf(minion)) {
 				return player;
 			}
 		}

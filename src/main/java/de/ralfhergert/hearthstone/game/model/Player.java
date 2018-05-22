@@ -14,7 +14,7 @@ import java.util.Stack;
 /**
  * Represents the current game state a player can be in.
  */
-public class Player implements GameEventListener {
+public class Player implements Character,GameEventListener {
 
 	private String name;
 
@@ -22,8 +22,9 @@ public class Player implements GameEventListener {
 
 	private final Stack<Card> library = new Stack<>();
 	private final List<Card> hand = new ArrayList<>();
+	private final List<Card> playedCards = new ArrayList<>();
 	private final List<Minion> battlefield = new ArrayList<>();
-	private final List<Card> graveyard = new ArrayList<>();
+	private final List<Minion> graveyard = new ArrayList<>();
 
 	private final List<Secret> secrets = new ArrayList<>();
 
@@ -164,10 +165,15 @@ public class Player implements GameEventListener {
 		this.currentFatigueDamage = currentFatigueDamage;
 	}
 
+	@Override
+	public int getHitPoints() {
+		return hitPoints;
+	}
+
 	/**
 	 * @return true is the dealt damage was lethal.
 	 */
-	public boolean dealDamage(final int damage) {
+	public int takeDamage(final int damage) {
 		if (!isImmune) {
 			// deal the damage to the armor first.
 			armor -= damage;
@@ -176,7 +182,7 @@ public class Player implements GameEventListener {
 				armor = 0;
 			}
 		}
-		return hitPoints <= 0;
+		return hitPoints;
 	}
 
 	@Override
@@ -184,8 +190,9 @@ public class Player implements GameEventListener {
 		// forward the event.
 		library.forEach(card -> card.onEvent(event));
 		hand.forEach(card -> card.onEvent(event));
+		playedCards.forEach(card -> card.onEvent(event));
 		battlefield.forEach(minion -> minion.onEvent(event));
-		graveyard.forEach(card -> card.onEvent(event));
+		graveyard.forEach(minion -> minion.onEvent(event));
 		secrets.forEach(secret -> secret.onEvent(event));
 		heroPower.onEvent(event);
 		weapon.onEvent(event);
@@ -193,5 +200,17 @@ public class Player implements GameEventListener {
 
 	public boolean isOwnerOf(HeroPower heroPower) {
 		return Objects.equals(this.heroPower, heroPower);
+	}
+
+	public boolean isOwnerOf(Minion minion) {
+		return battlefield.contains(minion);
+	}
+
+	public void removeFromBattlefield(Minion minion) {
+		battlefield.remove(minion);
+	}
+
+	public void addToGraveyard(Minion minion) {
+		graveyard.add(minion);
 	}
 }

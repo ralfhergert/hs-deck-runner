@@ -5,6 +5,9 @@ import de.ralfhergert.hearthstone.game.model.Target;
 
 import java.util.List;
 
+/**
+ * Interface for targeted effects.
+ */
 public interface TargetedEffect extends Effect {
 
 	HearthstoneGameState applyOn(HearthstoneGameState state, Target target);

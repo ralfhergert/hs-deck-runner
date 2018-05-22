@@ -19,7 +19,7 @@ public class PlayHeroPower implements Action<HearthstoneGameState> {
 		// let the player pay the mana cost.
 		player.setAvailableMana(player.getAvailableMana() - heroPower.getManaCost());
 		heroPower.setAvailable(false);
-		return ((GeneralEffect)heroPower.getEffect()).applyOn(nextState);
+		return ((GeneralEffect)heroPower.getEffect()).applyTo(nextState);
 	}
 
 	@Override
