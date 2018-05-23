@@ -6,7 +6,7 @@ import de.ralfhergert.hearthstone.event.GameEventListener;
 /**
  * Represents a minion on the battlefield.
  */
-public class Minion extends Character<Minion> implements GameEventListener {
+public class Minion extends Character<Minion> implements Target,GameEventListener {
 
 	private Card card; // the card this minion was summoned from.
 

@@ -46,8 +46,9 @@ public class HeroPower implements GameEventListener {
 		return isAvailable;
 	}
 
-	public void setAvailable(boolean available) {
+	public HeroPower setAvailable(boolean available) {
 		isAvailable = available;
+		return this;
 	}
 
 	/**

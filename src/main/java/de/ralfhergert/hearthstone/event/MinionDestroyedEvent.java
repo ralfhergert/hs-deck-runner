@@ -4,7 +4,7 @@ import de.ralfhergert.hearthstone.game.model.HearthstoneGameState;
 import de.ralfhergert.hearthstone.game.model.Minion;
 
 /**
- * This event is send after the draw-starting-hand-phase before player one's turn starts.
+ * This event is send after a minion has been destroyed.
  */
 public class MinionDestroyedEvent extends CharacterDestroyedEvent<Minion> {
 

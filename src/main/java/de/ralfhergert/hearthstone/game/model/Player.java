@@ -1,5 +1,6 @@
 package de.ralfhergert.hearthstone.game.model;
 
+import de.ralfhergert.hearthstone.effect.Effect;
 import de.ralfhergert.hearthstone.event.GameEvent;
 import de.ralfhergert.hearthstone.event.GameEventListener;
 
@@ -14,7 +15,7 @@ import java.util.Stack;
 /**
  * Represents the current game state a player can be in.
  */
-public class Player extends Character<Player> implements GameEventListener {
+public class Player extends Character<Player> implements Target,GameEventListener {
 
 	private String name;
 
@@ -110,6 +111,10 @@ public class Player extends Character<Player> implements GameEventListener {
 		hand.add(card);
 	}
 
+	public List<Minion> getBattlefield() {
+		return battlefield;
+	}
+
 	public int getNumberOfManaCrystals() {
 		return numberOfManaCrystals;
 	}
@@ -122,8 +127,9 @@ public class Player extends Character<Player> implements GameEventListener {
 		return availableMana;
 	}
 
-	public void setAvailableMana(int availableMana) {
+	public Player setAvailableMana(int availableMana) {
 		this.availableMana = availableMana;
+		return this;
 	}
 
 	public int getCrystalsLockedNextTurn() {
@@ -161,7 +167,9 @@ public class Player extends Character<Player> implements GameEventListener {
 		battlefield.forEach(minion -> minion.onEvent(event));
 		graveyard.forEach(minion -> minion.onEvent(event));
 		secrets.forEach(secret -> secret.onEvent(event));
-		heroPower.onEvent(event);
+		if (heroPower != null) {
+			heroPower.onEvent(event);
+		}
 		weapon.onEvent(event);
 	}
 
@@ -171,6 +179,10 @@ public class Player extends Character<Player> implements GameEventListener {
 
 	public boolean isOwnerOf(Minion minion) {
 		return battlefield.contains(minion);
+	}
+
+	public boolean isOwnerOf(Effect effect) {
+		return heroPower.getEffect() == effect;
 	}
 
 	public void removeFromBattlefield(Minion minion) {

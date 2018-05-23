@@ -12,6 +12,7 @@ public class Character<Self extends Character<Self>> {
 
 	private boolean isImmune;
 	private boolean isFrozen;
+	private boolean isElusive; // can not be targeted by heroPowers or targeted spells.
 
 	public Character() {}
 
@@ -42,7 +43,7 @@ public class Character<Self extends Character<Self>> {
 		return power;
 	}
 
-	public Character setPower(int power) {
+	public Self setPower(int power) {
 		this.power = power;
 		return (Self)this;
 	}
@@ -51,7 +52,7 @@ public class Character<Self extends Character<Self>> {
 		return armor;
 	}
 
-	public Character setArmor(int armor) {
+	public Self setArmor(int armor) {
 		this.armor = armor;
 		return (Self)this;
 	}
@@ -60,7 +61,7 @@ public class Character<Self extends Character<Self>> {
 		return isImmune;
 	}
 
-	public Character setImmune(boolean immune) {
+	public Self setImmune(boolean immune) {
 		isImmune = immune;
 		return (Self)this;
 	}
@@ -69,8 +70,17 @@ public class Character<Self extends Character<Self>> {
 		return isFrozen;
 	}
 
-	public Character setFrozen(boolean frozen) {
+	public Self setFrozen(boolean frozen) {
 		isFrozen = frozen;
+		return (Self)this;
+	}
+
+	public boolean isElusive() {
+		return isElusive;
+	}
+
+	public Self setElusive(boolean elusive) {
+		isElusive = elusive;
 		return (Self)this;
 	}
 

@@ -2,6 +2,7 @@ package de.ralfhergert.hearthstone.game.model;
 
 import de.ralfhergert.generic.game.model.Action;
 import de.ralfhergert.generic.game.model.GameState;
+import de.ralfhergert.hearthstone.effect.Effect;
 import de.ralfhergert.hearthstone.effect.GeneralEffect;
 import de.ralfhergert.hearthstone.event.GameEvent;
 import de.ralfhergert.hearthstone.event.GameEventListener;
@@ -50,6 +51,24 @@ public class HearthstoneGameState extends GameState<HearthstoneGameState> implem
 			case Player2Turn: return players[1];
 			default: return null;
 		}
+	}
+
+	public Player getOpposingPlayer(Player currentPlayer) {
+		for (Player player : players) {
+			if (player != currentPlayer) {
+				return player;
+			}
+		}
+		return null;
+	}
+
+	public PlayerOrdinal getPlayerOrdinal(Player player) {
+		for (PlayerOrdinal ordinal : PlayerOrdinal.values()) {
+			if (players[ordinal.ordinal()] == player) {
+				return ordinal;
+			}
+		}
+		return null;
 	}
 
 	public HearthstoneGameState setPlayers(Player... players) {
@@ -109,6 +128,15 @@ public class HearthstoneGameState extends GameState<HearthstoneGameState> implem
 	public Player getOwner(Minion minion) {
 		for (Player player : players) {
 			if (player.isOwnerOf(minion)) {
+				return player;
+			}
+		}
+		return null;
+	}
+
+	public Player getOwner(Effect effect) {
+		for (Player player : players) {
+			if (player.isOwnerOf(effect)) {
 				return player;
 			}
 		}
