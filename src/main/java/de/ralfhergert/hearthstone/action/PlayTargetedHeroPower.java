@@ -5,17 +5,17 @@ import de.ralfhergert.hearthstone.effect.TargetedEffect;
 import de.ralfhergert.hearthstone.game.model.HearthstoneGameState;
 import de.ralfhergert.hearthstone.game.model.HeroPower;
 import de.ralfhergert.hearthstone.game.model.Player;
-import de.ralfhergert.hearthstone.game.model.Target;
+import de.ralfhergert.hearthstone.game.model.TargetRef;
 
 /**
  * This action lets the active player play it's hero power.
  */
 public class PlayTargetedHeroPower implements Action<HearthstoneGameState> {
 
-	private final Target target;
+	private final TargetRef targetRef;
 
-	public PlayTargetedHeroPower(Target target) {
-		this.target = target;
+	public PlayTargetedHeroPower(TargetRef targetRef) {
+		this.targetRef = targetRef;
 	}
 
 	@Override
@@ -26,7 +26,7 @@ public class PlayTargetedHeroPower implements Action<HearthstoneGameState> {
 		// let the player pay the mana cost.
 		player.setAvailableMana(player.getAvailableMana() - heroPower.getManaCost());
 		heroPower.setAvailable(false);
-		return ((TargetedEffect)heroPower.getEffect()).applyOn(nextState, target);
+		return ((TargetedEffect)heroPower.getEffect()).applyOn(nextState, targetRef);
 	}
 
 	@Override

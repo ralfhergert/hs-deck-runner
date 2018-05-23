@@ -4,7 +4,9 @@ package de.ralfhergert.hearthstone.game.model;
  * A character is either a minion or a player.
  * @param <Self> type of the overriding class.
  */
-public class Character<Self extends Character<Self>> {
+public class Character<Self extends Character<Self>> implements Target {
+
+	private TargetRef targetRef = new TargetRef();
 
 	private int hitPoints;
 	private int power;
@@ -23,11 +25,20 @@ public class Character<Self extends Character<Self>> {
 		if (other == null) {
 			throw new IllegalArgumentException("character can not be null");
 		}
+		targetRef = other.targetRef;
 		hitPoints = other.hitPoints;
 		power = other.power;
 		armor = other.armor;
 		isImmune = other.isImmune;
 		isFrozen = other.isFrozen;
+	}
+
+	public TargetRef getTargetRef() {
+		return targetRef;
+	}
+
+	public void setTargetRef(TargetRef targetRef) {
+		this.targetRef = targetRef;
 	}
 
 	public int getHitPoints() {

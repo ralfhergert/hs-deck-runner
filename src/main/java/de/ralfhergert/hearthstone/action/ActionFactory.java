@@ -46,7 +46,7 @@ public class ActionFactory {
 			if (heroPower != null && heroPower.isAvailable() && player.getAvailableMana() >= heroPower.getManaCost()) {
 				if (heroPower.isTargeted()) {
 					for (Target target : heroPower.getPossibleTargets(state)) {
-						foundActions.add(new PlayTargetedHeroPower(target));
+						foundActions.add(new PlayTargetedHeroPower(target.getTargetRef()));
 					}
 				} else {
 					foundActions.add(new PlayHeroPower());

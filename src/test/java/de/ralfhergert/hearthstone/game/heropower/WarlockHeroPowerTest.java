@@ -1,0 +1,47 @@
+package de.ralfhergert.hearthstone.game.heropower;
+
+import de.ralfhergert.generic.game.model.Action;
+import de.ralfhergert.hearthstone.action.ActionFactory;
+import de.ralfhergert.hearthstone.action.PlayHeroPower;
+import de.ralfhergert.hearthstone.game.model.GameOutcome;
+import de.ralfhergert.hearthstone.game.model.HearthstoneGameState;
+import de.ralfhergert.hearthstone.game.model.HeroPower;
+import de.ralfhergert.hearthstone.game.model.Player;
+import de.ralfhergert.hearthstone.game.model.Turn;
+import org.junit.Assert;
+import org.junit.Test;
+
+import java.util.List;
+
+/**
+ * This test ensure that the warlock hero power works correctly.
+ */
+public class WarlockHeroPowerTest {
+
+	/**
+	 * This test creates a game state in which the only playable action for player one
+	 * is to use the hero power, which will kill player one.
+	 */
+	@Test
+	public void testPlayerSuicidesWithWarlockHeroPower() {
+		final Player player1 = new Player()
+			.setHitPoints(3)
+			.setAvailableMana(2)
+			.setHeroPower(new HeroPower(2, new WarlockHeroPowerEffect()).setAvailable(true));
+		final Player player2 = new Player();
+		final HearthstoneGameState startState = new HearthstoneGameState(null, null).setPlayers(player1, player2);
+		startState.setTurn(Turn.Player1Turn);
+		// ask the action factory for all possible plays.
+		List<Action<HearthstoneGameState>> actions = new ActionFactory().createAllApplicableActions(startState);
+		Assert.assertNotNull("actions should not be null", actions);
+		Assert.assertEquals("number of found actions", 1, actions.size());
+		Action<HearthstoneGameState> action = actions.get(0);
+		Assert.assertNotNull("found action should not be null", action);
+		Assert.assertEquals("found action should by of type", PlayHeroPower.class, action.getClass());
+		// play the hero power.
+		HearthstoneGameState afterState = action.applyTo(startState);
+		Assert.assertNotNull("after state should not be null", afterState);
+		Assert.assertTrue("queuedEvents should be empty", afterState.getQueuedEffects().isEmpty());
+		Assert.assertEquals("player one should have won", GameOutcome.Player2Wins, afterState.getOutcome());
+	}
+}

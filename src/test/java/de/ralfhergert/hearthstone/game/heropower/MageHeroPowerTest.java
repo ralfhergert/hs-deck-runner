@@ -59,10 +59,9 @@ public class MageHeroPowerTest {
 		final Player player1 = new Player()
 			.setAvailableMana(2)
 			.setHeroPower(new HeroPower(2, new MageHeroPowerEffect()).setAvailable(true));
-		final Minion minion = new Minion().setHitPoints(1);
 		final Player player2 = new Player()
 			.setElusive(true) // declare the player elusive, so the mage hero power can not target this player.
-			.addToBattlefield(minion);
+			.addToBattlefield(new Minion().setHitPoints(1));
 		final HearthstoneGameState startState = new HearthstoneGameState(null, null).setPlayers(player1, player2);
 		startState.setTurn(Turn.Player1Turn);
 		Assert.assertEquals("player two should have one minion on the battlefield", 1, startState.getPlayer(PlayerOrdinal.Two).getBattlefield().size());

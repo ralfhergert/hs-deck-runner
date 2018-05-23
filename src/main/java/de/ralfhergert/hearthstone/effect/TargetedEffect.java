@@ -2,6 +2,7 @@ package de.ralfhergert.hearthstone.effect;
 
 import de.ralfhergert.hearthstone.game.model.HearthstoneGameState;
 import de.ralfhergert.hearthstone.game.model.Target;
+import de.ralfhergert.hearthstone.game.model.TargetRef;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ import java.util.List;
  */
 public interface TargetedEffect extends Effect {
 
-	HearthstoneGameState applyOn(HearthstoneGameState state, Target target);
+	HearthstoneGameState applyOn(HearthstoneGameState state, TargetRef targetRef);
 
 	List<Target> getPossibleTargets(HearthstoneGameState state);
 }

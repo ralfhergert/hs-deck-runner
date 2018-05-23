@@ -18,7 +18,6 @@ public class HearthstoneGameState extends GameState<HearthstoneGameState> implem
 	private Player[] players = new Player[2];
 
 	private Turn turn = Turn.DrawStartingHand;
-
 	private GameOutcome outcome = GameOutcome.Undecided;
 
 	private List<GeneralEffect> queuedEffects = new ArrayList<>();
@@ -138,6 +137,19 @@ public class HearthstoneGameState extends GameState<HearthstoneGameState> implem
 		for (Player player : players) {
 			if (player.isOwnerOf(effect)) {
 				return player;
+			}
+		}
+		return null;
+	}
+
+	public Target findTarget(TargetRef targetRef) {
+		for (Player player : players) {
+			if (player.getTargetRef().equals(targetRef)) {
+				return player;
+			}
+			final Target target = player.findTarget(targetRef);
+			if (target != null) {
+				return target;
 			}
 		}
 		return null;

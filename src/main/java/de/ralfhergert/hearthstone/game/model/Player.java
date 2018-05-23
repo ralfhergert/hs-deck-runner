@@ -15,7 +15,7 @@ import java.util.Stack;
 /**
  * Represents the current game state a player can be in.
  */
-public class Player extends Character<Player> implements Target,GameEventListener {
+public class Player extends Character<Player> implements GameEventListener {
 
 	private String name;
 
@@ -200,5 +200,14 @@ public class Player extends Character<Player> implements Target,GameEventListene
 
 	public boolean isOwnerOf(Effect effect) {
 		return heroPower.getEffect() == effect;
+	}
+
+	public Target findTarget(TargetRef targetRef) {
+		for (Minion minion : battlefield) {
+			if (minion.getTargetRef().equals(targetRef)) {
+				return minion;
+			}
+		}
+		return null;
 	}
 }

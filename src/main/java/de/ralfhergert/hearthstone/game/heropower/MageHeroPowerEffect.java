@@ -7,6 +7,7 @@ import de.ralfhergert.hearthstone.game.model.HearthstoneGameState;
 import de.ralfhergert.hearthstone.game.model.Minion;
 import de.ralfhergert.hearthstone.game.model.Player;
 import de.ralfhergert.hearthstone.game.model.Target;
+import de.ralfhergert.hearthstone.game.model.TargetRef;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,11 +20,12 @@ public class MageHeroPowerEffect implements TargetedEffect {
 	private final int inflictDamage = 1;
 
 	@Override
-	public HearthstoneGameState applyOn(HearthstoneGameState state, Target target) {
+	public HearthstoneGameState applyOn(HearthstoneGameState state, TargetRef targetRef) {
+		Target target = state.findTarget(targetRef);
 		if (target instanceof Player) {
-			return new DamagePlayerAtomic((Player)target, getInflictDamage()).applyTo(state);
+			return new DamagePlayerAtomic(state.getPlayerOrdinal((Player)target), getInflictDamage()).applyTo(state);
 		} else if (target instanceof Minion) {
-			return new DamageMinionAtomic((Minion)target, getInflictDamage()).applyTo(state);
+			return new DamageMinionAtomic(targetRef, getInflictDamage()).applyTo(state);
 		}
 		return state;
 	}
