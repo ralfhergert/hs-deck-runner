@@ -16,7 +16,7 @@ import org.junit.Test;
 import java.util.List;
 
 /**
- * This test ensure that the mage hero power works correctly.
+ * This test ensures that the mage hero power works correctly.
  */
 public class MageHeroPowerTest {
 

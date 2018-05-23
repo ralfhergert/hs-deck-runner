@@ -7,6 +7,7 @@ import de.ralfhergert.hearthstone.game.model.GameOutcome;
 import de.ralfhergert.hearthstone.game.model.HearthstoneGameState;
 import de.ralfhergert.hearthstone.game.model.HeroPower;
 import de.ralfhergert.hearthstone.game.model.Player;
+import de.ralfhergert.hearthstone.game.model.PlayerOrdinal;
 import de.ralfhergert.hearthstone.game.model.Turn;
 import org.junit.Assert;
 import org.junit.Test;
@@ -14,9 +15,9 @@ import org.junit.Test;
 import java.util.List;
 
 /**
- * This test ensures that the warlock hero power works correctly.
+ * This test ensures that the warrior hero power works correctly.
  */
-public class WarlockHeroPowerTest {
+public class WarriorHeroPowerTest {
 
 	/**
 	 * This test creates a game state in which the only playable action for player one
@@ -25,12 +26,12 @@ public class WarlockHeroPowerTest {
 	@Test
 	public void testPlayerSuicidesWithWarlockHeroPower() {
 		final Player player1 = new Player()
-			.setHitPoints(3)
 			.setAvailableMana(2)
-			.setHeroPower(new HeroPower(2, new WarlockHeroPowerEffect()).setAvailable(true));
+			.setHeroPower(new HeroPower(2, new WarriorHeroPowerEffect()).setAvailable(true));
 		final Player player2 = new Player();
 		final HearthstoneGameState startState = new HearthstoneGameState(null, null).setPlayers(player1, player2);
 		startState.setTurn(Turn.Player1Turn);
+		Assert.assertEquals("player one armor should be", 0, startState.getPlayer(PlayerOrdinal.One).getArmor());
 		// ask the action factory for all possible plays.
 		List<Action<HearthstoneGameState>> actions = new ActionFactory().createAllApplicableActions(startState);
 		Assert.assertNotNull("actions should not be null", actions);
@@ -42,6 +43,7 @@ public class WarlockHeroPowerTest {
 		HearthstoneGameState afterState = action.applyTo(startState);
 		Assert.assertNotNull("after state should not be null", afterState);
 		Assert.assertTrue("queuedEvents should be empty", afterState.getQueuedEffects().isEmpty());
-		Assert.assertEquals("player one should have won", GameOutcome.Player2Wins, afterState.getOutcome());
+		Assert.assertEquals("game is still undecided", GameOutcome.Undecided, afterState.getOutcome());
+		Assert.assertEquals("player one should have armor", 2, afterState.getPlayer(PlayerOrdinal.One).getArmor());
 	}
 }
