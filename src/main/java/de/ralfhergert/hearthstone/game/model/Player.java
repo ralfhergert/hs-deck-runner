@@ -115,6 +115,23 @@ public class Player extends Character<Player> implements Target,GameEventListene
 		return battlefield;
 	}
 
+	public Player addToBattlefield(Minion minion) {
+		battlefield.add(minion);
+		return this;
+	}
+
+	public void removeFromBattlefield(Minion minion) {
+		battlefield.remove(minion);
+	}
+
+	public List<Minion> getGraveyard() {
+		return graveyard;
+	}
+
+	public void addToGraveyard(Minion minion) {
+		graveyard.add(minion);
+	}
+
 	public int getNumberOfManaCrystals() {
 		return numberOfManaCrystals;
 	}
@@ -183,13 +200,5 @@ public class Player extends Character<Player> implements Target,GameEventListene
 
 	public boolean isOwnerOf(Effect effect) {
 		return heroPower.getEffect() == effect;
-	}
-
-	public void removeFromBattlefield(Minion minion) {
-		battlefield.remove(minion);
-	}
-
-	public void addToGraveyard(Minion minion) {
-		graveyard.add(minion);
 	}
 }
