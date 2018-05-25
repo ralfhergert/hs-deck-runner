@@ -107,7 +107,7 @@ public class Character<Self extends Character<Self>> implements Target {
 	}
 
 	/**
-	 * Decreases the current hit point by the given amount of damage.
+	 * Decreases the current hit points by the given amount of damage.
 	 * @return the remaining hit points of this character.
 	 */
 	public int takeDamage(final int damage) {
@@ -122,4 +122,9 @@ public class Character<Self extends Character<Self>> implements Target {
 		return currentHitPoints;
 	}
 
+	public int heal(final int heal) {
+		// healing can not exceed the maximum hit points.
+		currentHitPoints = Math.min(maxHitPoints, currentHitPoints + heal);
+		return currentHitPoints;
+	}
 }
