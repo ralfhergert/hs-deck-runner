@@ -2,6 +2,7 @@ package de.ralfhergert.hearthstone.game.heropower;
 
 import de.ralfhergert.generic.game.model.Action;
 import de.ralfhergert.hearthstone.action.ActionFactory;
+import de.ralfhergert.hearthstone.action.EndTurnAction;
 import de.ralfhergert.hearthstone.action.PlayHeroPower;
 import de.ralfhergert.hearthstone.game.model.GameOutcome;
 import de.ralfhergert.hearthstone.game.model.HearthstoneGameState;
@@ -35,12 +36,13 @@ public class WarriorHeroPowerTest {
 		// ask the action factory for all possible plays.
 		List<Action<HearthstoneGameState>> actions = new ActionFactory().createAllApplicableActions(startState);
 		Assert.assertNotNull("actions should not be null", actions);
-		Assert.assertEquals("number of found actions", 1, actions.size());
-		Action<HearthstoneGameState> action = actions.get(0);
-		Assert.assertNotNull("found action should not be null", action);
-		Assert.assertEquals("found action should by of type", PlayHeroPower.class, action.getClass());
+		Assert.assertEquals("number of found actions", 2, actions.size());
+		// filter the EndTurnAction and return the remaining action.
+		Action<HearthstoneGameState> foundAction = actions.stream().filter(action -> !(action instanceof EndTurnAction)).findFirst().get();
+		Assert.assertNotNull("found action should not be null", foundAction);
+		Assert.assertEquals("found action should by of type", PlayHeroPower.class, foundAction.getClass());
 		// play the hero power.
-		HearthstoneGameState afterState = action.applyTo(startState);
+		HearthstoneGameState afterState = foundAction.applyTo(startState);
 		Assert.assertNotNull("after state should not be null", afterState);
 		Assert.assertTrue("queuedEvents should be empty", afterState.getQueuedEffects().isEmpty());
 		Assert.assertEquals("game is still undecided", GameOutcome.Undecided, afterState.getOutcome());

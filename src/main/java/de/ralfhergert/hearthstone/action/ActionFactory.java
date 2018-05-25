@@ -41,6 +41,7 @@ public class ActionFactory {
 		} else { // it is a player's turn.
 			final PlayerOrdinal playerOrdinal = state.getTurn() == Turn.Player1Turn ? PlayerOrdinal.One : PlayerOrdinal.Two;
 			final Player player = state.getPlayer(playerOrdinal);
+			foundActions.add(new EndTurnAction(playerOrdinal));
 			// check for the hero power.
 			HeroPower heroPower = player.getHeroPower();
 			if (heroPower != null && heroPower.isAvailable() && player.getAvailableMana() >= heroPower.getManaCost()) {
