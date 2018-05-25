@@ -18,6 +18,7 @@ import java.util.Stack;
 public class Player extends Character<Player> implements GameEventListener {
 
 	private String name;
+	private int numberOfTurns = 0;
 
 	private StartingHandState startingHandState;
 
@@ -47,6 +48,7 @@ public class Player extends Character<Player> implements GameEventListener {
 	public Player(Player player) {
 		super(player);
 		name = player.name;
+		numberOfTurns = player.numberOfTurns;
 		startingHandState = player.startingHandState;
 		library.addAll(player.library);
 		hand.addAll(player.hand);
@@ -67,6 +69,15 @@ public class Player extends Character<Player> implements GameEventListener {
 
 	public Player setName(String name) {
 		this.name = name;
+		return this;
+	}
+
+	public int getNumberOfTurns() {
+		return numberOfTurns;
+	}
+
+	public Player setNumberOfTurns(int numberOfTurns) {
+		this.numberOfTurns = numberOfTurns;
 		return this;
 	}
 
