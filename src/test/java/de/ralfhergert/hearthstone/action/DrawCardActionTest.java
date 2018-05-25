@@ -12,6 +12,16 @@ import org.junit.Test;
  */
 public class DrawCardActionTest {
 
+	@Test(expected = IllegalArgumentException.class)
+	public void testActionRejectsNullPlayerOrdinal() {
+		new DrawCardsAction(null);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testActionRejectsZeroCards() {
+		new DrawCardsAction(PlayerOrdinal.One, 0);
+	}
+
 	@Test
 	public void testPlayerSuffersLethalFatigue() {
 		final Player player1 = new Player().setHitPoints(1);
