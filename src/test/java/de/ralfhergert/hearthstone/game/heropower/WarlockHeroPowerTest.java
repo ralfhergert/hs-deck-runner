@@ -26,7 +26,7 @@ public class WarlockHeroPowerTest {
 	@Test
 	public void testPlayerSuicidesWithWarlockHeroPower() {
 		final Player player1 = new Player()
-			.setHitPoints(3)
+			.setCurrentHitPoints(3)
 			.setAvailableMana(2)
 			.setHeroPower(new HeroPower(2, new WarlockHeroPowerEffect()).setAvailable(true));
 		final Player player2 = new Player();

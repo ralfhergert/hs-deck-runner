@@ -24,11 +24,11 @@ public class DrawCardActionTest {
 
 	@Test
 	public void testPlayerSuffersLethalFatigue() {
-		final Player player1 = new Player().setHitPoints(1);
+		final Player player1 = new Player().setCurrentHitPoints(1);
 		final Player player2 = new Player();
 		final HearthstoneGameState startState = new HearthstoneGameState(null, null).setPlayers(player1, player2);
 		// check some predicate assumptions.
-		Assert.assertEquals("player one has 1 hit point", 1, startState.getPlayer(PlayerOrdinal.One).getHitPoints());
+		Assert.assertEquals("player one has 1 hit point", 1, startState.getPlayer(PlayerOrdinal.One).getCurrentHitPoints());
 		Assert.assertTrue("player one has an empty library", startState.getPlayer(PlayerOrdinal.One).getHand().isEmpty());
 		// let player one draw a card form his empty library.
 		HearthstoneGameState state = new DrawCardsAction(PlayerOrdinal.One, 1).applyTo(startState);

@@ -32,7 +32,7 @@ public class MageHeroPowerTest {
 		final Player player1 = new Player()
 			.setAvailableMana(2)
 			.setHeroPower(new HeroPower(2, new MageHeroPowerEffect()).setAvailable(true));
-		final Player player2 = new Player().setHitPoints(1);
+		final Player player2 = new Player().setCurrentHitPoints(1);
 		final HearthstoneGameState startState = new HearthstoneGameState(null, null).setPlayers(player1, player2);
 		startState.setTurn(Turn.Player1Turn);
 		// ask the action factory for all possible plays.
@@ -63,7 +63,7 @@ public class MageHeroPowerTest {
 			.setHeroPower(new HeroPower(2, new MageHeroPowerEffect()).setAvailable(true));
 		final Player player2 = new Player()
 			.setElusive(true) // declare the player elusive, so the mage hero power can not target this player.
-			.addToBattlefield(new Minion().setHitPoints(1));
+			.addToBattlefield(new Minion().setCurrentHitPoints(1));
 		final HearthstoneGameState startState = new HearthstoneGameState(null, null).setPlayers(player1, player2);
 		startState.setTurn(Turn.Player1Turn);
 		Assert.assertEquals("player two should have one minion on the battlefield", 1, startState.getPlayer(PlayerOrdinal.Two).getBattlefield().size());

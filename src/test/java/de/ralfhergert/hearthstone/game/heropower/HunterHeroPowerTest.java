@@ -28,7 +28,7 @@ public class HunterHeroPowerTest {
 		final Player player1 = new Player()
 			.setAvailableMana(2)
 			.setHeroPower(new HeroPower(2, new HunterHeroPowerEffect()).setAvailable(true));
-		final Player player2 = new Player().setHitPoints(2);
+		final Player player2 = new Player().setCurrentHitPoints(2);
 		final HearthstoneGameState startState = new HearthstoneGameState(null, null).setPlayers(player1, player2);
 		startState.setTurn(Turn.Player1Turn);
 		// ask the action factory for all possible plays.

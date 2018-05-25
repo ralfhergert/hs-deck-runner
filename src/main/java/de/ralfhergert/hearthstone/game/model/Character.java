@@ -8,7 +8,8 @@ public class Character<Self extends Character<Self>> implements Target {
 
 	private TargetRef targetRef = new TargetRef();
 
-	private int hitPoints;
+	private int currentHitPoints;
+	private int maxHitPoints;
 	private int power;
 	private int armor;
 
@@ -26,7 +27,8 @@ public class Character<Self extends Character<Self>> implements Target {
 			throw new IllegalArgumentException("character can not be null");
 		}
 		targetRef = other.targetRef;
-		hitPoints = other.hitPoints;
+		currentHitPoints = other.currentHitPoints;
+		maxHitPoints = other.maxHitPoints;
 		power = other.power;
 		armor = other.armor;
 		isImmune = other.isImmune;
@@ -41,12 +43,21 @@ public class Character<Self extends Character<Self>> implements Target {
 		this.targetRef = targetRef;
 	}
 
-	public int getHitPoints() {
-		return hitPoints;
+	public int getCurrentHitPoints() {
+		return currentHitPoints;
 	}
 
-	public Self setHitPoints(int hitPoints) {
-		this.hitPoints = hitPoints;
+	public Self setCurrentHitPoints(int currentHitPoints) {
+		this.currentHitPoints = currentHitPoints;
+		return (Self)this;
+	}
+
+	public int getMaxHitPoints() {
+		return maxHitPoints;
+	}
+
+	public Self setMaxHitPoints(int maxHitPoints) {
+		this.maxHitPoints = maxHitPoints;
 		return (Self)this;
 	}
 
@@ -104,11 +115,11 @@ public class Character<Self extends Character<Self>> implements Target {
 			// deal the damage to the armor first.
 			armor -= damage;
 			if (armor < 0) { // if the armor could not absorb the damage.
-				hitPoints += armor;
+				currentHitPoints += armor;
 				armor = 0;
 			}
 		}
-		return hitPoints;
+		return currentHitPoints;
 	}
 
 }

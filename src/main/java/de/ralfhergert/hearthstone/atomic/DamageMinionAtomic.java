@@ -34,13 +34,13 @@ public class DamageMinionAtomic implements Action<HearthstoneGameState> {
 			return nextState;
 		}
 		final Minion minion = (Minion)target;
-		final int hitPointsBefore = minion.getHitPoints();
+		final int hitPointsBefore = minion.getCurrentHitPoints();
 		final int hitPointsAfter = minion.takeDamage(damage);
 		if (hitPointsBefore > hitPointsAfter) {
 			nextState.onEvent(new MinionTakesDamageEvent(nextState, minion, hitPointsBefore));
 		}
 		// firing the event might have altered the minion's hit points, so don't use hitPointsAfter.
-		return (minion.getHitPoints() < 1)
+		return (minion.getCurrentHitPoints() < 1)
 			? new DestroyMinionAtomic(minion).applyTo(nextState)
 			: nextState;
 	}

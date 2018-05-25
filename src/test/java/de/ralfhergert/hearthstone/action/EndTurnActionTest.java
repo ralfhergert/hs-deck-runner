@@ -22,8 +22,8 @@ public class EndTurnActionTest {
 
 	@Test
 	public void testPlayerSuffersLethalFatigue() {
-		final Player player1 = new Player().setHitPoints(20);
-		final Player player2 = new Player().setHitPoints(20);
+		final Player player1 = new Player().setCurrentHitPoints(20);
+		final Player player2 = new Player().setCurrentHitPoints(20);
 		final HearthstoneGameState startState = new HearthstoneGameState(null, null).setPlayers(player1, player2);
 		startState.setTurn(Turn.Player1Turn);
 		List<Action<HearthstoneGameState>> foundActions = new ActionFactory().createAllApplicableActions(startState);
@@ -40,8 +40,8 @@ public class EndTurnActionTest {
 
 	@Test
 	public void testTurnLimitIsReached() {
-		final Player player1 = new Player().setNumberOfTurns(44).setHitPoints(20);
-		final Player player2 = new Player().setNumberOfTurns(44).setHitPoints(20);
+		final Player player1 = new Player().setNumberOfTurns(44).setCurrentHitPoints(20);
+		final Player player2 = new Player().setNumberOfTurns(44).setCurrentHitPoints(20);
 		final HearthstoneGameState startState = new HearthstoneGameState(null, null).setPlayers(player1, player2);
 		startState.setTurn(Turn.Player2Turn);
 		List<Action<HearthstoneGameState>> foundActions = new ActionFactory().createAllApplicableActions(startState);
