@@ -127,4 +127,8 @@ public class Character<Self extends Character<Self>> implements Target {
 		currentHitPoints = Math.min(maxHitPoints, currentHitPoints + heal);
 		return currentHitPoints;
 	}
+
+	public boolean isDamaged() {
+		return currentHitPoints < maxHitPoints;
+	}
 }
