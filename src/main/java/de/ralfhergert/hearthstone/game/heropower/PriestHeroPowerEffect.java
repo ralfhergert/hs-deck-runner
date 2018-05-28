@@ -23,6 +23,12 @@ public class PriestHeroPowerEffect implements TargetedEffect {
 		return state.apply(new HealCharacterAtomic(targetRef, getHealAmount()));
 	}
 
+	/**
+	 * Returns all possible targets for this effect. Note that the original hearthstone
+	 * game allows to heal undamaged characters, but since this action does not trigger
+	 * other effects like "whenever [...] is healed", this implementation ignores all
+	 * undamaged characters as valid targets.
+	 */
 	@Override
 	public List<Target> getPossibleTargets(HearthstoneGameState state) {
 		final List<Target> targets = new ArrayList<>();
