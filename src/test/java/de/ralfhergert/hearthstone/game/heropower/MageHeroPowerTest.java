@@ -38,9 +38,12 @@ public class MageHeroPowerTest {
 		// ask the action factory for all possible plays.
 		List<Action<HearthstoneGameState>> actions = new ActionFactory().createAllApplicableActions(startState);
 		Assert.assertNotNull("actions should not be null", actions);
-		Assert.assertEquals("number of found actions", 2, actions.size());
-		// filter the EndTurnAction and return the remaining action.
-		Action<HearthstoneGameState> foundAction = actions.stream().filter(action -> !(action instanceof EndTurnAction)).findFirst().get();
+		Assert.assertEquals("number of found actions", 3, actions.size());
+		// filter the EndTurnAction and pinging own face.
+		Action<HearthstoneGameState> foundAction = actions.stream()
+			.filter(action -> !(action instanceof EndTurnAction))
+			.filter(action -> !(action instanceof PlayTargetedHeroPower && ((PlayTargetedHeroPower)action).getTargetRef().equals(player1.getTargetRef())))
+			.findFirst().get();
 		Assert.assertNotNull("found action should not be null", foundAction);
 		Assert.assertEquals("found action should by of type", PlayTargetedHeroPower.class, foundAction.getClass());
 		// play the hero power.
@@ -71,9 +74,12 @@ public class MageHeroPowerTest {
 		// ask the action factory for all possible plays.
 		List<Action<HearthstoneGameState>> actions = new ActionFactory().createAllApplicableActions(startState);
 		Assert.assertNotNull("actions should not be null", actions);
-		Assert.assertEquals("number of found actions", 2, actions.size());
-		// filter the EndTurnAction and return the remaining action.
-		Action<HearthstoneGameState> foundAction = actions.stream().filter(action -> !(action instanceof EndTurnAction)).findFirst().get();
+		Assert.assertEquals("number of found actions", 3, actions.size());
+		// filter the EndTurnAction and pinging own face.
+		Action<HearthstoneGameState> foundAction = actions.stream()
+			.filter(action -> !(action instanceof EndTurnAction))
+			.filter(action -> !(action instanceof PlayTargetedHeroPower && ((PlayTargetedHeroPower)action).getTargetRef().equals(player1.getTargetRef())))
+			.findFirst().get();
 		Assert.assertNotNull("found action should not be null", foundAction);
 		Assert.assertEquals("found action should by of type", PlayTargetedHeroPower.class, foundAction.getClass());
 		// play the hero power.

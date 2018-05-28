@@ -12,7 +12,11 @@ public class TargetRef {
 	private final long id;
 
 	public TargetRef() {
-		this.id = nextTargetRef++;
+		this(nextTargetRef++);
+	}
+
+	public TargetRef(long id) {
+		this.id = id;
 	}
 
 	public long getId() {

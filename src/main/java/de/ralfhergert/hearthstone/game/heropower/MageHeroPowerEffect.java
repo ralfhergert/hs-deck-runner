@@ -33,6 +33,13 @@ public class MageHeroPowerEffect implements TargetedEffect {
 	@Override
 	public List<Target> getPossibleTargets(HearthstoneGameState state) {
 		final List<Target> targets = new ArrayList<>();
+		final Player owner = state.getOwner(this);
+		targets.add(owner);
+		for (Minion minion : owner.getBattlefield()) {
+			if (!minion.isElusive()) {
+				targets.add(minion);
+			}
+		}
 		final Player opponent = state.getOpposingPlayer(state.getOwner(this));
 		if (!opponent.isElusive()) {
 			targets.add(opponent);

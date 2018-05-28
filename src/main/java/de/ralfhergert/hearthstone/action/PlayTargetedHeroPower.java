@@ -41,4 +41,8 @@ public class PlayTargetedHeroPower implements Action<HearthstoneGameState> {
 		}
 		return false;
 	}
+
+	public TargetRef getTargetRef() {
+		return targetRef;
+	}
 }
