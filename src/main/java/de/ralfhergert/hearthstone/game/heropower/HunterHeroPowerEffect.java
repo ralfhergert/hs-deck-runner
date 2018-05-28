@@ -7,7 +7,7 @@ import de.ralfhergert.hearthstone.game.model.Player;
 import de.ralfhergert.hearthstone.game.model.PlayerOrdinal;
 
 /**
- * This is the effect of the warrior hero power.
+ * This is the effect of the hunter hero power.
  */
 public class HunterHeroPowerEffect implements GeneralEffect {
 

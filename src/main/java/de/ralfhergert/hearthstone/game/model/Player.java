@@ -59,7 +59,7 @@ public class Player extends Character<Player> implements GameEventListener {
 		availableMana = player.availableMana;
 		crystalsLockedNextTurn = player.crystalsLockedNextTurn;
 		heroPower = player.heroPower != null ? new HeroPower(player.heroPower) : null;
-		weapon = new Weapon(player.weapon);
+		weapon = player.weapon != null ? new Weapon(player.weapon) : null;
 		currentFatigueDamage = player.currentFatigueDamage;
 	}
 
@@ -177,6 +177,15 @@ public class Player extends Character<Player> implements GameEventListener {
 		return this;
 	}
 
+	public Weapon getWeapon() {
+		return weapon;
+	}
+
+	public Player setWeapon(Weapon weapon) {
+		this.weapon = weapon;
+		return this;
+	}
+
 	public int getCurrentFatigueDamage() {
 		return currentFatigueDamage;
 	}
@@ -198,7 +207,9 @@ public class Player extends Character<Player> implements GameEventListener {
 		if (heroPower != null) {
 			heroPower.onEvent(event);
 		}
-		weapon.onEvent(event);
+		if (weapon != null) {
+			weapon.onEvent(event);
+		}
 	}
 
 	public boolean isOwnerOf(HeroPower heroPower) {
