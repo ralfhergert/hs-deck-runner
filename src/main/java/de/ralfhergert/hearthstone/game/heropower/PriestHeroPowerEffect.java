@@ -36,7 +36,7 @@ public class PriestHeroPowerEffect implements TargetedEffect {
 			}
 		}
 		final Player opponent = state.getOpposingPlayer(state.getOwner(this));
-		for (Minion minion : owner.getBattlefield()) {
+		for (Minion minion : opponent.getBattlefield()) {
 			if (minion.isDamaged() && !minion.isElusive()) {
 				targets.add(minion);
 			}
