@@ -20,8 +20,10 @@ public class Character<Self extends Character<Self>> implements Target, GameEven
 	private boolean isImmune;
 	private boolean isFrozen;
 	private boolean isElusive; // can not be targeted by heroPowers or targeted spells.
+	private boolean hasTaunt;
 
 	private int numberOfAttacksThisTurn = 0;
+	private int numberOfAttacksLimit = 1;
 
 	public Character() {}
 
@@ -112,12 +114,30 @@ public class Character<Self extends Character<Self>> implements Target, GameEven
 		return (Self)this;
 	}
 
+	public boolean hasTaunt() {
+		return hasTaunt;
+	}
+
+	public Self setHasTaunt(boolean hasTaunt) {
+		this.hasTaunt = hasTaunt;
+		return (Self)this;
+	}
+
 	public int getNumberOfAttacksThisTurn() {
 		return numberOfAttacksThisTurn;
 	}
 
 	public Self setNumberOfAttacksThisTurn(int numberOfAttacksThisTurn) {
 		this.numberOfAttacksThisTurn = numberOfAttacksThisTurn;
+		return (Self)this;
+	}
+
+	public int getNumberOfAttacksLimit() {
+		return numberOfAttacksLimit;
+	}
+
+	public Self setNumberOfAttacksLimit(int numberOfAttacksLimit) {
+		this.numberOfAttacksLimit = numberOfAttacksLimit;
 		return (Self)this;
 	}
 
@@ -145,6 +165,14 @@ public class Character<Self extends Character<Self>> implements Target, GameEven
 
 	public boolean isDamaged() {
 		return currentHitPoints < maxHitPoints;
+	}
+
+	public int getAttack() {
+		return power;
+	}
+
+	public boolean canAttack() {
+		return getAttack() > 0 && !isFrozen && numberOfAttacksThisTurn < numberOfAttacksLimit;
 	}
 
 	@Override

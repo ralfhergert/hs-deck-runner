@@ -194,6 +194,10 @@ public class Player extends Character<Player> implements GameEventListener {
 		this.currentFatigueDamage = currentFatigueDamage;
 	}
 
+	@Override
+	public int getAttack() {
+		return getPower() + (weapon != null ? weapon.getAttack() : 0);
+	}
 
 	@Override
 	public void onEvent(GameEvent event) {
@@ -225,7 +229,7 @@ public class Player extends Character<Player> implements GameEventListener {
 		return heroPower.getEffect() == effect;
 	}
 
-	public Target findTarget(TargetRef targetRef) {
+	public Minion findTarget(TargetRef targetRef) {
 		for (Minion minion : battlefield) {
 			if (minion.getTargetRef().equals(targetRef)) {
 				return minion;
@@ -233,4 +237,20 @@ public class Player extends Character<Player> implements GameEventListener {
 		}
 		return null;
 	}
+
+	/**
+	 * @return true if this player himself has taunt or has at least on tount minion.
+	 */
+	public boolean hasTauntsOnBoard() {
+		if (hasTaunt()) {
+			return true;
+		}
+		for (Minion minion : getBattlefield()) {
+			if (minion.hasTaunt()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 }

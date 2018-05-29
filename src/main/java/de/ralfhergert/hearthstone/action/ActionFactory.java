@@ -2,8 +2,10 @@ package de.ralfhergert.hearthstone.action;
 
 import de.ralfhergert.generic.game.model.Action;
 import de.ralfhergert.hearthstone.atomic.ExecuteQueuedEffectsAtomic;
+import de.ralfhergert.hearthstone.game.model.Character;
 import de.ralfhergert.hearthstone.game.model.HearthstoneGameState;
 import de.ralfhergert.hearthstone.game.model.HeroPower;
+import de.ralfhergert.hearthstone.game.model.Minion;
 import de.ralfhergert.hearthstone.game.model.Player;
 import de.ralfhergert.hearthstone.game.model.PlayerOrdinal;
 import de.ralfhergert.hearthstone.game.model.StartingHandState;
@@ -12,6 +14,7 @@ import de.ralfhergert.hearthstone.game.model.Turn;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * This factory will find all applicable action for a given game state.
@@ -53,7 +56,31 @@ public class ActionFactory {
 					foundActions.add(new PlayHeroPower());
 				}
 			}
+			// get possible attack actions.
+			final List<Character> possibleTargets = getPossibleAttackTargets(state.getOpposingPlayer(player));
+			if (player.canAttack()) {
+				for (Character target : possibleTargets) {
+					foundActions.add(new CharacterAttacksAction(player.getTargetRef(), target.getTargetRef()));
+				}
+			}
+			for (Minion minion : player.getBattlefield()) {
+				if (minion.canAttack()) {
+					for (Character target : possibleTargets) {
+						foundActions.add(new CharacterAttacksAction(minion.getTargetRef(), target.getTargetRef()));
+					}
+				}
+			}
 		}
 		return foundActions;
+	}
+
+	public static List<Character> getPossibleAttackTargets(Player player) {
+		final List<Character> targets = new ArrayList<>(player.getBattlefield());
+		targets.add(player);
+		if (player.hasTauntsOnBoard()) { // if the player has taunts on board the only viable targets are those with taunt.
+			return targets.stream().filter(character -> character.hasTaunt()).collect(Collectors.toList());
+		} else {
+			return targets;
+		}
 	}
 }

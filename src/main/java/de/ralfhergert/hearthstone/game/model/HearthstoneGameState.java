@@ -20,6 +20,13 @@ public class HearthstoneGameState extends GameState<HearthstoneGameState> implem
 	private Turn turn = Turn.DrawStartingHand;
 	private GameOutcome outcome = GameOutcome.Undecided;
 
+	/**
+	 * These two references will be set while an attack is going on.
+	 * They enable effects to alter the target of an attack.
+	 */
+	private TargetRef currentAttackerRef;
+	private TargetRef currentTargetRef;
+
 	private List<GeneralEffect> queuedEffects = new ArrayList<>();
 
 	public HearthstoneGameState(HearthstoneGameState parent, Action<HearthstoneGameState> action) {
@@ -115,6 +122,24 @@ public class HearthstoneGameState extends GameState<HearthstoneGameState> implem
 		queuedEffects.clear();
 	}
 
+	public TargetRef getCurrentAttackerRef() {
+		return currentAttackerRef;
+	}
+
+	public HearthstoneGameState setCurrentAttackerRef(TargetRef currentAttackerRef) {
+		this.currentAttackerRef = currentAttackerRef;
+		return this;
+	}
+
+	public TargetRef getCurrentTargetRef() {
+		return currentTargetRef;
+	}
+
+	public HearthstoneGameState setCurrentTargetRef(TargetRef currentTargetRef) {
+		this.currentTargetRef = currentTargetRef;
+		return this;
+	}
+
 	public Player getOwner(HeroPower heroPower) {
 		for (Player player : players) {
 			if (player.isOwnerOf(heroPower)) {
@@ -156,12 +181,12 @@ public class HearthstoneGameState extends GameState<HearthstoneGameState> implem
 		return null;
 	}
 
-	public Target findTarget(TargetRef targetRef) {
+	public Character findTarget(TargetRef targetRef) {
 		for (Player player : players) {
 			if (player.getTargetRef().equals(targetRef)) {
 				return player;
 			}
-			final Target target = player.findTarget(targetRef);
+			final Minion target = player.findTarget(targetRef);
 			if (target != null) {
 				return target;
 			}
