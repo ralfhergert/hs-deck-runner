@@ -197,6 +197,7 @@ public class Player extends Character<Player> implements GameEventListener {
 
 	@Override
 	public void onEvent(GameEvent event) {
+		super.onEvent(event);
 		// forward the event.
 		library.forEach(card -> card.onEvent(event));
 		hand.forEach(card -> card.onEvent(event));

@@ -15,5 +15,7 @@ public class Minion extends Character<Minion> implements GameEventListener {
 	}
 
 	@Override
-	public void onEvent(GameEvent event) {}
+	public void onEvent(GameEvent event) {
+		super.onEvent(event);
+	}
 }

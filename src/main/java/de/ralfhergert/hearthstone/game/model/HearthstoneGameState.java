@@ -142,6 +142,20 @@ public class HearthstoneGameState extends GameState<HearthstoneGameState> implem
 		return null;
 	}
 
+	public PlayerOrdinal findOwnerOrdinal(TargetRef targetRef) {
+		for (PlayerOrdinal playerOrdinal : PlayerOrdinal.values()) {
+			final Player player = getPlayer(playerOrdinal);
+			if (getPlayer(playerOrdinal).getTargetRef().equals(targetRef)) {
+				return playerOrdinal;
+			}
+			final Target target = player.findTarget(targetRef);
+			if (target != null) {
+				return playerOrdinal;
+			}
+		}
+		return null;
+	}
+
 	public Target findTarget(TargetRef targetRef) {
 		for (Player player : players) {
 			if (player.getTargetRef().equals(targetRef)) {

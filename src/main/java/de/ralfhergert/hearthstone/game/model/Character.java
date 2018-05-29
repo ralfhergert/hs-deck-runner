@@ -1,10 +1,14 @@
 package de.ralfhergert.hearthstone.game.model;
 
+import de.ralfhergert.hearthstone.event.GameEvent;
+import de.ralfhergert.hearthstone.event.GameEventListener;
+import de.ralfhergert.hearthstone.event.StartTurnEvent;
+
 /**
  * A character is either a minion or a player.
  * @param <Self> type of the overriding class.
  */
-public class Character<Self extends Character<Self>> implements Target {
+public class Character<Self extends Character<Self>> implements Target, GameEventListener {
 
 	private TargetRef targetRef = new TargetRef();
 
@@ -16,6 +20,8 @@ public class Character<Self extends Character<Self>> implements Target {
 	private boolean isImmune;
 	private boolean isFrozen;
 	private boolean isElusive; // can not be targeted by heroPowers or targeted spells.
+
+	private int numberOfAttacksThisTurn = 0;
 
 	public Character() {}
 
@@ -106,6 +112,15 @@ public class Character<Self extends Character<Self>> implements Target {
 		return (Self)this;
 	}
 
+	public int getNumberOfAttacksThisTurn() {
+		return numberOfAttacksThisTurn;
+	}
+
+	public Self setNumberOfAttacksThisTurn(int numberOfAttacksThisTurn) {
+		this.numberOfAttacksThisTurn = numberOfAttacksThisTurn;
+		return (Self)this;
+	}
+
 	/**
 	 * Decreases the current hit points by the given amount of damage.
 	 * @return the remaining hit points of this character.
@@ -130,5 +145,15 @@ public class Character<Self extends Character<Self>> implements Target {
 
 	public boolean isDamaged() {
 		return currentHitPoints < maxHitPoints;
+	}
+
+	@Override
+	public void onEvent(GameEvent event) {
+		if (event instanceof StartTurnEvent) {
+			StartTurnEvent startTurnEvent = (StartTurnEvent)event;
+			if (startTurnEvent.getPlayerOrdinal() == startTurnEvent.getState().findOwnerOrdinal(targetRef)) {
+				numberOfAttacksThisTurn = 0;
+			}
+		}
 	}
 }
