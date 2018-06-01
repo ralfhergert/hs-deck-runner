@@ -232,9 +232,9 @@ public class Player extends Character<Player> implements GameEventListener<Heart
 		if (event instanceof PlayerTakesDamageEvent) {
 			PlayerTakesDamageEvent takesDamageEvent = (PlayerTakesDamageEvent)event;
 			if (takesDamageEvent.getCharacter().getTargetRef().equals(getTargetRef())) {
-				Player player = (Player)state.findTarget(getTargetRef());
+				Player player = (Player)nextState.findTarget(getTargetRef());
 				if (player.getCurrentHitPoints() <= 0) {
-					return state.apply(new DestroyPlayerAtomic(state.getPlayerOrdinal(player)));
+					return nextState.apply(new DestroyPlayerAtomic(nextState.getPlayerOrdinal(player)));
 				}
 			}
 		}

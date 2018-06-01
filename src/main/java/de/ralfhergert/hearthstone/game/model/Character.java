@@ -1,5 +1,6 @@
 package de.ralfhergert.hearthstone.game.model;
 
+import de.ralfhergert.hearthstone.event.CharacterAttackedEvent;
 import de.ralfhergert.hearthstone.event.GameEvent;
 import de.ralfhergert.hearthstone.event.GameEventListener;
 import de.ralfhergert.hearthstone.event.StartTurnEvent;
@@ -43,6 +44,10 @@ public class Character<Self extends Character<Self>> implements Target, GameEven
 		armor = other.armor;
 		isImmune = other.isImmune;
 		isFrozen = other.isFrozen;
+		isElusive = other.isElusive;
+		hasTaunt = other.hasTaunt;
+		numberOfAttacksThisTurn = other.numberOfAttacksThisTurn;
+		numberOfAttacksLimit = other.numberOfAttacksLimit;
 	}
 
 	public TargetRef getTargetRef() {
@@ -183,6 +188,12 @@ public class Character<Self extends Character<Self>> implements Target, GameEven
 			StartTurnEvent startTurnEvent = (StartTurnEvent)event;
 			if (state.findOwnerOrdinal(targetRef) == startTurnEvent.getPlayerOrdinal()) {
 				state.findTarget(targetRef).setNumberOfAttacksThisTurn(0);
+			}
+		} else if (event instanceof CharacterAttackedEvent) {
+			CharacterAttackedEvent attackedEvent = (CharacterAttackedEvent)event;
+			if (targetRef.equals(attackedEvent.getAttackerTargetRef())) {
+				Character attacker = state.findTarget(targetRef);
+				attacker.setNumberOfAttacksThisTurn(1 + attacker.getNumberOfAttacksThisTurn());
 			}
 		}
 		return state;
