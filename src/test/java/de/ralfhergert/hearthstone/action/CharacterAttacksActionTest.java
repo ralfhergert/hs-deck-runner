@@ -58,10 +58,10 @@ public class CharacterAttacksActionTest {
 
 	@Test
 	public void testPlayerSuicidesIntoMinion() {
-		// player one gets a 1/1 weapon and 1 hitPoint.
+		// player one gets a 1/2 weapon and 1 hitPoint.
 		final Player player1 = new Player()
 			.setCurrentHitPoints(1)
-			.setWeapon(new Weapon().setAttack(1).setDurability(1).setActive(true));
+			.setWeapon(new Weapon().setAttack(1).setDurability(2).setActive(true));
 		// player two gets a 1/1 taunt minion.
 		final Player player2 = new Player()
 			.setCurrentHitPoints(1)
@@ -80,6 +80,8 @@ public class CharacterAttacksActionTest {
 		HearthstoneGameState afterState = foundAction.applyTo(startState);
 		Assert.assertNotNull("after state should not be null", afterState);
 		Assert.assertEquals("numberOfAttacks player one made", 1, afterState.getPlayer(PlayerOrdinal.One).getNumberOfAttacksThisTurn());
+		Assert.assertNotNull("player one's weapon should exist", afterState.getPlayer(PlayerOrdinal.One).getWeapon());
+		Assert.assertEquals("player one's weapon should have durability", 1, afterState.getPlayer(PlayerOrdinal.One).getWeapon().getDurability());
 		Assert.assertEquals("after state gameOutcome should be", GameOutcome.Player2Wins, afterState.getOutcome());
 		Assert.assertEquals("player two's minions on battlefield", 0, afterState.getPlayer(PlayerOrdinal.Two).getBattlefield().size());
 	}
