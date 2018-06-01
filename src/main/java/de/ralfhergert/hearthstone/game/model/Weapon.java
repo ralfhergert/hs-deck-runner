@@ -2,8 +2,10 @@ package de.ralfhergert.hearthstone.game.model;
 
 import de.ralfhergert.hearthstone.atomic.DestroyWeaponAtomic;
 import de.ralfhergert.hearthstone.event.CharacterAttackedEvent;
+import de.ralfhergert.hearthstone.event.EndTurnEvent;
 import de.ralfhergert.hearthstone.event.GameEvent;
 import de.ralfhergert.hearthstone.event.GameEventListener;
+import de.ralfhergert.hearthstone.event.StartTurnEvent;
 
 /**
  * Represents a played and active weapon on the board.
@@ -79,6 +81,18 @@ public class Weapon implements GameEventListener<HearthstoneGameState> {
 				if (durability == 0) {
 					return state.apply(new DestroyWeaponAtomic(state.getPlayerOrdinal(state.getOwner(weaponRef))));
 				}
+			}
+		} else if (event instanceof EndTurnEvent) {
+			EndTurnEvent endTurnEvent = (EndTurnEvent)event;
+			// is it this weapon's owner end of turn?
+			if (endTurnEvent.getPlayerOrdinal() == state.getPlayerOrdinal(state.getOwner(weaponRef))) {
+				state.getPlayer(endTurnEvent.getPlayerOrdinal()).getWeapon().setActive(false);
+			}
+		} else if (event instanceof StartTurnEvent) {
+			StartTurnEvent startTurnEvent = (StartTurnEvent)event;
+			// is it this weapon's owner start of turn?
+			if (startTurnEvent.getPlayerOrdinal() == state.getPlayerOrdinal(state.getOwner(weaponRef))) {
+				state.getPlayer(startTurnEvent.getPlayerOrdinal()).getWeapon().setActive(true);
 			}
 		}
 		return state;
