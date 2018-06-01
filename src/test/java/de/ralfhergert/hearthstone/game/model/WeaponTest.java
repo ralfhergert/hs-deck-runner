@@ -13,6 +13,11 @@ import java.util.List;
  */
 public class WeaponTest {
 
+	@Test(expected = IllegalArgumentException.class)
+	public void testWeaponRejectsCloningFromNull() {
+		new Weapon(null);
+	}
+
 	/**
 	 * This test gives both players a 0/1 weapon. Due to the weapon having 0 attack
 	 * the players only option is ending their turns. This test checks that the
