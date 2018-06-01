@@ -26,7 +26,7 @@ public class DestroyWeaponAtomic implements Action<HearthstoneGameState> {
 		final Player player = nextState.getPlayer(playerOrdinal);
 		if (player.getWeapon() != null) {
 			player.setWeapon(null);
-			nextState.onEvent(new WeaponDestroyedEvent(nextState, playerOrdinal));
+			return nextState.onEvent(new WeaponDestroyedEvent(playerOrdinal));
 		}
 		return nextState;
 	}

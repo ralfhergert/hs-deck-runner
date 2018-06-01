@@ -1,6 +1,5 @@
 package de.ralfhergert.hearthstone.event;
 
-import de.ralfhergert.hearthstone.game.model.HearthstoneGameState;
 import de.ralfhergert.hearthstone.game.model.Player;
 
 /**
@@ -8,7 +7,7 @@ import de.ralfhergert.hearthstone.game.model.Player;
  */
 public class PlayerDestroyedEvent extends CharacterDestroyedEvent<Player> {
 
-	public PlayerDestroyedEvent(HearthstoneGameState state, Player character) {
-		super(state, character);
+	public PlayerDestroyedEvent(Player character) {
+		super(character);
 	}
 }

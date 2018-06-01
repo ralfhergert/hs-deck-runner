@@ -1,6 +1,5 @@
 package de.ralfhergert.hearthstone.event;
 
-import de.ralfhergert.hearthstone.game.model.HearthstoneGameState;
 import de.ralfhergert.hearthstone.game.model.Minion;
 
 /**
@@ -8,7 +7,7 @@ import de.ralfhergert.hearthstone.game.model.Minion;
  */
 public class MinionTakesDamageEvent extends CharacterTakesDamageEvent<Minion> {
 
-	public MinionTakesDamageEvent(HearthstoneGameState state, Minion character, int hitPointsBefore) {
-		super(state, character, hitPointsBefore);
+	public MinionTakesDamageEvent(Minion character, int hitPointsBefore) {
+		super(character, hitPointsBefore);
 	}
 }

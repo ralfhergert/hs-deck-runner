@@ -8,12 +8,11 @@ import de.ralfhergert.hearthstone.event.StartTurnEvent;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Generic implementation of a hero power.
  */
-public class HeroPower implements GameEventListener {
+public class HeroPower implements GameEventListener<HearthstoneGameState> {
 
 	private final int manaCost;
 	private final Effect effect;
@@ -66,12 +65,13 @@ public class HeroPower implements GameEventListener {
 	}
 
 	@Override
-	public void onEvent(GameEvent event) {
+	public HearthstoneGameState onEvent(HearthstoneGameState state, GameEvent event) {
 		if (event instanceof StartTurnEvent) {
 			// reset availability if it is the heroPower's player turn.
-			if (Objects.equals(event.getState().getOwner(this), ((StartTurnEvent)event).getPlayer())) {
-				isAvailable = true;
+			if (state.getPlayerOrdinal(state.getOwner(this)) == ((StartTurnEvent)event).getPlayerOrdinal()) {
+				isAvailable = true; // FIXME find by reference.
 			}
 		}
+		return state;
 	}
 }

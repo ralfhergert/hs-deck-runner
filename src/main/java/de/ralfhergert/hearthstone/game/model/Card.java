@@ -6,8 +6,10 @@ import de.ralfhergert.hearthstone.event.GameEventListener;
 /**
  * Represents a card in library, hand or graveyard.
  */
-public class Card implements GameEventListener {
+public class Card implements GameEventListener<HearthstoneGameState> {
 
 	@Override
-	public void onEvent(GameEvent event) {}
+	public HearthstoneGameState onEvent(HearthstoneGameState state, GameEvent event) {
+		return state;
+	}
 }

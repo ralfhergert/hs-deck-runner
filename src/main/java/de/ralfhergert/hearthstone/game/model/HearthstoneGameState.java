@@ -2,6 +2,7 @@ package de.ralfhergert.hearthstone.game.model;
 
 import de.ralfhergert.generic.game.model.Action;
 import de.ralfhergert.generic.game.model.GameState;
+import de.ralfhergert.hearthstone.atomic.ExecuteQueuedEffectsAtomic;
 import de.ralfhergert.hearthstone.effect.Effect;
 import de.ralfhergert.hearthstone.effect.GeneralEffect;
 import de.ralfhergert.hearthstone.event.GameEvent;
@@ -13,7 +14,7 @@ import java.util.List;
 /**
  * Holds the current state of a game of Hearthstone.
  */
-public class HearthstoneGameState extends GameState<HearthstoneGameState> implements GameEventListener {
+public class HearthstoneGameState extends GameState<HearthstoneGameState> implements GameEventListener<HearthstoneGameState> {
 
 	private Player[] players = new Player[2];
 
@@ -108,10 +109,14 @@ public class HearthstoneGameState extends GameState<HearthstoneGameState> implem
 		}
 	}
 
+	public HearthstoneGameState onEvent(GameEvent event) {
+		return onEvent(this, event);
+	}
+
 	@Override
-	public void onEvent(GameEvent event) {
-		players[0].onEvent(event);
-		players[1].onEvent(event);
+	public HearthstoneGameState onEvent(HearthstoneGameState state, GameEvent event) {
+		HearthstoneGameState nextState = players[0].onEvent(state, event);
+		return players[1].onEvent(nextState, event);
 	}
 
 	public List<GeneralEffect> getQueuedEffects() {
@@ -167,6 +172,15 @@ public class HearthstoneGameState extends GameState<HearthstoneGameState> implem
 		return null;
 	}
 
+	public Player getOwner(WeaponRef weaponRef) {
+		for (Player player : players) {
+			if (player.isOwnerOf(weaponRef)) {
+				return player;
+			}
+		}
+		return null;
+	}
+
 	public PlayerOrdinal findOwnerOrdinal(TargetRef targetRef) {
 		for (PlayerOrdinal playerOrdinal : PlayerOrdinal.values()) {
 			final Player player = getPlayer(playerOrdinal);
@@ -192,5 +206,16 @@ public class HearthstoneGameState extends GameState<HearthstoneGameState> implem
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * This helper method resolves queued effect on a state creating a new resolved state.
+	 */
+	public HearthstoneGameState resolveQueuedEffects() {
+		HearthstoneGameState resolvedState = this;
+		while (!resolvedState.getQueuedEffects().isEmpty()) {
+			resolvedState = resolvedState.apply(new ExecuteQueuedEffectsAtomic());
+		}
+		return resolvedState;
 	}
 }

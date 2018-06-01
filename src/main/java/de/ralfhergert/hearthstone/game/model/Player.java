@@ -1,8 +1,10 @@
 package de.ralfhergert.hearthstone.game.model;
 
+import de.ralfhergert.hearthstone.atomic.DestroyPlayerAtomic;
 import de.ralfhergert.hearthstone.effect.Effect;
 import de.ralfhergert.hearthstone.event.GameEvent;
 import de.ralfhergert.hearthstone.event.GameEventListener;
+import de.ralfhergert.hearthstone.event.PlayerTakesDamageEvent;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -15,7 +17,7 @@ import java.util.Stack;
 /**
  * Represents the current game state a player can be in.
  */
-public class Player extends Character<Player> implements GameEventListener {
+public class Player extends Character<Player> implements GameEventListener<HearthstoneGameState> {
 
 	private String name;
 	private int numberOfTurns = 0;
@@ -196,25 +198,47 @@ public class Player extends Character<Player> implements GameEventListener {
 
 	@Override
 	public int getAttack() {
-		return getPower() + (weapon != null ? weapon.getAttack() : 0);
+		return getPower() + (weapon != null && weapon.isActive() ? weapon.getAttack() : 0);
 	}
 
 	@Override
-	public void onEvent(GameEvent event) {
-		super.onEvent(event);
+	public HearthstoneGameState onEvent(HearthstoneGameState state, GameEvent event) {
+		HearthstoneGameState nextState = super.onEvent(state, event);
 		// forward the event.
-		library.forEach(card -> card.onEvent(event));
-		hand.forEach(card -> card.onEvent(event));
-		playedCards.forEach(card -> card.onEvent(event));
-		battlefield.forEach(minion -> minion.onEvent(event));
-		graveyard.forEach(minion -> minion.onEvent(event));
-		secrets.forEach(secret -> secret.onEvent(event));
+		for (Card card : library) {
+			nextState = card.onEvent(nextState, event);
+		}
+		for (Card card : hand) {
+			nextState = card.onEvent(nextState, event);
+		}
+		for (Card card : playedCards) {
+			nextState = card.onEvent(nextState, event);
+		}
+		for (Minion minion : battlefield) {
+			nextState = minion.onEvent(nextState, event);
+		}
+		for (Minion minion : graveyard) {
+			nextState = minion.onEvent(nextState, event);
+		}
+		for (Secret secret : secrets) {
+			nextState = secret.onEvent(nextState, event);
+		}
 		if (heroPower != null) {
-			heroPower.onEvent(event);
+			nextState = heroPower.onEvent(nextState, event);
 		}
 		if (weapon != null) {
-			weapon.onEvent(event);
+			nextState = weapon.onEvent(nextState, event);
 		}
+		if (event instanceof PlayerTakesDamageEvent) {
+			PlayerTakesDamageEvent takesDamageEvent = (PlayerTakesDamageEvent)event;
+			if (takesDamageEvent.getCharacter().getTargetRef().equals(getTargetRef())) {
+				Player player = (Player)state.findTarget(getTargetRef());
+				if (player.getCurrentHitPoints() <= 0) {
+					return state.apply(new DestroyPlayerAtomic(state.getPlayerOrdinal(player)));
+				}
+			}
+		}
+		return nextState;
 	}
 
 	public boolean isOwnerOf(HeroPower heroPower) {
@@ -227,6 +251,10 @@ public class Player extends Character<Player> implements GameEventListener {
 
 	public boolean isOwnerOf(Effect effect) {
 		return heroPower.getEffect() == effect;
+	}
+
+	public boolean isOwnerOf(WeaponRef weaponRef) {
+		return weapon != null && weapon.getWeaponRef().equals(weaponRef);
 	}
 
 	public Minion findTarget(TargetRef targetRef) {

@@ -32,8 +32,7 @@ public class EquipWeaponAtomic implements Action<HearthstoneGameState> {
 			nextState = nextState.apply(new DestroyWeaponAtomic(playerOrdinal));
 		}
 		nextState.getPlayer(playerOrdinal).setWeapon(weapon);
-		nextState.onEvent(new WeaponEquippedEvent(nextState, playerOrdinal));
-		return nextState;
+		return nextState.onEvent(new WeaponEquippedEvent(playerOrdinal));
 	}
 
 	@Override

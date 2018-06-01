@@ -8,9 +8,9 @@ import de.ralfhergert.hearthstone.event.StartTurnEvent;
  * A character is either a minion or a player.
  * @param <Self> type of the overriding class.
  */
-public class Character<Self extends Character<Self>> implements Target, GameEventListener {
+public class Character<Self extends Character<Self>> implements Target, GameEventListener<HearthstoneGameState> {
 
-	private TargetRef targetRef = new TargetRef();
+	private TargetRef targetRef;
 
 	private int currentHitPoints;
 	private int maxHitPoints;
@@ -25,7 +25,9 @@ public class Character<Self extends Character<Self>> implements Target, GameEven
 	private int numberOfAttacksThisTurn = 0;
 	private int numberOfAttacksLimit = 1;
 
-	public Character() {}
+	public Character() {
+		targetRef = new TargetRef();
+	}
 
 	/**
 	 * Copy-constructor.
@@ -176,12 +178,13 @@ public class Character<Self extends Character<Self>> implements Target, GameEven
 	}
 
 	@Override
-	public void onEvent(GameEvent event) {
+	public HearthstoneGameState onEvent(HearthstoneGameState state, GameEvent event) {
 		if (event instanceof StartTurnEvent) {
 			StartTurnEvent startTurnEvent = (StartTurnEvent)event;
-			if (startTurnEvent.getPlayerOrdinal() == startTurnEvent.getState().findOwnerOrdinal(targetRef)) {
-				numberOfAttacksThisTurn = 0;
+			if (state.findOwnerOrdinal(targetRef) == startTurnEvent.getPlayerOrdinal()) {
+				state.findTarget(targetRef).setNumberOfAttacksThisTurn(0);
 			}
 		}
+		return state;
 	}
 }

@@ -41,9 +41,9 @@ public class HealCharacterAtomic implements Action<HearthstoneGameState> {
 		final int hitPointsAfter = character.heal(heal);
 		if (hitPointsBefore < hitPointsAfter) {
 			if (target instanceof Minion) {
-				nextState.onEvent(new MinionHealedEvent(nextState, targetRef, hitPointsAfter));
+				return nextState.onEvent(new MinionHealedEvent(targetRef, hitPointsAfter));
 			} else if (target instanceof Player) {
-				nextState.onEvent(new PlayerHealedEvent(nextState, targetRef, hitPointsAfter));
+				return nextState.onEvent(new PlayerHealedEvent(targetRef, hitPointsAfter));
 			}
 		}
 		return nextState;

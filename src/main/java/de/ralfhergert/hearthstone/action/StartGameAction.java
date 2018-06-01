@@ -14,8 +14,8 @@ public class StartGameAction implements Action<HearthstoneGameState> {
 
 	@Override
 	public HearthstoneGameState applyTo(HearthstoneGameState previousState) {
-		final HearthstoneGameState state = new HearthstoneGameState(null, this);
-		state.onEvent(new StartGameEvent(state));
+		final HearthstoneGameState state = new HearthstoneGameState(null, this)
+			.onEvent(new StartGameEvent());
 		return state.apply(new StartTurnAction(PlayerOrdinal.One));
 	}
 

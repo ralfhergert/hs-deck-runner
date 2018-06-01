@@ -1,6 +1,5 @@
 package de.ralfhergert.hearthstone.event;
 
-import de.ralfhergert.hearthstone.game.model.HearthstoneGameState;
 import de.ralfhergert.hearthstone.game.model.TargetRef;
 
 /**
@@ -11,8 +10,7 @@ public class CharacterAttacksEvent extends GameEvent {
 
 	private final TargetRef attackerTargetRef;
 
-	public CharacterAttacksEvent(HearthstoneGameState state, TargetRef attackerTargetRef) {
-		super(state);
+	public CharacterAttacksEvent(TargetRef attackerTargetRef) {
 		this.attackerTargetRef = attackerTargetRef;
 	}
 

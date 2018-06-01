@@ -20,6 +20,12 @@ public class CharacterAttacksAction implements Action<HearthstoneGameState> {
 	private final TargetRef targetRef;
 
 	public CharacterAttacksAction(TargetRef attackerRef, TargetRef targetRef) {
+		if (attackerRef == null) {
+			throw new IllegalArgumentException("attackerRef must not be null");
+		}
+		if (targetRef == null) {
+			throw new IllegalArgumentException("targetRef must not be null");
+		}
 		this.attackerRef = attackerRef;
 		this.targetRef = targetRef;
 	}
@@ -31,8 +37,8 @@ public class CharacterAttacksAction implements Action<HearthstoneGameState> {
 		}
 		final HearthstoneGameState nextState = new HearthstoneGameState(state, this)
 			.setCurrentAttackerRef(attackerRef)
-			.setCurrentTargetRef(targetRef);
-		nextState.onEvent(new CharacterAttacksEvent(nextState, attackerRef)); // events may exist which alter the target.
+			.setCurrentTargetRef(targetRef)
+			.onEvent(new CharacterAttacksEvent(attackerRef)); // events may exist which alter the target.
 		final Character attacker = nextState.findTarget(attackerRef);
 		final Character target = nextState.findTarget(nextState.getCurrentTargetRef());
 		final HearthstoneGameState afterState = nextState
@@ -44,15 +50,11 @@ public class CharacterAttacksAction implements Action<HearthstoneGameState> {
 				: new DamageMinionAtomic(nextState.getCurrentTargetRef(), target.getAttack()))
 			.setCurrentAttackerRef(null)
 			.setCurrentTargetRef(null);
-		afterState.onEvent(new CharacterAttackedEvent(afterState, attackerRef));
-		return afterState;
+		return afterState.onEvent(new CharacterAttackedEvent(attackerRef));
 	}
 
 	@Override
 	public boolean isApplicableTo(HearthstoneGameState state) {
-		if (attackerRef == null || targetRef == null) {
-			return false;
-		}
 		final PlayerOrdinal activePlayerOrdinal = state.getTurn().getPlayerOrdinal();
 		if (activePlayerOrdinal == null) {
 			return false;

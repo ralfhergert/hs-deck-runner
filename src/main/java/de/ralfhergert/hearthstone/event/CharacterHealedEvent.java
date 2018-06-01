@@ -1,7 +1,6 @@
 package de.ralfhergert.hearthstone.event;
 
 import de.ralfhergert.hearthstone.game.model.Character;
-import de.ralfhergert.hearthstone.game.model.HearthstoneGameState;
 import de.ralfhergert.hearthstone.game.model.TargetRef;
 
 /**
@@ -12,8 +11,7 @@ public class CharacterHealedEvent extends GameEvent {
 	private final TargetRef targetRef;
 	private final int hitPointsAfter;
 
-	public CharacterHealedEvent(HearthstoneGameState state, TargetRef targetRef, int hitPointsAfter) {
-		super(state);
+	public CharacterHealedEvent(TargetRef targetRef, int hitPointsAfter) {
 		this.targetRef = targetRef;
 		this.hitPointsAfter = hitPointsAfter;
 	}

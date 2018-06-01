@@ -6,8 +6,10 @@ import de.ralfhergert.hearthstone.event.GameEventListener;
 /**
  * Represents a played and active secret on board.
  */
-public class Secret implements GameEventListener {
+public class Secret implements GameEventListener<HearthstoneGameState> {
 
 	@Override
-	public void onEvent(GameEvent event) {}
+	public HearthstoneGameState onEvent(HearthstoneGameState state, GameEvent event) {
+		return state;
+	}
 }

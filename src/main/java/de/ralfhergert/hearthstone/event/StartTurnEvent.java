@@ -1,7 +1,5 @@
 package de.ralfhergert.hearthstone.event;
 
-import de.ralfhergert.hearthstone.game.model.HearthstoneGameState;
-import de.ralfhergert.hearthstone.game.model.Player;
 import de.ralfhergert.hearthstone.game.model.PlayerOrdinal;
 
 /**
@@ -11,16 +9,11 @@ public class StartTurnEvent extends GameEvent {
 
 	private final PlayerOrdinal playerOrdinal;
 
-	public StartTurnEvent(HearthstoneGameState state, PlayerOrdinal playerOrdinal) {
-		super(state);
+	public StartTurnEvent(PlayerOrdinal playerOrdinal) {
 		this.playerOrdinal = playerOrdinal;
 	}
 
 	public PlayerOrdinal getPlayerOrdinal() {
 		return playerOrdinal;
-	}
-
-	public Player getPlayer() {
-		return getState().getPlayer(playerOrdinal);
 	}
 }

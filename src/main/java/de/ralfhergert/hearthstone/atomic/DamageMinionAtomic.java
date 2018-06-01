@@ -19,8 +19,8 @@ public class DamageMinionAtomic implements Action<HearthstoneGameState> {
 		if (targetRef == null) {
 			throw new IllegalArgumentException("targetRef can not be null");
 		}
-		if (damage < 1) {
-			throw new IllegalArgumentException("damage can not be smaller than 1");
+		if (damage < 0) {
+			throw new IllegalArgumentException("damage can not be smaller than 0");
 		}
 		this.targetRef = targetRef;
 		this.damage = damage;
@@ -28,6 +28,9 @@ public class DamageMinionAtomic implements Action<HearthstoneGameState> {
 
 	@Override
 	public HearthstoneGameState applyTo(HearthstoneGameState state) {
+		if (damage < 1) {
+			return state;
+		}
 		HearthstoneGameState nextState = new HearthstoneGameState(state, this);
 		Target target = nextState.findTarget(targetRef);
 		if (target == null || !(target instanceof Minion)) {
@@ -37,12 +40,9 @@ public class DamageMinionAtomic implements Action<HearthstoneGameState> {
 		final int hitPointsBefore = minion.getCurrentHitPoints();
 		final int hitPointsAfter = minion.takeDamage(damage);
 		if (hitPointsBefore > hitPointsAfter) {
-			nextState.onEvent(new MinionTakesDamageEvent(nextState, minion, hitPointsBefore));
+			return nextState.onEvent(new MinionTakesDamageEvent(minion, hitPointsBefore));
 		}
-		// firing the event might have altered the minion's hit points, so don't use hitPointsAfter.
-		return (minion.getCurrentHitPoints() < 1)
-			? new DestroyMinionAtomic(minion).applyTo(nextState)
-			: nextState;
+		return nextState;
 	}
 
 	@Override

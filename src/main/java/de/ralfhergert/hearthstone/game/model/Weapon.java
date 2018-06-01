@@ -1,17 +1,24 @@
 package de.ralfhergert.hearthstone.game.model;
 
+import de.ralfhergert.hearthstone.atomic.DestroyWeaponAtomic;
+import de.ralfhergert.hearthstone.event.CharacterAttackedEvent;
 import de.ralfhergert.hearthstone.event.GameEvent;
 import de.ralfhergert.hearthstone.event.GameEventListener;
 
 /**
  * Represents a played and active weapon on the board.
  */
-public class Weapon implements GameEventListener {
+public class Weapon implements GameEventListener<HearthstoneGameState> {
+
+	private WeaponRef weaponRef;
 
 	private int attack;
 	private int durability;
+	private boolean isActive;
 
-	public Weapon() {}
+	public Weapon() {
+		weaponRef = new WeaponRef();
+	}
 
 	/**
 	 * Copy-constructor.
@@ -20,8 +27,19 @@ public class Weapon implements GameEventListener {
 		if (weapon == null) {
 			throw new IllegalArgumentException("weapon can not be null");
 		}
+		weaponRef = weapon.weaponRef;
 		attack = weapon.attack;
 		durability = weapon.durability;
+		isActive = weapon.isActive;
+	}
+
+	public WeaponRef getWeaponRef() {
+		return weaponRef;
+	}
+
+	public Weapon setWeaponRef(WeaponRef weaponRef) {
+		this.weaponRef = weaponRef;
+		return this;
 	}
 
 	public int getAttack() {
@@ -42,6 +60,27 @@ public class Weapon implements GameEventListener {
 		return this;
 	}
 
+	public boolean isActive() {
+		return isActive;
+	}
+
+	public Weapon setActive(boolean active) {
+		isActive = active;
+		return this;
+	}
+
 	@Override
-	public void onEvent(GameEvent event) {}
+	public HearthstoneGameState onEvent(HearthstoneGameState state, GameEvent event) {
+		if (event instanceof CharacterAttackedEvent) {
+			CharacterAttackedEvent characterAttackedEvent = (CharacterAttackedEvent)event;
+			// was the owner of this weapon the attacker?
+			if (characterAttackedEvent.getAttackerTargetRef().equals(state.getOwner(weaponRef).getTargetRef())) {
+				durability--;
+				if (durability == 0) {
+					return state.apply(new DestroyWeaponAtomic(state.getPlayerOrdinal(state.getOwner(weaponRef))));
+				}
+			}
+		}
+		return state;
+	}
 }

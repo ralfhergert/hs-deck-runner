@@ -27,8 +27,7 @@ public class DestroyMinionAtomic implements Action<HearthstoneGameState> {
 		Player owner = nextState.getOwner(minion);
 		owner.removeFromBattlefield(minion);
 		owner.addToGraveyard(minion);
-		nextState.onEvent(new MinionDestroyedEvent(state, minion));
-		return nextState;
+		return nextState.onEvent(new MinionDestroyedEvent(minion));
 	}
 
 	@Override
