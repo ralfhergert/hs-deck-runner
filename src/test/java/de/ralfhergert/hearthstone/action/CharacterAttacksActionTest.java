@@ -51,7 +51,6 @@ public class CharacterAttacksActionTest {
 		// play the attack.
 		HearthstoneGameState afterState = foundAction.applyTo(startState);
 		Assert.assertNotNull("after state should not be null", afterState);
-		Assert.assertTrue("queuedEvents should be empty", afterState.getQueuedEffects().isEmpty());
 		Assert.assertEquals("numberOfAttacks player one made", 1, afterState.getPlayer(PlayerOrdinal.One).getNumberOfAttacksThisTurn());
 		Assert.assertEquals("after state gameOutcome should be", GameOutcome.Player1Wins, afterState.getOutcome());
 		Assert.assertNull("player one's weapon should be destroyed", afterState.getPlayer(PlayerOrdinal.One).getWeapon());
@@ -80,7 +79,6 @@ public class CharacterAttacksActionTest {
 		// play the attack.
 		HearthstoneGameState afterState = foundAction.applyTo(startState);
 		Assert.assertNotNull("after state should not be null", afterState);
-		Assert.assertTrue("queuedEvents should be empty", afterState.getQueuedEffects().isEmpty());
 		Assert.assertEquals("numberOfAttacks player one made", 1, afterState.getPlayer(PlayerOrdinal.One).getNumberOfAttacksThisTurn());
 		Assert.assertEquals("after state gameOutcome should be", GameOutcome.Player2Wins, afterState.getOutcome());
 		Assert.assertEquals("player two's minions on battlefield", 0, afterState.getPlayer(PlayerOrdinal.Two).getBattlefield().size());

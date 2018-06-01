@@ -44,7 +44,6 @@ public class WarriorHeroPowerTest {
 		// play the hero power.
 		HearthstoneGameState afterState = foundAction.applyTo(startState);
 		Assert.assertNotNull("after state should not be null", afterState);
-		Assert.assertTrue("queuedEvents should be empty", afterState.getQueuedEffects().isEmpty());
 		Assert.assertEquals("game is still undecided", GameOutcome.Undecided, afterState.getOutcome());
 		Assert.assertEquals("player one should have armor", 2, afterState.getPlayer(PlayerOrdinal.One).getArmor());
 	}

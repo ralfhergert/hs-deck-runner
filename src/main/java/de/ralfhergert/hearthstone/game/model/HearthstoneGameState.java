@@ -2,14 +2,9 @@ package de.ralfhergert.hearthstone.game.model;
 
 import de.ralfhergert.generic.game.model.Action;
 import de.ralfhergert.generic.game.model.GameState;
-import de.ralfhergert.hearthstone.atomic.ExecuteQueuedEffectsAtomic;
 import de.ralfhergert.hearthstone.effect.Effect;
-import de.ralfhergert.hearthstone.effect.GeneralEffect;
 import de.ralfhergert.hearthstone.event.GameEvent;
 import de.ralfhergert.hearthstone.event.GameEventListener;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Holds the current state of a game of Hearthstone.
@@ -28,8 +23,6 @@ public class HearthstoneGameState extends GameState<HearthstoneGameState> implem
 	private TargetRef currentAttackerRef;
 	private TargetRef currentTargetRef;
 
-	private List<GeneralEffect> queuedEffects = new ArrayList<>();
-
 	public HearthstoneGameState(HearthstoneGameState parent, Action<HearthstoneGameState> action) {
 		super(parent, action);
 		if (parent != null) {
@@ -37,7 +30,6 @@ public class HearthstoneGameState extends GameState<HearthstoneGameState> implem
 			players[1] = new Player(parent.players[1]);
 			turn = parent.turn;
 			outcome = parent.outcome;
-			queuedEffects.addAll(parent.queuedEffects);
 		}
 	}
 
@@ -119,14 +111,6 @@ public class HearthstoneGameState extends GameState<HearthstoneGameState> implem
 		return players[1].onEvent(nextState, event);
 	}
 
-	public List<GeneralEffect> getQueuedEffects() {
-		return queuedEffects;
-	}
-
-	public void clearQueuedEffects() {
-		queuedEffects.clear();
-	}
-
 	public TargetRef getCurrentAttackerRef() {
 		return currentAttackerRef;
 	}
@@ -206,16 +190,5 @@ public class HearthstoneGameState extends GameState<HearthstoneGameState> implem
 			}
 		}
 		return null;
-	}
-
-	/**
-	 * This helper method resolves queued effect on a state creating a new resolved state.
-	 */
-	public HearthstoneGameState resolveQueuedEffects() {
-		HearthstoneGameState resolvedState = this;
-		while (!resolvedState.getQueuedEffects().isEmpty()) {
-			resolvedState = resolvedState.apply(new ExecuteQueuedEffectsAtomic());
-		}
-		return resolvedState;
 	}
 }

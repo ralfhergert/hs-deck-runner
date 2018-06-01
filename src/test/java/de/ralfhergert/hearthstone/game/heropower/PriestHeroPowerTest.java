@@ -51,7 +51,6 @@ public class PriestHeroPowerTest {
 		// play the hero power.
 		HearthstoneGameState afterState = foundAction.applyTo(startState);
 		Assert.assertNotNull("after state should not be null", afterState);
-		Assert.assertTrue("queuedEvents should be empty", afterState.getQueuedEffects().isEmpty());
 		Assert.assertEquals("after state should still be undecided", GameOutcome.Undecided, afterState.getOutcome());
 		Assert.assertEquals("player one should have 20 hitPoints", 20, afterState.getPlayer(PlayerOrdinal.One).getCurrentHitPoints());
 	}
@@ -82,7 +81,6 @@ public class PriestHeroPowerTest {
 		// play the hero power.
 		HearthstoneGameState afterState = foundAction.applyTo(startState);
 		Assert.assertNotNull("after state should not be null", afterState);
-		Assert.assertTrue("queuedEvents should be empty", afterState.getQueuedEffects().isEmpty());
 		Assert.assertEquals("after state should still be undecided", GameOutcome.Undecided, afterState.getOutcome());
 		Assert.assertEquals("minion one of player two should have 3 hitPoints", 3, afterState.getPlayer(PlayerOrdinal.Two).getBattlefield().get(0).getCurrentHitPoints());
 	}

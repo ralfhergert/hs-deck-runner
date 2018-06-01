@@ -43,7 +43,6 @@ public class RogueHeroPowerTest {
 		// play the hero power.
 		HearthstoneGameState afterState = foundAction.applyTo(startState);
 		Assert.assertNotNull("after state should not be null", afterState);
-		Assert.assertTrue("queuedEvents should be empty", afterState.getQueuedEffects().isEmpty());
 		Assert.assertEquals("after state should be undecided", GameOutcome.Undecided, afterState.getOutcome());
 		Assert.assertNotNull("player one should have a weapon", afterState.getPlayer(PlayerOrdinal.One).getWeapon());
 		Assert.assertEquals("weapon should have 1 attack", 1, afterState.getPlayer(PlayerOrdinal.One).getWeapon().getAttack());

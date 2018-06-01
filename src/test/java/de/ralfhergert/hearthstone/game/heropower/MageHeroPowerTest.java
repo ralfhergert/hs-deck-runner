@@ -49,7 +49,6 @@ public class MageHeroPowerTest {
 		// play the hero power.
 		HearthstoneGameState afterState = foundAction.applyTo(startState);
 		Assert.assertNotNull("after state should not be null", afterState);
-		Assert.assertTrue("queuedEvents should be empty", afterState.getQueuedEffects().isEmpty());
 		Assert.assertEquals("player one should have won", GameOutcome.Player1Wins, afterState.getOutcome());
 	}
 
@@ -85,7 +84,6 @@ public class MageHeroPowerTest {
 		// play the hero power.
 		HearthstoneGameState afterState = foundAction.applyTo(startState);
 		Assert.assertNotNull("after state should not be null", afterState);
-		Assert.assertTrue("queuedEvents should be empty", afterState.getQueuedEffects().isEmpty());
 		Assert.assertEquals("game is still undecided", GameOutcome.Undecided, afterState.getOutcome());
 		Assert.assertEquals("player two should have no minion on the battlefield", 0, afterState.getPlayer(PlayerOrdinal.Two).getBattlefield().size());
 		Assert.assertEquals("player two should have one minion in the graveyard", 1, afterState.getPlayer(PlayerOrdinal.Two).getGraveyard().size());

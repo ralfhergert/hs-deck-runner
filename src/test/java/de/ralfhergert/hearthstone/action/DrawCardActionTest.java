@@ -33,7 +33,6 @@ public class DrawCardActionTest {
 		// let player one draw a card form his empty library.
 		HearthstoneGameState state = new DrawCardsAction(PlayerOrdinal.One, 1).applyTo(startState);
 		Assert.assertNotNull("new state should not be null", state);
-		Assert.assertTrue("queuedEffects should be empty", state.getQueuedEffects().isEmpty());
 		Assert.assertEquals("player two should have won", GameOutcome.Player2Wins, state.getOutcome());
 	}
 }

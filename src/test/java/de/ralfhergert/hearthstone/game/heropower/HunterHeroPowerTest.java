@@ -42,7 +42,6 @@ public class HunterHeroPowerTest {
 		// play the hero power.
 		HearthstoneGameState afterState = foundAction.applyTo(startState);
 		Assert.assertNotNull("after state should not be null", afterState);
-		Assert.assertTrue("queuedEvents should be empty", afterState.getQueuedEffects().isEmpty());
 		Assert.assertEquals("player 1 should have won the game", GameOutcome.Player1Wins, afterState.getOutcome());
 	}
 }
