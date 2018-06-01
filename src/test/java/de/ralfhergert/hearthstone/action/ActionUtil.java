@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 /**
  * This class helps to shorten the tests by providing shared methods and utils.
  */
-public class ActionUtil {
+public final class ActionUtil {
 
 	private ActionUtil() { /* no need to instantiate */ }
 
