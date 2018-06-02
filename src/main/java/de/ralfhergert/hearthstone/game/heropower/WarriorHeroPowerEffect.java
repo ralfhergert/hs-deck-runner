@@ -15,4 +15,9 @@ public class WarriorHeroPowerEffect implements GeneralEffect {
 		owner.setArmor(2 + owner.getArmor());
 		return state;
 	}
+
+	@Override
+	public boolean isApplicableTo(HearthstoneGameState state) {
+		return true;
+	}
 }

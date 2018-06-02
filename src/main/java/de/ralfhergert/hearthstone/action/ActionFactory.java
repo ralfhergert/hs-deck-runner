@@ -44,7 +44,10 @@ public class ActionFactory {
 			foundActions.add(new EndTurnAction(playerOrdinal));
 			// check for the hero power.
 			HeroPower heroPower = player.getHeroPower();
-			if (heroPower != null && heroPower.isAvailable() && player.getAvailableMana() >= heroPower.getManaCost()) {
+			if (heroPower != null &&
+				heroPower.isAvailable() &&
+				heroPower.isApplicableTo(state) &&
+				player.getAvailableMana() >= heroPower.getManaCost()) {
 				if (heroPower.isTargeted()) {
 					for (Target target : heroPower.getPossibleTargets(state)) {
 						foundActions.add(new PlayTargetedHeroPower(target.getTargetRef()));

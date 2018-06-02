@@ -55,4 +55,9 @@ public class MageHeroPowerEffect implements TargetedEffect {
 	public int getInflictDamage() {
 		return inflictDamage;
 	}
+
+	@Override
+	public boolean isApplicableTo(HearthstoneGameState state) {
+		return true;
+	}
 }

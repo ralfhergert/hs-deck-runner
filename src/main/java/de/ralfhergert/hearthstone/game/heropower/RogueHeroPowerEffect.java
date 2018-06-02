@@ -16,4 +16,9 @@ public class RogueHeroPowerEffect implements GeneralEffect {
 		Player owner = state.getOwner(this);
 		return state.apply(new EquipWeaponAtomic(state.getPlayerOrdinal(owner), new Weapon().setAttack(1).setDurability(2)));
 	}
+
+	@Override
+	public boolean isApplicableTo(HearthstoneGameState state) {
+		return true;
+	}
 }

@@ -53,4 +53,9 @@ public class PriestHeroPowerEffect implements TargetedEffect {
 	public int getHealAmount() {
 		return healAmount;
 	}
+
+	@Override
+	public boolean isApplicableTo(HearthstoneGameState state) {
+		return true;
+	}
 }

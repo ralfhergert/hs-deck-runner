@@ -16,4 +16,9 @@ public class HunterHeroPowerEffect implements GeneralEffect {
 		Player owner = state.getOwner(this);
 		return state.apply(new DamagePlayerAtomic(state.getPlayerOrdinal(owner) == PlayerOrdinal.One ? PlayerOrdinal.Two : PlayerOrdinal.One, 2));
 	}
+
+	@Override
+	public boolean isApplicableTo(HearthstoneGameState state) {
+		return true;
+	}
 }

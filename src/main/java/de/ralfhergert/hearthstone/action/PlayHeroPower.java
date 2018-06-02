@@ -29,6 +29,7 @@ public class PlayHeroPower implements Action<HearthstoneGameState> {
 			final HeroPower heroPower = player.getHeroPower();
 			return heroPower != null &&
 				heroPower.isAvailable() &&
+				heroPower.isApplicableTo(state) &&
 				!heroPower.isTargeted() &&
 				player.getAvailableMana() >= heroPower.getManaCost();
 		}

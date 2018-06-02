@@ -74,4 +74,8 @@ public class HeroPower implements GameEventListener<HearthstoneGameState> {
 		}
 		return state;
 	}
+
+	public boolean isApplicableTo(HearthstoneGameState state) {
+		return effect != null && effect.isApplicableTo(state);
+	}
 }
