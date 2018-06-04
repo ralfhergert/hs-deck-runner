@@ -19,7 +19,6 @@ import java.util.Stack;
  */
 public class Player extends Character<Player> implements GameEventListener<HearthstoneGameState> {
 
-	private String name;
 	private int numberOfTurns = 0;
 
 	private StartingHandState startingHandState;
@@ -49,7 +48,6 @@ public class Player extends Character<Player> implements GameEventListener<Heart
 	 */
 	public Player(Player player) {
 		super(player);
-		name = player.name;
 		numberOfTurns = player.numberOfTurns;
 		startingHandState = player.startingHandState;
 		library.addAll(player.library);
@@ -63,15 +61,6 @@ public class Player extends Character<Player> implements GameEventListener<Heart
 		heroPower = player.heroPower != null ? new HeroPower(player.heroPower) : null;
 		weapon = player.weapon != null ? new Weapon(player.weapon) : null;
 		currentFatigueDamage = player.currentFatigueDamage;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public Player setName(String name) {
-		this.name = name;
-		return this;
 	}
 
 	public int getNumberOfTurns() {

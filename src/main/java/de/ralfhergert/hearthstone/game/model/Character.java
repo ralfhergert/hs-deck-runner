@@ -12,6 +12,7 @@ import de.ralfhergert.hearthstone.event.StartTurnEvent;
 public class Character<Self extends Character<Self>> implements Target, GameEventListener<HearthstoneGameState> {
 
 	private TargetRef targetRef;
+	private String name;
 
 	private int currentHitPoints;
 	private int maxHitPoints;
@@ -38,6 +39,7 @@ public class Character<Self extends Character<Self>> implements Target, GameEven
 			throw new IllegalArgumentException("character can not be null");
 		}
 		targetRef = other.targetRef;
+		name = other.name;
 		currentHitPoints = other.currentHitPoints;
 		maxHitPoints = other.maxHitPoints;
 		power = other.power;
@@ -56,6 +58,15 @@ public class Character<Self extends Character<Self>> implements Target, GameEven
 
 	public void setTargetRef(TargetRef targetRef) {
 		this.targetRef = targetRef;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public Self setName(String name) {
+		this.name = name;
+		return (Self)this;
 	}
 
 	public int getCurrentHitPoints() {
