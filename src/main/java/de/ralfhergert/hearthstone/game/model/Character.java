@@ -1,9 +1,13 @@
 package de.ralfhergert.hearthstone.game.model;
 
+import de.ralfhergert.hearthstone.effect.Effect;
 import de.ralfhergert.hearthstone.event.CharacterAttackedEvent;
 import de.ralfhergert.hearthstone.event.GameEvent;
 import de.ralfhergert.hearthstone.event.GameEventListener;
 import de.ralfhergert.hearthstone.event.StartTurnEvent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A character is either a minion or a player.
@@ -26,6 +30,8 @@ public class Character<Self extends Character<Self>> implements Target, GameEven
 
 	private int numberOfAttacksThisTurn = 0;
 	private int numberOfAttacksLimit = 1;
+
+	private List<Effect> effects = new ArrayList<>();
 
 	public Character() {
 		targetRef = new TargetRef();
@@ -50,6 +56,7 @@ public class Character<Self extends Character<Self>> implements Target, GameEven
 		hasTaunt = other.hasTaunt;
 		numberOfAttacksThisTurn = other.numberOfAttacksThisTurn;
 		numberOfAttacksLimit = other.numberOfAttacksLimit;
+		effects.addAll(other.effects);
 	}
 
 	public TargetRef getTargetRef() {
@@ -159,6 +166,20 @@ public class Character<Self extends Character<Self>> implements Target, GameEven
 		return (Self)this;
 	}
 
+	public Self addEffect(Effect effect) {
+		effects.add(effect);
+		return (Self)this;
+	}
+
+	public Self removeEffect(Effect effect) {
+		effects.remove(effect);
+		return (Self)this;
+	}
+
+	public boolean isEffectedBy(Effect effect) {
+		return effects.contains(effect);
+	}
+
 	/**
 	 * Decreases the current hit points by the given amount of damage.
 	 * @return the remaining hit points of this character.
@@ -195,6 +216,12 @@ public class Character<Self extends Character<Self>> implements Target, GameEven
 
 	@Override
 	public HearthstoneGameState onEvent(HearthstoneGameState state, GameEvent event) {
+		// effects may try to remove themselves, so a copied list is used to avoid concurrent modifications.
+		new ArrayList<>(effects).forEach(effect -> {
+			if (effect instanceof GameEventListener) {
+				((GameEventListener<HearthstoneGameState>)effect).onEvent(state, event);
+			}
+		});
 		if (event instanceof StartTurnEvent) {
 			StartTurnEvent startTurnEvent = (StartTurnEvent)event;
 			if (state.findOwnerOrdinal(targetRef) == startTurnEvent.getPlayerOrdinal()) {

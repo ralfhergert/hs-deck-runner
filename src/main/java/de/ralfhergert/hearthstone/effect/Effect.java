@@ -8,4 +8,8 @@ import de.ralfhergert.hearthstone.game.model.HearthstoneGameState;
 public interface Effect {
 
 	boolean isApplicableTo(HearthstoneGameState state);
+
+	default HearthstoneGameState unapplyOn(HearthstoneGameState state) {
+		return state;
+	}
 }

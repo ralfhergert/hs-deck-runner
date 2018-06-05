@@ -6,6 +6,10 @@ import de.ralfhergert.hearthstone.effect.Effect;
 import de.ralfhergert.hearthstone.event.GameEvent;
 import de.ralfhergert.hearthstone.event.GameEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * Holds the current state of a game of Hearthstone.
  */
@@ -190,5 +194,18 @@ public class HearthstoneGameState extends GameState<HearthstoneGameState> implem
 			}
 		}
 		return null;
+	}
+
+	public List<Character> findAllEffectedCharacters(final Effect effect) {
+		final List<Character> effectedCharacters = new ArrayList<>();
+		for (Player player : players) {
+			if (player.isEffectedBy(effect)) {
+				effectedCharacters.add(player);
+			}
+			effectedCharacters.addAll(player.getBattlefield().stream()
+				.filter(minion -> minion.isEffectedBy(effect))
+				.collect(Collectors.toList()));
+		}
+		return effectedCharacters;
 	}
 }
