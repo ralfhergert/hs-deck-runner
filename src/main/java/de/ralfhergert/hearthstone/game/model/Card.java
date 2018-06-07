@@ -10,6 +10,9 @@ public class Card implements GameEventListener<HearthstoneGameState> {
 
 	private CardRef cardRef;
 
+	private int manaCost;
+	private String name;
+
 	public Card() {
 		cardRef = new CardRef();
 	}
@@ -22,6 +25,8 @@ public class Card implements GameEventListener<HearthstoneGameState> {
 			throw new IllegalArgumentException("other card must not be null");
 		}
 		cardRef = other.cardRef;
+		manaCost = other.manaCost;
+		name = other.name;
 	}
 
 	@Override
