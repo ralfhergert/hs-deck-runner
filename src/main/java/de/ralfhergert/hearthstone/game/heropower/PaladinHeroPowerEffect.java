@@ -1,9 +1,8 @@
 package de.ralfhergert.hearthstone.game.heropower;
 
 import de.ralfhergert.hearthstone.effect.GeneralEffect;
+import de.ralfhergert.hearthstone.game.minion.SilverHandRecruitMinionFactory;
 import de.ralfhergert.hearthstone.game.model.HearthstoneGameState;
-import de.ralfhergert.hearthstone.game.model.Minion;
-import de.ralfhergert.hearthstone.game.model.MinionType;
 import de.ralfhergert.hearthstone.game.model.Player;
 
 /**
@@ -14,11 +13,7 @@ public class PaladinHeroPowerEffect implements GeneralEffect {
 	@Override
 	public HearthstoneGameState applyTo(HearthstoneGameState state) {
 		Player owner = state.getOwner(this); // TODO find by ref
-		owner.addToBattlefield(new Minion()
-			.setMinionType(MinionType.SilverHandRecruit)
-			.setPower(1)
-			.setCurrentHitPoints(1)
-			.setMaxHitPoints(1));
+		owner.addToBattlefield(new SilverHandRecruitMinionFactory().create());
 		return state;
 	}
 

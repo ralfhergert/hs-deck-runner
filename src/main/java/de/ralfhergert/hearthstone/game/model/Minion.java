@@ -10,7 +10,9 @@ import de.ralfhergert.hearthstone.event.MinionTakesDamageEvent;
  */
 public class Minion extends Character<Minion> implements GameEventListener<HearthstoneGameState> {
 
-	private Card card; // the card this minion was summoned from.
+	/* The card this minion was summoned from. Can be null, if the minion was created
+	 * by a hero power or other effect. */
+	private Card card;
 	private MinionType minionType;
 
 	public Card getCard() {
