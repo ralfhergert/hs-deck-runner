@@ -15,6 +15,14 @@ public class Minion extends Character<Minion> implements GameEventListener<Heart
 	private Card card;
 	private MinionType minionType;
 
+	public Minion() {}
+
+	public Minion(Minion other) {
+		super(other);
+		card = other.card;
+		minionType = other.minionType;
+	}
+
 	public Card getCard() {
 		return card;
 	}
