@@ -7,6 +7,7 @@ import de.ralfhergert.hearthstone.event.GameEventListener;
 import de.ralfhergert.hearthstone.event.StartTurnEvent;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -163,6 +164,11 @@ public class Character<Self extends Character<Self>> implements Target, GameEven
 
 	public Self setNumberOfAttacksLimit(int numberOfAttacksLimit) {
 		this.numberOfAttacksLimit = numberOfAttacksLimit;
+		return (Self)this;
+	}
+
+	public Self addEffects(Collection<Effect> effects) {
+		this.effects.addAll(effects);
 		return (Self)this;
 	}
 

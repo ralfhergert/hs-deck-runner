@@ -4,6 +4,7 @@ import de.ralfhergert.hearthstone.atomic.DestroyMinionAtomic;
 import de.ralfhergert.hearthstone.event.GameEvent;
 import de.ralfhergert.hearthstone.event.GameEventListener;
 import de.ralfhergert.hearthstone.event.MinionTakesDamageEvent;
+import de.ralfhergert.hearthstone.game.minion.MinionFactory;
 
 /**
  * Represents a minion on the battlefield.
@@ -13,6 +14,7 @@ public class Minion extends Character<Minion> implements GameEventListener<Heart
 	/* The card this minion was summoned from. Can be null, if the minion was created
 	 * by a hero power or other effect. */
 	private Card card;
+	private MinionFactory minionFactory;
 	private MinionType minionType;
 
 	public Minion() {}
@@ -20,11 +22,21 @@ public class Minion extends Character<Minion> implements GameEventListener<Heart
 	public Minion(Minion other) {
 		super(other);
 		card = other.card;
+		minionFactory = other.minionFactory;
 		minionType = other.minionType;
 	}
 
 	public Card getCard() {
 		return card;
+	}
+
+	public MinionFactory getMinionFactory() {
+		return minionFactory;
+	}
+
+	public Minion setMinionFactory(MinionFactory minionFactory) {
+		this.minionFactory = minionFactory;
+		return this;
 	}
 
 	public MinionType getMinionType() {
