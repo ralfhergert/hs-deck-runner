@@ -239,7 +239,13 @@ public class Player extends Character<Player> implements GameEventListener<Heart
 	}
 
 	public boolean isOwnerOf(Effect effect) {
-		return heroPower.getEffect() == effect;
+		for (Minion minion : battlefield) {
+			if (minion.isEffectedBy(effect)) {
+				return true;
+			}
+		}
+		return heroPower != null && heroPower.getEffect() == effect
+			|| isEffectedBy(effect);
 	}
 
 	public boolean isOwnerOf(WeaponRef weaponRef) {

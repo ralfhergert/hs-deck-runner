@@ -8,6 +8,7 @@ import de.ralfhergert.hearthstone.event.GameEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 /**
@@ -19,6 +20,8 @@ public class HearthstoneGameState extends GameState<HearthstoneGameState> implem
 
 	private Turn turn = Turn.DrawStartingHand;
 	private GameOutcome outcome = GameOutcome.Undecided;
+
+	private Random random;
 
 	/**
 	 * These two references will be set while an attack is going on.
@@ -34,6 +37,9 @@ public class HearthstoneGameState extends GameState<HearthstoneGameState> implem
 			players[1] = new Player(parent.players[1]);
 			turn = parent.turn;
 			outcome = parent.outcome;
+			random = parent.random;
+		} else {
+			random = new Random();
 		}
 	}
 
@@ -207,5 +213,17 @@ public class HearthstoneGameState extends GameState<HearthstoneGameState> implem
 				.collect(Collectors.toList()));
 		}
 		return effectedCharacters;
+	}
+
+	public Random getRandom() {
+		return random;
+	}
+
+	/**
+	 * Used for testing purposes to pass in a rigged random.
+	 */
+	public HearthstoneGameState setRandom(Random random) {
+		this.random = random;
+		return this;
 	}
 }
