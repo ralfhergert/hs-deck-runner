@@ -85,4 +85,28 @@ public class CharacterAttacksActionTest {
 		Assert.assertEquals("after state gameOutcome should be", GameOutcome.Player2Wins, afterState.getOutcome());
 		Assert.assertEquals("player two's minions on battlefield", 0, afterState.getPlayer(PlayerOrdinal.Two).getBattlefield().size());
 	}
+
+	@Test
+	public void testMinionAttacksPlayerForLethal() {
+		final Player player1 = new Player()
+			.addToBattlefield(new Minion().setPower(3));
+		// player two gets a 1/1 taunt minion.
+		final Player player2 = new Player()
+			.setCurrentHitPoints(3);
+		final HearthstoneGameState startState = new HearthstoneGameState(null, null).setPlayers(player1, player2);
+		startState.setTurn(Turn.Player1Turn);
+		// ask the action factory for all possible plays.
+		List<Action<HearthstoneGameState>> actions = new ActionFactory().createAllApplicableActions(startState);
+		actions = ActionUtil.remove(actions, EndTurnAction.class);
+		Assert.assertNotNull("actions should not be null", actions);
+		Assert.assertEquals("number of found actions", 1, actions.size());
+		Action<HearthstoneGameState> foundAction = actions.get(0);
+		Assert.assertNotNull("found action should not be null", foundAction);
+		Assert.assertEquals("found action should by of type", CharacterAttacksAction.class, foundAction.getClass());
+		// play the attack.
+		HearthstoneGameState afterState = foundAction.applyTo(startState);
+		Assert.assertNotNull("after state should not be null", afterState);
+		Assert.assertEquals("numberOfAttacks minion made", 1, afterState.getPlayer(PlayerOrdinal.One).getBattlefield().get(0).getNumberOfAttacksThisTurn());
+		Assert.assertEquals("after state gameOutcome should be", GameOutcome.Player1Wins, afterState.getOutcome());
+	}
 }
