@@ -19,13 +19,13 @@ public final class CardRepository {
 		new MinionCardEntry(273, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 0, "Wisp", new MinionFactory().setPower(1).setHitPoints(1)),
 		new MinionCardEntry(346, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 4, "Mogu'shan Warden", new MinionFactory().setPower(1).setHitPoints(7).setHasTaunt(true))
 /* Cards which effects are not yet implemented.
-264, CardSet.Classic, Rarity.Epic, HeroClass.Neutral, 12, "Mountain Giant", new MinionFactory().setPower(8).setHitPoints(8)
-496, CardSet.Classic, Rarity.Epic, HeroClass.Mage, 10, "Pyroblast", new Effect()
-474, CardSet.Classic, Rarity.Legendary, HeroClass.Neutral, 10, "Deathwing", new MinionFactory().setPower(12).setHitPoints(12)
-614, CardSet.Classic, Rarity.Epic, HeroClass.Neutral, 10, "Sea Giant", new MinionFactory().setPower(8).setHitPoints(8)
-303, CardSet.Classic, Rarity.Legendary, HeroClass.Neutral, 9, "Alexstrasza", new MinionFactory().setPower(8).setHitPoints(8)
-605, CardSet.Classic, Rarity.Legendary, HeroClass.Druid, 9, "Cenarius", new MinionFactory().setPower(5).setHitPoints(8)
-194, CardSet.Classic, Rarity.Legendary, HeroClass.Hunter, 9, "King Krush", new MinionFactory().setPower(8).setHitPoints(8)
+264, CardSet.Classic, Rarity.Epic, HeroClass.Neutral, 12, "Mountain Giant", new MinionFactory().setPower(8).setHitPoints(8) "Costs (1) less for each other card in your hand."
+496, CardSet.Classic, Rarity.Epic, HeroClass.Mage, 10, "Pyroblast", new Effect() "Deal 10 damage."
+474, CardSet.Classic, Rarity.Legendary, HeroClass.Neutral, 10, "Deathwing", new MinionFactory().setPower(12).setHitPoints(12) "Battlecry: Destroy all other minion and discard your hand."
+614, CardSet.Classic, Rarity.Epic, HeroClass.Neutral, 10, "Sea Giant", new MinionFactory().setPower(8).setHitPoints(8) "Costs (1) less for each other minion on the battlefield."
+303, CardSet.Classic, Rarity.Legendary, HeroClass.Neutral, 9, "Alexstrasza", new MinionFactory().setPower(8).setHitPoints(8) "Battlecry: Set a hero's remaining health to 15."
+605, CardSet.Classic, Rarity.Legendary, HeroClass.Druid, 9, "Cenarius", new MinionFactory().setPower(5).setHitPoints(8) "Choose one: Give your other minions +2/+2; or summon two 2/2 Treants with taunt."
+194, CardSet.Classic, Rarity.Legendary, HeroClass.Hunter, 9, "King Krush", new MinionFactory().setPower(8).setHitPoints(8) "Charge"
 482, CardSet.Classic, Rarity.Legendary, HeroClass.Warlock, 9, "Lord Jaraxxus", new MinionFactory().setPower(3).setHitPoints(15)
 241, CardSet.Classic, Rarity.Legendary, HeroClass.Neutral, 9, "Malygos", new MinionFactory().setPower(4).setHitPoints(12)
 285, CardSet.Classic, Rarity.Legendary, HeroClass.Neutral, 9, "Nozdormu", new MinionFactory().setPower(8).setHitPoints(8)
