@@ -1,5 +1,6 @@
 package de.ralfhergert.hearthstone.card;
 
+import de.ralfhergert.hearthstone.action.ActionDiscovery;
 import de.ralfhergert.hearthstone.game.minion.MinionFactory;
 import de.ralfhergert.hearthstone.game.model.Card;
 import de.ralfhergert.hearthstone.game.model.CardSet;
@@ -16,8 +17,8 @@ import java.util.List;
 public final class CardRepository {
 
 	private static List<CardEntry<? extends Card>> cards = Arrays.asList(
-		new MinionCardEntry(273, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 0, "Wisp", new MinionFactory().setPower(1).setHitPoints(1)),
-		new MinionCardEntry(346, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 4, "Mogu'shan Warden", new MinionFactory().setPower(1).setHitPoints(7).setHasTaunt(true))
+		new MinionCardEntry(273, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 0, "Wisp", new MinionFactory().setPower(1).setHitPoints(1), new DefaultMinionCardActionDiscovery()),
+		new MinionCardEntry(346, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 4, "Mogu'shan Warden", new MinionFactory().setPower(1).setHitPoints(7).setHasTaunt(true), new DefaultMinionCardActionDiscovery())
 /* Cards which effects are not yet implemented.
 264, CardSet.Classic, Rarity.Epic, HeroClass.Neutral, 12, "Mountain Giant", new MinionFactory().setPower(8).setHitPoints(8) "Costs (1) less for each other card in your hand."
 496, CardSet.Classic, Rarity.Epic, HeroClass.Mage, 10, "Pyroblast", new Effect() "Deal 10 damage."
@@ -273,7 +274,7 @@ public final class CardRepository {
 	 * This is the super-class for all card entries in this repository.
 	 * @param <Card> the card type this card entry will produce.
 	 */
-	private abstract static class CardEntry<Card> {
+	private abstract static class CardEntry<Card extends de.ralfhergert.hearthstone.game.model.Card> {
 
 		private final int id;
 		private final CardSet cardSet;
@@ -281,21 +282,27 @@ public final class CardRepository {
 		private final HeroClass heroClass;
 		private final int manaCost;
 		private final String name;
+		private final ActionDiscovery<Card> actionDiscovery;
 
-		public CardEntry(int id, CardSet cardSet, Rarity rarity, HeroClass heroClass, int manaCost, String name) {
+		public CardEntry(int id, CardSet cardSet, Rarity rarity, HeroClass heroClass, int manaCost, String name, ActionDiscovery<Card> actionDiscovery) {
 			this.id = id;
 			this.cardSet = cardSet;
 			this.rarity = rarity;
 			this.heroClass = heroClass;
 			this.manaCost = manaCost;
 			this.name = name;
+			this.actionDiscovery = actionDiscovery;
 		}
 
 		public int getId() {
 			return id;
 		}
 
-		public abstract Card create();
+		public final Card create() {
+			return (Card)createInstance().setActionDiscovery(actionDiscovery);
+		}
+
+		protected abstract Card createInstance();
 	}
 
 	/**
@@ -305,13 +312,13 @@ public final class CardRepository {
 
 		private final MinionFactory minionFactory;
 
-		public MinionCardEntry(int id, CardSet cardSet, Rarity rarity, HeroClass heroClass, int manaCost, String name, MinionFactory minionFactory) {
-			super(id, cardSet, rarity, heroClass, manaCost, name);
+		public MinionCardEntry(int id, CardSet cardSet, Rarity rarity, HeroClass heroClass, int manaCost, String name, MinionFactory minionFactory, ActionDiscovery<MinionCard> actionDiscovery) {
+			super(id, cardSet, rarity, heroClass, manaCost, name, actionDiscovery);
 			this.minionFactory = minionFactory.setManaCost(manaCost).setMinionName(name);
 		}
 
 		@Override
-		public MinionCard create() {
+		public MinionCard createInstance() {
 			return new MinionCard(minionFactory).setId(getId());
 		}
 	}

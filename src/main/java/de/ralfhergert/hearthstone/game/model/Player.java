@@ -103,8 +103,9 @@ public class Player extends Character<Player> implements GameEventListener<Heart
 		return hand;
 	}
 
-	public void addToHand(Card card) {
+	public Player addToHand(Card card) {
 		hand.add(card);
+		return this;
 	}
 
 	public List<Card> removeAllFromHand() {
@@ -125,6 +126,10 @@ public class Player extends Character<Player> implements GameEventListener<Heart
 			}
 		}
 		return null;
+	}
+
+	public boolean hasInHand(CardRef cardRef) {
+		return findInHand(cardRef) != null;
 	}
 
 	public Player addToPlayedCards(Card card) {

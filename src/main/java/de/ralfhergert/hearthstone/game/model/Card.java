@@ -1,5 +1,6 @@
 package de.ralfhergert.hearthstone.game.model;
 
+import de.ralfhergert.hearthstone.action.ActionDiscovery;
 import de.ralfhergert.hearthstone.event.GameEvent;
 import de.ralfhergert.hearthstone.event.GameEventListener;
 
@@ -15,6 +16,8 @@ public class Card<Self extends Card> implements GameEventListener<HearthstoneGam
 	private int manaCost;
 	private int overloadCost;
 	private String name;
+
+	private ActionDiscovery<Self> actionDiscovery;
 
 	public Card() {
 		cardRef = new CardRef();
@@ -32,6 +35,7 @@ public class Card<Self extends Card> implements GameEventListener<HearthstoneGam
 		manaCost = other.manaCost;
 		overloadCost = other.overloadCost;
 		name = other.name;
+		actionDiscovery = other.actionDiscovery;
 	}
 
 	public CardRef getCardRef() {
@@ -75,6 +79,15 @@ public class Card<Self extends Card> implements GameEventListener<HearthstoneGam
 
 	public Self setName(String name) {
 		this.name = name;
+		return (Self)this;
+	}
+
+	public ActionDiscovery<Self> getActionDiscovery() {
+		return actionDiscovery;
+	}
+
+	public Self setActionDiscovery(ActionDiscovery<Self> actionDiscovery) {
+		this.actionDiscovery = actionDiscovery;
 		return (Self)this;
 	}
 

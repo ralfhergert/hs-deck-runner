@@ -1,6 +1,7 @@
 package de.ralfhergert.hearthstone.action;
 
 import de.ralfhergert.generic.game.model.Action;
+import de.ralfhergert.hearthstone.game.model.Card;
 import de.ralfhergert.hearthstone.game.model.Character;
 import de.ralfhergert.hearthstone.game.model.HearthstoneGameState;
 import de.ralfhergert.hearthstone.game.model.HeroPower;
@@ -69,6 +70,9 @@ public class ActionFactory {
 						foundActions.add(new CharacterAttacksAction(minion.getTargetRef(), target.getTargetRef()));
 					}
 				}
+			}
+			for (Card card : player.getHand()) {
+				foundActions.addAll(card.getActionDiscovery().createPossibleActions(card, state));
 			}
 		}
 		return foundActions;
