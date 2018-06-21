@@ -13,6 +13,7 @@ public class Card<Self extends Card> implements GameEventListener<HearthstoneGam
 
 	private int id;
 	private int manaCost;
+	private int overloadCost;
 	private String name;
 
 	public Card() {
@@ -29,6 +30,7 @@ public class Card<Self extends Card> implements GameEventListener<HearthstoneGam
 		cardRef = other.cardRef;
 		id = other.id;
 		manaCost = other.manaCost;
+		overloadCost = other.overloadCost;
 		name = other.name;
 	}
 
@@ -55,6 +57,15 @@ public class Card<Self extends Card> implements GameEventListener<HearthstoneGam
 
 	public Self setManaCost(int manaCost) {
 		this.manaCost = manaCost;
+		return (Self)this;
+	}
+
+	public int getOverloadCost() {
+		return overloadCost;
+	}
+
+	public Self setOverloadCost(int overloadCost) {
+		this.overloadCost = overloadCost;
 		return (Self)this;
 	}
 

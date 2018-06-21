@@ -103,14 +103,33 @@ public class Player extends Character<Player> implements GameEventListener<Heart
 		return hand;
 	}
 
+	public void addToHand(Card card) {
+		hand.add(card);
+	}
+
 	public List<Card> removeAllFromHand() {
 		final List<Card> cards = new ArrayList<>(hand);
 		hand.clear();
 		return cards;
 	}
 
-	public void addToHand(Card card) {
-		hand.add(card);
+	public Player removeFromHand(Card card) {
+		hand.remove(card);
+		return this;
+	}
+
+	public Card findInHand(CardRef cardRef) {
+		for (Card card : hand) {
+			if (card.getCardRef().equals(cardRef)) {
+				return card;
+			}
+		}
+		return null;
+	}
+
+	public Player addToPlayedCards(Card card) {
+		playedCards.add(card);
+		return this;
 	}
 
 	public List<Minion> getBattlefield() {
@@ -119,6 +138,11 @@ public class Player extends Character<Player> implements GameEventListener<Heart
 
 	public Player addToBattlefield(Minion minion) {
 		battlefield.add(minion);
+		return this;
+	}
+
+	public Player addToBattlefield(Minion minion, int position) {
+		battlefield.add(position, minion);
 		return this;
 	}
 
@@ -275,5 +299,4 @@ public class Player extends Character<Player> implements GameEventListener<Heart
 		}
 		return false;
 	}
-
 }

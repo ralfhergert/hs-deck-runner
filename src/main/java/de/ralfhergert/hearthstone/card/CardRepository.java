@@ -21,7 +21,7 @@ public final class CardRepository {
 /* Cards which effects are not yet implemented.
 264, CardSet.Classic, Rarity.Epic, HeroClass.Neutral, 12, "Mountain Giant", new MinionFactory().setPower(8).setHitPoints(8) "Costs (1) less for each other card in your hand."
 496, CardSet.Classic, Rarity.Epic, HeroClass.Mage, 10, "Pyroblast", new Effect() "Deal 10 damage."
-474, CardSet.Classic, Rarity.Legendary, HeroClass.Neutral, 10, "Deathwing", new MinionFactory().setPower(12).setHitPoints(12) "Battlecry: Destroy all other minion and discard your hand."
+474, CardSet.Classic, Rarity.Legendary, HeroClass.Neutral, 10, "Deathwing", new MinionFactory().setPower(12).setHitPoints(12) "Battlecry: Destroy all other minions and discard your hand."
 614, CardSet.Classic, Rarity.Epic, HeroClass.Neutral, 10, "Sea Giant", new MinionFactory().setPower(8).setHitPoints(8) "Costs (1) less for each other minion on the battlefield."
 303, CardSet.Classic, Rarity.Legendary, HeroClass.Neutral, 9, "Alexstrasza", new MinionFactory().setPower(8).setHitPoints(8) "Battlecry: Set a hero's remaining health to 15."
 605, CardSet.Classic, Rarity.Legendary, HeroClass.Druid, 9, "Cenarius", new MinionFactory().setPower(5).setHitPoints(8) "Choose one: Give your other minions +2/+2; or summon two 2/2 Treants with taunt."
