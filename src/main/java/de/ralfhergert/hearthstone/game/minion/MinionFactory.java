@@ -19,6 +19,7 @@ public class MinionFactory {
 	private int power;
 	private int hitPoints;
 	private boolean hasTaunt;
+	private boolean hasCharge;
 	private List<Effect> effects = new ArrayList<>();
 
 	public Minion create() {
@@ -30,6 +31,7 @@ public class MinionFactory {
 			.setCurrentHitPoints(hitPoints)
 			.setMaxHitPoints(hitPoints)
 			.setHasTaunt(hasTaunt)
+			.setHasCharge(hasCharge)
 			.addEffects(effects);
 	}
 
@@ -78,12 +80,21 @@ public class MinionFactory {
 		return this;
 	}
 
-	public boolean isHasTaunt() {
+	public boolean hasTaunt() {
 		return hasTaunt;
 	}
 
 	public MinionFactory setHasTaunt(boolean hasTaunt) {
 		this.hasTaunt = hasTaunt;
+		return this;
+	}
+
+	public boolean hasCharge() {
+		return hasCharge;
+	}
+
+	public MinionFactory setHasCharge(boolean hasCharge) {
+		this.hasCharge = hasCharge;
 		return this;
 	}
 
