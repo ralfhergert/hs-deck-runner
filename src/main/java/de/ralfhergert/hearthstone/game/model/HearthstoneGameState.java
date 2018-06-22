@@ -175,6 +175,20 @@ public class HearthstoneGameState extends GameState<HearthstoneGameState> implem
 		return null;
 	}
 
+	public Character getEffectOwner(Effect effect) {
+		for (Player player : players) {
+			if (player.isEffectedBy(effect)) {
+				return player;
+			}
+			for (Minion minion : player.getBattlefield()) {
+				if (minion.isEffectedBy(effect)) {
+					return minion;
+				}
+			}
+		}
+		return null;
+	}
+
 	public PlayerOrdinal findOwnerOrdinal(TargetRef targetRef) {
 		for (PlayerOrdinal playerOrdinal : PlayerOrdinal.values()) {
 			final Player player = getPlayer(playerOrdinal);

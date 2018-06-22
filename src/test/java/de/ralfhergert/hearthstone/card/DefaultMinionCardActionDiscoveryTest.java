@@ -43,6 +43,7 @@ public class DefaultMinionCardActionDiscoveryTest {
 		Assert.assertEquals("active player should have no overload", 0, afterState.getActivePlayer().getCrystalsLockedNextTurn());
 		Assert.assertEquals("active player should have no card in hand", 0, afterState.getActivePlayer().getHand().size());
 		Assert.assertEquals("active player should one minion on board", 1, afterState.getActivePlayer().getBattlefield().size());
+		Assert.assertEquals("minion should have taunt", true, afterState.getActivePlayer().getBattlefield().get(0).hasTaunt());
 		// confirm that Mogu'shan Warden has summoning sickness.
 		List<Action<HearthstoneGameState>> afterActions = new ActionFactory().createAllApplicableActions(afterState);
 		Assert.assertNotNull("actions should not be null", afterActions);

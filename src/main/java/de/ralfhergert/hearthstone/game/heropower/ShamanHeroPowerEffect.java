@@ -2,8 +2,10 @@ package de.ralfhergert.hearthstone.game.heropower;
 
 import de.ralfhergert.hearthstone.atomic.HealCharacterAtomic;
 import de.ralfhergert.hearthstone.effect.GeneralEffect;
+import de.ralfhergert.hearthstone.event.MinionEntersBattlefieldEvent;
 import de.ralfhergert.hearthstone.game.effect.AtTheEndOfYourTurn;
 import de.ralfhergert.hearthstone.game.effect.SpellDamageEffect;
+import de.ralfhergert.hearthstone.game.effect.TauntEffect;
 import de.ralfhergert.hearthstone.game.minion.MinionFactory;
 import de.ralfhergert.hearthstone.game.model.HearthstoneGameState;
 import de.ralfhergert.hearthstone.game.model.Minion;
@@ -47,7 +49,7 @@ public class ShamanHeroPowerEffect implements GeneralEffect {
 			.setMinionType(MinionType.Totem)
 			.setPower(0)
 			.setHitPoints(2)
-			.setHasTaunt(true),
+			.addEffect(new TauntEffect()),
 		new MinionFactory()
 			.setManaCost(1)
 			.setMinionName("Wrath of Air Totem")
@@ -60,9 +62,10 @@ public class ShamanHeroPowerEffect implements GeneralEffect {
 	public HearthstoneGameState applyTo(HearthstoneGameState state) {
 		Player owner = state.getOwner(this); // TODO find by ref
 		// pick one of the available totem factories by random
-		MinionFactory factory = totemFactories.get(state.getRandom().nextInt(totemFactories.size()));
-		owner.addToBattlefield(factory.create());
-		return state;
+		final MinionFactory factory = totemFactories.get(state.getRandom().nextInt(totemFactories.size()));
+		final Minion minion = factory.create();
+		owner.addToBattlefield(minion);
+		return state.onEvent(new MinionEntersBattlefieldEvent(minion.getTargetRef()));
 	}
 
 	@Override

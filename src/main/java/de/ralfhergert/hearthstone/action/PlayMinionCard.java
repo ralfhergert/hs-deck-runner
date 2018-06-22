@@ -3,6 +3,7 @@ package de.ralfhergert.hearthstone.action;
 import de.ralfhergert.generic.game.model.Action;
 import de.ralfhergert.hearthstone.effect.Effect;
 import de.ralfhergert.hearthstone.effect.GeneralEffect;
+import de.ralfhergert.hearthstone.event.MinionEntersBattlefieldEvent;
 import de.ralfhergert.hearthstone.game.model.Card;
 import de.ralfhergert.hearthstone.game.model.CardRef;
 import de.ralfhergert.hearthstone.game.model.HearthstoneGameState;
@@ -34,7 +35,7 @@ public class PlayMinionCard implements Action<HearthstoneGameState> {
 			player.setCrystalsLockedNextTurn(player.getCrystalsLockedNextTurn() + minionCard.getOverloadCost());
 			player.removeFromHand(minionCard);
 			player.addToPlayedCards(minionCard);
-			Minion minion = minionCard.getMinionFactory().create();
+			final Minion minion = minionCard.getMinionFactory().create();
 			Effect effect = minion.getBattlecry();
 			if (effect != null) {
 				if (effect instanceof GeneralEffect) {
@@ -42,6 +43,7 @@ public class PlayMinionCard implements Action<HearthstoneGameState> {
 				}
 			}
 			nextState.getActivePlayer().addToBattlefield(minion, position);
+			return nextState.onEvent(new MinionEntersBattlefieldEvent(minion.getTargetRef()));
 		}
 		return nextState;
 	}
