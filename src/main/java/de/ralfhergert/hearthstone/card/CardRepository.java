@@ -17,10 +17,12 @@ import java.util.List;
 public final class CardRepository {
 
 	private static List<CardEntry<? extends CardEntry, ? extends Card>> cards = Arrays.asList(
+		new MinionCardEntry(24, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 1, "Shieldbearer", new MinionFactory().setPower(0).setHitPoints(4).setHasTaunt(true)),
 		new MinionCardEntry(124, CardSet.Classic, Rarity.Epic, HeroClass.Shaman, 5, "Earth Elemental", new MinionFactory().setPower(7).setHitPoints(8).setHasTaunt(true)).setOverloadCost(3),
 		new MinionCardEntry(194, CardSet.Classic, Rarity.Legendary, HeroClass.Hunter, 9, "King Krush", new MinionFactory().setPower(8).setHitPoints(8).setHasCharge(true)),
 		new MinionCardEntry(273, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 0, "Wisp", new MinionFactory().setPower(1).setHitPoints(1)),
-		new MinionCardEntry(346, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 4, "Mogu'shan Warden", new MinionFactory().setPower(1).setHitPoints(7).setHasTaunt(true))
+		new MinionCardEntry(346, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 4, "Mogu'shan Warden", new MinionFactory().setPower(1).setHitPoints(7).setHasTaunt(true)),
+		new MinionCardEntry(476, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 5, "Fen Creeper", new MinionFactory().setPower(3).setHitPoints(6).setHasTaunt(true))
 /* Cards which effects are not yet implemented.
 264, CardSet.Classic, Rarity.Epic, HeroClass.Neutral, 12, "Mountain Giant", new MinionFactory().setPower(8).setHitPoints(8) "Costs (1) less for each other card in your hand."
 496, CardSet.Classic, Rarity.Epic, HeroClass.Mage, 10, "Pyroblast", new Effect() "Deal 10 damage."
@@ -81,7 +83,6 @@ public final class CardRepository {
 507, CardSet.Classic, Rarity.Rare, HeroClass.Warlock, 5, "Doomguard", new MinionFactory().setPower(5).setHitPoints(7)
 587, CardSet.Classic, Rarity.Common, HeroClass.Druid, 5, "Druid of the Claw", new MinionFactory().setPower(4).setHitPoints(4)
 450, CardSet.Classic, Rarity.Epic, HeroClass.Neutral, 5, "Faceless Manipulator", new MinionFactory().setPower(3).setHitPoints(3)
-476, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 5, "Fen Creeper", new MinionFactory().setPower(3).setHitPoints(6)
 602, CardSet.Classic, Rarity.Legendary, HeroClass.Neutral, 5, "Harrison Jones", new MinionFactory().setPower(5).setHitPoints(4)
 674, CardSet.Classic, Rarity.Legendary, HeroClass.Neutral, 5, "Leeroy Jenkins", new MinionFactory().setPower(6).setHitPoints(2)
 648, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 5, "Silver Hand Knight", new MinionFactory().setPower(4).setHitPoints(4)
@@ -245,7 +246,6 @@ public final class CardRepository {
 263, CardSet.Classic, Rarity.Common, HeroClass.Mage, 1, "Mana Wyrm", new MinionFactory().setPower(1).setHitPoints(3)
 420, CardSet.Classic, Rarity.Rare, HeroClass.Neutral, 1, "Murloc Tidecaller", new MinionFactory().setPower(1).setHitPoints(2)
 483, CardSet.Classic, Rarity.Rare, HeroClass.Neutral, 1, "Secretkeeper", new MinionFactory().setPower(1).setHitPoints(2)
-24, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 1, "Shieldbearer", new MinionFactory().setPower(0).setHitPoints(4)
 103, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 1, "Southsea Deckhand", new MinionFactory().setPower(2).setHitPoints(1)
 112, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 1, "Worgen Infiltrator", new MinionFactory().setPower(2).setHitPoints(1)
 629, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 1, "Young Dragonhawk", new MinionFactory().setPower(1).setHitPoints(1)
