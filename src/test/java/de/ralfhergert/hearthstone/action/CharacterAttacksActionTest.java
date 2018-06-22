@@ -89,7 +89,7 @@ public class CharacterAttacksActionTest {
 	@Test
 	public void testMinionAttacksPlayerForLethal() {
 		final Player player1 = new Player()
-			.addToBattlefield(new Minion().setPower(3));
+			.addToBattlefield(new Minion().setPower(3).setHasSummoningSickness(false));
 		// player two gets a 1/1 taunt minion.
 		final Player player2 = new Player()
 			.setCurrentHitPoints(3);
