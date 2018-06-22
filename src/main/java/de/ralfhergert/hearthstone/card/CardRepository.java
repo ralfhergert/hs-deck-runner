@@ -16,10 +16,11 @@ import java.util.List;
  */
 public final class CardRepository {
 
-	private static List<CardEntry<? extends Card>> cards = Arrays.asList(
+	private static List<CardEntry<? extends CardEntry, ? extends Card>> cards = Arrays.asList(
+		new MinionCardEntry(124, CardSet.Classic, Rarity.Epic, HeroClass.Shaman, 5, "Earth Elemental", new MinionFactory().setPower(7).setHitPoints(8).setHasTaunt(true)).setOverloadCost(3),
 		new MinionCardEntry(194, CardSet.Classic, Rarity.Legendary, HeroClass.Hunter, 9, "King Krush", new MinionFactory().setPower(8).setHitPoints(8).setHasCharge(true)),
-		new MinionCardEntry(273, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 0, "Wisp", new MinionFactory().setPower(1).setHitPoints(1), new DefaultMinionCardActionDiscovery()),
-		new MinionCardEntry(346, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 4, "Mogu'shan Warden", new MinionFactory().setPower(1).setHitPoints(7).setHasTaunt(true), new DefaultMinionCardActionDiscovery())
+		new MinionCardEntry(273, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 0, "Wisp", new MinionFactory().setPower(1).setHitPoints(1)),
+		new MinionCardEntry(346, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 4, "Mogu'shan Warden", new MinionFactory().setPower(1).setHitPoints(7).setHasTaunt(true))
 /* Cards which effects are not yet implemented.
 264, CardSet.Classic, Rarity.Epic, HeroClass.Neutral, 12, "Mountain Giant", new MinionFactory().setPower(8).setHitPoints(8) "Costs (1) less for each other card in your hand."
 496, CardSet.Classic, Rarity.Epic, HeroClass.Mage, 10, "Pyroblast", new Effect() "Deal 10 damage."
@@ -27,16 +28,15 @@ public final class CardRepository {
 614, CardSet.Classic, Rarity.Epic, HeroClass.Neutral, 10, "Sea Giant", new MinionFactory().setPower(8).setHitPoints(8) "Costs (1) less for each other minion on the battlefield."
 303, CardSet.Classic, Rarity.Legendary, HeroClass.Neutral, 9, "Alexstrasza", new MinionFactory().setPower(8).setHitPoints(8) "Battlecry: Set a hero's remaining health to 15."
 605, CardSet.Classic, Rarity.Legendary, HeroClass.Druid, 9, "Cenarius", new MinionFactory().setPower(5).setHitPoints(8) "Choose one: Give your other minions +2/+2; or summon two 2/2 Treants with taunt."
-
-482, CardSet.Classic, Rarity.Legendary, HeroClass.Warlock, 9, "Lord Jaraxxus", new MinionFactory().setPower(3).setHitPoints(15)
-241, CardSet.Classic, Rarity.Legendary, HeroClass.Neutral, 9, "Malygos", new MinionFactory().setPower(4).setHitPoints(12)
+482, CardSet.Classic, Rarity.Legendary, HeroClass.Warlock, 9, "Lord Jaraxxus", new MinionFactory().setPower(3).setHitPoints(15) "Battlecry: Destroy your hero and replace it with Lord Jaraxxus."
+241, CardSet.Classic, Rarity.Legendary, HeroClass.Neutral, 9, "Malygos", new MinionFactory().setPower(4).setHitPoints(12) "Spell Damage +5"
 285, CardSet.Classic, Rarity.Legendary, HeroClass.Neutral, 9, "Nozdormu", new MinionFactory().setPower(8).setHitPoints(8)
 432, CardSet.Classic, Rarity.Legendary, HeroClass.Neutral, 9, "Onyxia", new MinionFactory().setPower(8).setHitPoints(8)
 495, CardSet.Classic, Rarity.Legendary, HeroClass.Neutral, 9, "Ysera", new MinionFactory().setPower(4).setHitPoints(12)
 506, CardSet.Classic, Rarity.Epic, HeroClass.Paladin, 8, "Lay on Hands", new Effect()
 398, CardSet.Classic, Rarity.Epic, HeroClass.Warlock, 8, "Twisting Nether", new Effect()
-335, CardSet.Classic, Rarity.Legendary, HeroClass.Shaman, 8, "Al'Akir the Windlord", new MinionFactory().setPower(3).setHitPoints(5)
-643, CardSet.Classic, Rarity.Legendary, HeroClass.Warrior, 8, "Grommash Hellscream", new MinionFactory().setPower(4).setHitPoints(9)
+335, CardSet.Classic, Rarity.Legendary, HeroClass.Shaman, 8, "Al'Akir the Windlord", new MinionFactory().setPower(3).setHitPoints(5) "Windfury, Charge, Divine Shield, Taunt"
+643, CardSet.Classic, Rarity.Legendary, HeroClass.Warrior, 8, "Grommash Hellscream", new MinionFactory().setPower(4).setHitPoints(9) "Charge; Enrage: +6 Attack"
 18, CardSet.Classic, Rarity.Legendary, HeroClass.Neutral, 8, "Gruul", new MinionFactory().setPower(7).setHitPoints(7)
 391, CardSet.Classic, Rarity.Legendary, HeroClass.Paladin, 8, "Tirion Fordring", new MinionFactory().setPower(6).setHitPoints(6)
 278, CardSet.Classic, Rarity.Epic, HeroClass.Hunter, 7, "Gladiator's Longbow", new WeaponFactory.setAttack(5).setDurability(2)
@@ -46,12 +46,12 @@ public final class CardRepository {
 220, CardSet.Classic, Rarity.Legendary, HeroClass.Mage, 7, "Archmage Antonidas", new MinionFactory().setPower(5).setHitPoints(7)
 539, CardSet.Classic, Rarity.Legendary, HeroClass.Neutral, 7, "Baron Geddon", new MinionFactory().setPower(7).setHitPoints(5)
 228, CardSet.Classic, Rarity.Legendary, HeroClass.Priest, 7, "Prophet Velen", new MinionFactory().setPower(7).setHitPoints(7)
-518, CardSet.Classic, Rarity.Rare, HeroClass.Neutral, 7, "Ravenholdt Assassin", new MinionFactory().setPower(7).setHitPoints(5)
+518, CardSet.Classic, Rarity.Rare, HeroClass.Neutral, 7, "Ravenholdt Assassin", new MinionFactory().setPower(7).setHitPoints(5) "Stealth"
 142, CardSet.Classic, Rarity.Epic, HeroClass.Paladin, 6, "Avenging Wrath", new Effect()
 276, CardSet.Classic, Rarity.Rare, HeroClass.Mage, 6, "Blizzard", new Effect()
 457, CardSet.Classic, Rarity.Rare, HeroClass.Priest, 6, "Holy Fire", new Effect()
 573, CardSet.Classic, Rarity.Rare, HeroClass.Warlock, 6, "Siphon Soul", new Effect()
-463, CardSet.Classic, Rarity.Rare, HeroClass.Neutral, 6, "Argent Commander", new MinionFactory().setPower(4).setHitPoints(2)
+463, CardSet.Classic, Rarity.Rare, HeroClass.Neutral, 6, "Argent Commander", new MinionFactory().setPower(4).setHitPoints(2) "Charge; Divine Shield"
 147, CardSet.Classic, Rarity.Epic, HeroClass.Priest, 6, "Cabal Shadow Priest", new MinionFactory().setPower(4).setHitPoints(5)
 498, CardSet.Classic, Rarity.Legendary, HeroClass.Neutral, 6, "Cairne Bloodhoof", new MinionFactory().setPower(4).setHitPoints(5)
 598, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 6, "Frost Elemental", new MinionFactory().setPower(5).setHitPoints(5)
@@ -80,7 +80,6 @@ public final class CardRepository {
 267, CardSet.Classic, Rarity.Legendary, HeroClass.Neutral, 5, "Captain Greenskin", new MinionFactory().setPower(5).setHitPoints(4)
 507, CardSet.Classic, Rarity.Rare, HeroClass.Warlock, 5, "Doomguard", new MinionFactory().setPower(5).setHitPoints(7)
 587, CardSet.Classic, Rarity.Common, HeroClass.Druid, 5, "Druid of the Claw", new MinionFactory().setPower(4).setHitPoints(4)
-124, CardSet.Classic, Rarity.Epic, HeroClass.Shaman, 5, "Earth Elemental", new MinionFactory().setPower(7).setHitPoints(8)
 450, CardSet.Classic, Rarity.Epic, HeroClass.Neutral, 5, "Faceless Manipulator", new MinionFactory().setPower(3).setHitPoints(3)
 476, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 5, "Fen Creeper", new MinionFactory().setPower(3).setHitPoints(6)
 602, CardSet.Classic, Rarity.Legendary, HeroClass.Neutral, 5, "Harrison Jones", new MinionFactory().setPower(5).setHitPoints(4)
@@ -263,7 +262,7 @@ public final class CardRepository {
 	private CardRepository() { /* no instantiation necessary */ }
 
 	public static Card createById(int id) {
-		for (CardEntry<? extends Card> cardEntry : cards) {
+		for (CardEntry<? extends CardEntry, ? extends Card> cardEntry : cards) {
 			if (cardEntry.id == id) {
 				return cardEntry.create();
 			}
@@ -272,7 +271,7 @@ public final class CardRepository {
 	}
 
 	public static Card createByName(final String name) {
-		for (CardEntry<? extends Card> cardEntry : cards) {
+		for (CardEntry<? extends CardEntry, ? extends Card> cardEntry : cards) {
 			if (cardEntry.name.equals(name)) {
 				return cardEntry.create();
 			}
@@ -282,9 +281,10 @@ public final class CardRepository {
 
 	/**
 	 * This is the super-class for all card entries in this repository.
+	 * @param <Self> return type for fluent methods.
 	 * @param <Card> the card type this card entry will produce.
 	 */
-	private abstract static class CardEntry<Card extends de.ralfhergert.hearthstone.game.model.Card> {
+	private abstract static class CardEntry<Self extends CardEntry<Self,Card>, Card extends de.ralfhergert.hearthstone.game.model.Card> {
 
 		private final int id;
 		private final CardSet cardSet;
@@ -293,6 +293,8 @@ public final class CardRepository {
 		private final int manaCost;
 		private final String name;
 		private final ActionDiscovery<Card> actionDiscovery;
+
+		private int overloadCost = 0;
 
 		public CardEntry(int id, CardSet cardSet, Rarity rarity, HeroClass heroClass, int manaCost, String name, ActionDiscovery<Card> actionDiscovery) {
 			this.id = id;
@@ -308,8 +310,15 @@ public final class CardRepository {
 			return id;
 		}
 
+		public Self setOverloadCost(int overloadCost) {
+			this.overloadCost = overloadCost;
+			return (Self)this;
+		}
+
 		public final Card create() {
-			return (Card)createInstance().setActionDiscovery(actionDiscovery);
+			return (Card)createInstance()
+				.setActionDiscovery(actionDiscovery)
+				.setOverloadCost(overloadCost);
 		}
 
 		protected abstract Card createInstance();
@@ -318,7 +327,7 @@ public final class CardRepository {
 	/**
 	 * This is a card entry for a minion card.
 	 */
-	private static class MinionCardEntry extends CardEntry<MinionCard> {
+	private static class MinionCardEntry extends CardEntry<MinionCardEntry,MinionCard> {
 
 		private final MinionFactory minionFactory;
 
