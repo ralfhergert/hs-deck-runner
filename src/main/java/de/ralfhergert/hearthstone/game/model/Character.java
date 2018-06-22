@@ -95,6 +95,15 @@ public class Character<Self extends Character<Self>> implements Target, GameEven
 		return (Self)this;
 	}
 
+	/**
+	 * This convenience method sets both {@link #currentHitPoints} and {@link #maxHitPoints}.
+	 */
+	public Self setHitPoints(int hitPoints) {
+		currentHitPoints = hitPoints;
+		maxHitPoints = hitPoints;
+		return (Self)this;
+	}
+
 	public int getPower() {
 		return power;
 	}
