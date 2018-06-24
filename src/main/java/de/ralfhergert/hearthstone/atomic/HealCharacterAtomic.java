@@ -30,7 +30,7 @@ public class HealCharacterAtomic implements Action<HearthstoneGameState> {
 	}
 
 	@Override
-	public HearthstoneGameState applyTo(HearthstoneGameState state) {
+	public HearthstoneGameState apply(HearthstoneGameState state) {
 		HearthstoneGameState nextState = new HearthstoneGameState(state, this);
 		Target target = nextState.findTarget(targetRef);
 		if (target == null || !(target instanceof Character)) {

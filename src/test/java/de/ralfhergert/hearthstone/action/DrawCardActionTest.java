@@ -31,7 +31,7 @@ public class DrawCardActionTest {
 		Assert.assertEquals("player one has 1 hit point", 1, startState.getPlayer(PlayerOrdinal.One).getCurrentHitPoints());
 		Assert.assertTrue("player one has an empty library", startState.getPlayer(PlayerOrdinal.One).getHand().isEmpty());
 		// let player one draw a card form his empty library.
-		HearthstoneGameState state = new DrawCardsAction(PlayerOrdinal.One, 1).applyTo(startState);
+		HearthstoneGameState state = new DrawCardsAction(PlayerOrdinal.One, 1).apply(startState);
 		Assert.assertNotNull("new state should not be null", state);
 		Assert.assertEquals("player two should have won", GameOutcome.Player2Wins, state.getOutcome());
 	}

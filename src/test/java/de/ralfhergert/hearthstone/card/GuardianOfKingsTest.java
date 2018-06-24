@@ -37,7 +37,7 @@ public class GuardianOfKingsTest {
 		Assert.assertNotNull("found action should not be null", foundAction);
 		Assert.assertEquals("found action should by of type", PlayMinionCard.class, foundAction.getClass());
 		// play the minion card.
-		HearthstoneGameState afterState = foundAction.applyTo(startState);
+		HearthstoneGameState afterState = foundAction.apply(startState);
 		Assert.assertNotNull("after state should not be null", afterState);
 		Assert.assertEquals("active player should have less mana", 0, afterState.getActivePlayer().getAvailableMana());
 		Assert.assertEquals("active player should have no overload", 0, afterState.getActivePlayer().getCrystalsLockedNextTurn());

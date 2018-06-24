@@ -30,7 +30,7 @@ public class DrawCardsAction implements Action<HearthstoneGameState> {
 	}
 
 	@Override
-	public HearthstoneGameState applyTo(HearthstoneGameState previousState) {
+	public HearthstoneGameState apply(HearthstoneGameState previousState) {
 		final HearthstoneGameState state = new HearthstoneGameState(previousState, this);
 		final Player player = state.getPlayer(playerOrdinal);
 		for (int i = 0; i < numberOfCards; i++) {

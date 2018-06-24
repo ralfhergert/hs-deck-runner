@@ -47,7 +47,7 @@ public class MageHeroPowerTest {
 		Assert.assertNotNull("found action should not be null", foundAction);
 		Assert.assertEquals("found action should by of type", PlayTargetedHeroPower.class, foundAction.getClass());
 		// play the hero power.
-		HearthstoneGameState afterState = foundAction.applyTo(startState);
+		HearthstoneGameState afterState = foundAction.apply(startState);
 		Assert.assertNotNull("after state should not be null", afterState);
 		Assert.assertEquals("player one should have won", GameOutcome.Player1Wins, afterState.getOutcome());
 	}
@@ -82,7 +82,7 @@ public class MageHeroPowerTest {
 		Assert.assertNotNull("found action should not be null", foundAction);
 		Assert.assertEquals("found action should by of type", PlayTargetedHeroPower.class, foundAction.getClass());
 		// play the hero power.
-		HearthstoneGameState afterState = foundAction.applyTo(startState);
+		HearthstoneGameState afterState = foundAction.apply(startState);
 		Assert.assertNotNull("after state should not be null", afterState);
 		Assert.assertEquals("game is still undecided", GameOutcome.Undecided, afterState.getOutcome());
 		Assert.assertEquals("player two should have no minion on the battlefield", 0, afterState.getPlayer(PlayerOrdinal.Two).getBattlefield().size());

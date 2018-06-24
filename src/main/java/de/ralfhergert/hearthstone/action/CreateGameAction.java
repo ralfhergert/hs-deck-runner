@@ -26,7 +26,7 @@ public class CreateGameAction implements Action<HearthstoneGameState> {
 	}
 
 	@Override
-	public HearthstoneGameState applyTo(HearthstoneGameState previousState) {
+	public HearthstoneGameState apply(HearthstoneGameState previousState) {
 		final HearthstoneGameState state = new HearthstoneGameState(null, this);
 		state.setPlayers(players);
 		state.setTurn(Turn.DrawStartingHand);

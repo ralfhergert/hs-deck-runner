@@ -20,18 +20,18 @@ public class HearthstoneDeckRunner {
 	private List<HearthstoneGameState> generation = new ArrayList<>();
 
 	public List<HearthstoneGameState> run(Player player1, Player player2) {
-		generation.add(new CreateGameAction(player1, player2).applyTo(null));
+		generation.add(new CreateGameAction(player1, player2).apply(null));
 
 		while (!generation.isEmpty()) {
 			final List<HearthstoneGameState> nextGeneration = new ArrayList<>();
 			for (HearthstoneGameState gameState : generation) {
 				List<Action<HearthstoneGameState>> applicableActions = actionFactory.createAllApplicableActions(gameState);
 				for (Action<HearthstoneGameState> action : applicableActions) {
-					final HearthstoneGameState nextState = action.applyTo(gameState);
+					final HearthstoneGameState nextState = action.apply(gameState);
 					if (nextState.getOutcome().isFinal()) {
 						finalStates.add(nextState);
 					} else {
-						nextGeneration.add(action.applyTo(gameState));
+						nextGeneration.add(action.apply(gameState));
 					}
 				}
 				generation = nextGeneration;

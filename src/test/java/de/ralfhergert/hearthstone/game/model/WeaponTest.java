@@ -41,7 +41,7 @@ public class WeaponTest {
 		Assert.assertNotNull("found action should not be null", foundAction);
 		Assert.assertEquals("found action should by of type", EndTurnAction.class, foundAction.getClass());
 		// switch turns.
-		HearthstoneGameState afterState = foundAction.applyTo(startState);
+		HearthstoneGameState afterState = foundAction.apply(startState);
 		Assert.assertNotNull("after state should not be null", afterState);
 		Assert.assertEquals("it should be player two's turn now", Turn.Player2Turn, afterState.getTurn());
 		Assert.assertEquals("player one's weapon should be deactivated", false, afterState.getPlayer(PlayerOrdinal.One).getWeapon().isActive());

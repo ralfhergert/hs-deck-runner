@@ -25,7 +25,7 @@ public class PlayMinionCard implements Action<HearthstoneGameState> {
 	}
 
 	@Override
-	public HearthstoneGameState applyTo(HearthstoneGameState state) {
+	public HearthstoneGameState apply(HearthstoneGameState state) {
 		HearthstoneGameState nextState = new HearthstoneGameState(state, this);
 		final Player player = nextState.getActivePlayer();
 		final Card card = player.findInHand(minionCardRef);

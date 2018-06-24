@@ -21,7 +21,7 @@ public class DestroyMinionAtomic implements Action<HearthstoneGameState> {
 	}
 
 	@Override
-	public HearthstoneGameState applyTo(HearthstoneGameState state) {
+	public HearthstoneGameState apply(HearthstoneGameState state) {
 		HearthstoneGameState nextState = new HearthstoneGameState(state, this);
 		// move the minion from the battlefield into the graveyard.
 		Player owner = nextState.getOwner(minion);

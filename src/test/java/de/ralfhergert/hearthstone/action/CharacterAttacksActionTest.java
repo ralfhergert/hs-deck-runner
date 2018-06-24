@@ -49,7 +49,7 @@ public class CharacterAttacksActionTest {
 		Assert.assertNotNull("found action should not be null", foundAction);
 		Assert.assertEquals("found action should by of type", CharacterAttacksAction.class, foundAction.getClass());
 		// play the attack.
-		HearthstoneGameState afterState = foundAction.applyTo(startState);
+		HearthstoneGameState afterState = foundAction.apply(startState);
 		Assert.assertNotNull("after state should not be null", afterState);
 		Assert.assertEquals("numberOfAttacks player one made", 1, afterState.getPlayer(PlayerOrdinal.One).getNumberOfAttacksThisTurn());
 		Assert.assertEquals("after state gameOutcome should be", GameOutcome.Player1Wins, afterState.getOutcome());
@@ -77,7 +77,7 @@ public class CharacterAttacksActionTest {
 		Assert.assertNotNull("found action should not be null", foundAction);
 		Assert.assertEquals("found action should by of type", CharacterAttacksAction.class, foundAction.getClass());
 		// play the attack.
-		HearthstoneGameState afterState = foundAction.applyTo(startState);
+		HearthstoneGameState afterState = foundAction.apply(startState);
 		Assert.assertNotNull("after state should not be null", afterState);
 		Assert.assertEquals("numberOfAttacks player one made", 1, afterState.getPlayer(PlayerOrdinal.One).getNumberOfAttacksThisTurn());
 		Assert.assertNotNull("player one's weapon should exist", afterState.getPlayer(PlayerOrdinal.One).getWeapon());
@@ -104,7 +104,7 @@ public class CharacterAttacksActionTest {
 		Assert.assertNotNull("found action should not be null", foundAction);
 		Assert.assertEquals("found action should by of type", CharacterAttacksAction.class, foundAction.getClass());
 		// play the attack.
-		HearthstoneGameState afterState = foundAction.applyTo(startState);
+		HearthstoneGameState afterState = foundAction.apply(startState);
 		Assert.assertNotNull("after state should not be null", afterState);
 		Assert.assertEquals("numberOfAttacks minion made", 1, afterState.getPlayer(PlayerOrdinal.One).getBattlefield().get(0).getNumberOfAttacksThisTurn());
 		Assert.assertEquals("after state gameOutcome should be", GameOutcome.Player1Wins, afterState.getOutcome());

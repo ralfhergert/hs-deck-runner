@@ -17,6 +17,6 @@ public class GameState<Self extends GameState<Self>> {
 	}
 
 	public Self apply(Action<Self> action) {
-		return action.applyTo((Self)this);
+		return action.apply((Self)this);
 	}
 }

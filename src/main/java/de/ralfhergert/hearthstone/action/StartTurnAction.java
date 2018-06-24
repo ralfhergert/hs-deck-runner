@@ -22,7 +22,7 @@ public class StartTurnAction implements Action<HearthstoneGameState> {
 	}
 
 	@Override
-	public HearthstoneGameState applyTo(HearthstoneGameState previousState) {
+	public HearthstoneGameState apply(HearthstoneGameState previousState) {
 		final HearthstoneGameState state = new HearthstoneGameState(previousState, this);
 		state.setTurn(playerOrdinal == PlayerOrdinal.One ? Turn.Player1Turn : Turn.Player2Turn);
 		{

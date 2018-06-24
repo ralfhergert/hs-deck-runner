@@ -14,8 +14,8 @@ public class WarlockHeroPowerEffect implements GeneralEffect {
 	@Override
 	public HearthstoneGameState applyTo(HearthstoneGameState state) {
 		PlayerOrdinal ownerOrdinal = state.getPlayerOrdinal(state.getOwner(this));
-		HearthstoneGameState nextState = new DrawCardsAction(ownerOrdinal, 1).applyTo(state);
-		return new DamagePlayerAtomic(ownerOrdinal, 2).applyTo(nextState);
+		HearthstoneGameState nextState = new DrawCardsAction(ownerOrdinal, 1).apply(state);
+		return new DamagePlayerAtomic(ownerOrdinal, 2).apply(nextState);
 	}
 
 	@Override

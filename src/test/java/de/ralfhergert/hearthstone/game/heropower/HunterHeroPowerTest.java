@@ -40,7 +40,7 @@ public class HunterHeroPowerTest {
 		Assert.assertNotNull("found action should not be null", foundAction);
 		Assert.assertEquals("found action should by of type", PlayHeroPower.class, foundAction.getClass());
 		// play the hero power.
-		HearthstoneGameState afterState = foundAction.applyTo(startState);
+		HearthstoneGameState afterState = foundAction.apply(startState);
 		Assert.assertNotNull("after state should not be null", afterState);
 		Assert.assertEquals("player 1 should have won the game", GameOutcome.Player1Wins, afterState.getOutcome());
 	}

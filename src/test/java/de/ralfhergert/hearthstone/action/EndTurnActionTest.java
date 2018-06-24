@@ -33,7 +33,7 @@ public class EndTurnActionTest {
 		Action<HearthstoneGameState> foundAction = foundActions.get(0);
 		Assert.assertEquals("found action is of type", EndTurnAction.class, foundAction.getClass());
 		// trigger the action.
-		HearthstoneGameState nextState = foundAction.applyTo(startState);
+		HearthstoneGameState nextState = foundAction.apply(startState);
 		Assert.assertNotNull("nextState should not be null", nextState);
 		Assert.assertEquals("nextState's turn should be", Turn.Player2Turn, nextState.getTurn());
 	}
@@ -51,7 +51,7 @@ public class EndTurnActionTest {
 		Action<HearthstoneGameState> foundAction = foundActions.get(0);
 		Assert.assertEquals("found action is of type", EndTurnAction.class, foundAction.getClass());
 		// trigger the action.
-		HearthstoneGameState nextState = foundAction.applyTo(startState);
+		HearthstoneGameState nextState = foundAction.apply(startState);
 		Assert.assertNotNull("nextState should not be null", nextState);
 		Assert.assertEquals("nextState's outcome should be", GameOutcome.Undecided, nextState.getOutcome());
 		Assert.assertEquals("nextState's turn should be", Turn.Player1Turn, nextState.getTurn());
@@ -63,7 +63,7 @@ public class EndTurnActionTest {
 		foundAction = foundActions.get(0);
 		Assert.assertEquals("found action is of type", EndTurnAction.class, foundAction.getClass());
 		// trigger the action.
-		HearthstoneGameState finalState = foundAction.applyTo(nextState);
+		HearthstoneGameState finalState = foundAction.apply(nextState);
 		Assert.assertNotNull("finalState should not be null", finalState);
 		Assert.assertEquals("finalState's outcome should be", GameOutcome.Draw, finalState.getOutcome());
 	}

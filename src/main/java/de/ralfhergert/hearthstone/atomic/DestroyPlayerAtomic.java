@@ -20,7 +20,7 @@ public class DestroyPlayerAtomic implements Action<HearthstoneGameState> {
 	}
 
 	@Override
-	public HearthstoneGameState applyTo(HearthstoneGameState state) {
+	public HearthstoneGameState apply(HearthstoneGameState state) {
 		HearthstoneGameState nextState = new HearthstoneGameState(state, this);
 		nextState.setPlayerAsLoser(playerOrdinal);
 		return nextState.onEvent(new PlayerDestroyedEvent(nextState.getPlayer(playerOrdinal)));

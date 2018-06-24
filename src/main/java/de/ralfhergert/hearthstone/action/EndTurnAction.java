@@ -22,7 +22,7 @@ public class EndTurnAction implements Action<HearthstoneGameState> {
 	}
 
 	@Override
-	public HearthstoneGameState applyTo(HearthstoneGameState previousState) {
+	public HearthstoneGameState apply(HearthstoneGameState previousState) {
 		final HearthstoneGameState state = new HearthstoneGameState(previousState, this)
 			.onEvent(new EndTurnEvent(playerOrdinal));
 		// check for the turn limit; when one of the players ends his 45th turn, the game is over.

@@ -24,7 +24,7 @@ public class CreateGameActionTest {
 	public void testCreateNewGame() {
 		final Player player1 = new Player().setName("Tom");
 		final Player player2 = new Player().setName("Jerry");
-		final HearthstoneGameState game = new CreateGameAction(player1, player2).applyTo(null);
+		final HearthstoneGameState game = new CreateGameAction(player1, player2).apply(null);
 		Assert.assertNotNull("game should not be null", game);
 		Assert.assertNotNull("players should not be null", game.getPlayers());
 		Assert.assertEquals("number of players", 2, game.getPlayers().length);

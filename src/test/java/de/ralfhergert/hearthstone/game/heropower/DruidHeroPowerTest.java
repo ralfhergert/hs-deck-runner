@@ -44,7 +44,7 @@ public class DruidHeroPowerTest {
 		Assert.assertNotNull("found action should not be null", foundAction);
 		Assert.assertEquals("found action should by of type", PlayHeroPower.class, foundAction.getClass());
 		// play the hero power.
-		HearthstoneGameState afterState = foundAction.applyTo(startState);
+		HearthstoneGameState afterState = foundAction.apply(startState);
 		Assert.assertNotNull("after state should not be null", afterState);
 		Assert.assertEquals("player one armor should be", 1, afterState.getPlayer(PlayerOrdinal.One).getArmor());
 		Assert.assertEquals("player one power should be", 1, afterState.getPlayer(PlayerOrdinal.One).getPower());
@@ -60,7 +60,7 @@ public class DruidHeroPowerTest {
 		Assert.assertNotNull("found action should not be null", endTurnAction);
 		Assert.assertEquals("found action should by of type", EndTurnAction.class, endTurnAction.getClass());
 		// play the hero power.
-		HearthstoneGameState finalState = endTurnAction.applyTo(afterState);
+		HearthstoneGameState finalState = endTurnAction.apply(afterState);
 		Assert.assertNotNull("final state should not be null", finalState);
 		Assert.assertEquals("player one armor should be", 1, finalState.getPlayer(PlayerOrdinal.One).getArmor());
 		Assert.assertEquals("player one power should be", 0, finalState.getPlayer(PlayerOrdinal.One).getPower());

@@ -31,7 +31,7 @@ public class CharacterAttacksAction implements Action<HearthstoneGameState> {
 	}
 
 	@Override
-	public HearthstoneGameState applyTo(HearthstoneGameState state) {
+	public HearthstoneGameState apply(HearthstoneGameState state) {
 		if (!isApplicableTo(state)) {
 			return state;
 		}

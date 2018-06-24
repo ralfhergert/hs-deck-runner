@@ -26,7 +26,7 @@ public class EquipWeaponAtomic implements Action<HearthstoneGameState> {
 	}
 
 	@Override
-	public HearthstoneGameState applyTo(HearthstoneGameState state) {
+	public HearthstoneGameState apply(HearthstoneGameState state) {
 		HearthstoneGameState nextState = new HearthstoneGameState(state, this);
 		if (nextState.getPlayer(playerOrdinal).getWeapon() != null) {
 			nextState = nextState.apply(new DestroyWeaponAtomic(playerOrdinal));

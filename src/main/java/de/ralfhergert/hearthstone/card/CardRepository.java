@@ -41,7 +41,7 @@ public final class CardRepository {
 		new MinionCardEntry(283, CardSet.Basic,   Rarity.Free, HeroClass.Paladin, 7, "Guardian of Kings", new MinionFactory().setPower(5).setHitPoints(6).addEffect(new BattlecryEffect() {
 			@Override
 			public HearthstoneGameState applyTo(HearthstoneGameState state) {
-				return new HealCharacterAtomic(state.getOwner(this).getTargetRef(), 6).applyTo(state);
+				return new HealCharacterAtomic(state.getOwner(this).getTargetRef(), 6).apply(state);
 			}
 		})),
 		new MinionCardEntry(289, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 2, "Bluegill Warrior", new MinionFactory().setMinionType(MinionType.Murloc).setPower(2).setHitPoints(1).addEffect(new ChargeEffect())),

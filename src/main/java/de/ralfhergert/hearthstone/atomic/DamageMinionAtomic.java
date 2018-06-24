@@ -27,7 +27,7 @@ public class DamageMinionAtomic implements Action<HearthstoneGameState> {
 	}
 
 	@Override
-	public HearthstoneGameState applyTo(HearthstoneGameState state) {
+	public HearthstoneGameState apply(HearthstoneGameState state) {
 		if (damage < 1) {
 			return state;
 		}

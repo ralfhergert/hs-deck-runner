@@ -24,7 +24,7 @@ public class KeepStartingHandAction implements Action<HearthstoneGameState> {
 	}
 
 	@Override
-	public HearthstoneGameState applyTo(HearthstoneGameState previousState) {
+	public HearthstoneGameState apply(HearthstoneGameState previousState) {
 		final HearthstoneGameState state = new HearthstoneGameState(previousState, this);
 		final Player player = state.getPlayers()[playerOrdinal.ordinal()];
 		player.setStartingHandState(StartingHandState.Keep);

@@ -45,7 +45,7 @@ public class PaladinHeroPowerTest {
 		Assert.assertNotNull("found action should not be null", foundAction);
 		Assert.assertEquals("found action should by of type", PlayHeroPower.class, foundAction.getClass());
 		// play the hero power.
-		HearthstoneGameState afterState = foundAction.applyTo(startState);
+		HearthstoneGameState afterState = foundAction.apply(startState);
 		Assert.assertNotNull("after state should not be null", afterState);
 		Assert.assertEquals("player one should have one minion on the battlefield", 1, afterState.getPlayer(PlayerOrdinal.One).getBattlefield().size());
 		Minion minion = afterState.getPlayer(PlayerOrdinal.One).getBattlefield().get(0);

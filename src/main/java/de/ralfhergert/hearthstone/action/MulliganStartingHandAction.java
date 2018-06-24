@@ -24,7 +24,7 @@ public class MulliganStartingHandAction implements Action<HearthstoneGameState> 
 	}
 
 	@Override
-	public HearthstoneGameState applyTo(HearthstoneGameState previousState) {
+	public HearthstoneGameState apply(HearthstoneGameState previousState) {
 		final HearthstoneGameState state = new HearthstoneGameState(previousState, this);
 		{
 			final Player player = state.getPlayers()[playerOrdinal.ordinal()];
@@ -34,7 +34,7 @@ public class MulliganStartingHandAction implements Action<HearthstoneGameState> 
 			player.shuffleLibrary();
 		}
 		// we want the player to draw first the new cards before the coin is added.
-		final HearthstoneGameState newHandState = new DrawCardsAction(playerOrdinal, playerOrdinal == PlayerOrdinal.One ? 4 : 3).applyTo(state);
+		final HearthstoneGameState newHandState = new DrawCardsAction(playerOrdinal, playerOrdinal == PlayerOrdinal.One ? 4 : 3).apply(state);
 
 		if (playerOrdinal == PlayerOrdinal.Two) {
 			newHandState.getPlayer(playerOrdinal).addToHand(cardFactory.createCoin());

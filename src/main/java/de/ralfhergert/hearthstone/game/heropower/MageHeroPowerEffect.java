@@ -23,9 +23,9 @@ public class MageHeroPowerEffect implements TargetedEffect {
 	public HearthstoneGameState applyOn(HearthstoneGameState state, TargetRef targetRef) {
 		Target target = state.findTarget(targetRef);
 		if (target instanceof Player) {
-			return new DamagePlayerAtomic(state.getPlayerOrdinal((Player)target), getInflictDamage()).applyTo(state);
+			return new DamagePlayerAtomic(state.getPlayerOrdinal((Player)target), getInflictDamage()).apply(state);
 		} else if (target instanceof Minion) {
-			return new DamageMinionAtomic(targetRef, getInflictDamage()).applyTo(state);
+			return new DamageMinionAtomic(targetRef, getInflictDamage()).apply(state);
 		}
 		return state;
 	}

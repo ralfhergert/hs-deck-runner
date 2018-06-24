@@ -19,7 +19,7 @@ public class PlayTargetedHeroPower implements Action<HearthstoneGameState> {
 	}
 
 	@Override
-	public HearthstoneGameState applyTo(HearthstoneGameState state) {
+	public HearthstoneGameState apply(HearthstoneGameState state) {
 		final HearthstoneGameState nextState = new HearthstoneGameState(state, this);
 		final Player player = nextState.getActivePlayer();
 		final HeroPower heroPower = player.getHeroPower();
