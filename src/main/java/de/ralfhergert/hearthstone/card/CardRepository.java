@@ -1,6 +1,7 @@
 package de.ralfhergert.hearthstone.card;
 
 import de.ralfhergert.hearthstone.action.ActionDiscovery;
+import de.ralfhergert.hearthstone.atomic.DamageCharacterAtomic;
 import de.ralfhergert.hearthstone.atomic.HealCharacterAtomic;
 import de.ralfhergert.hearthstone.game.effect.BattlecryEffect;
 import de.ralfhergert.hearthstone.game.effect.ChargeEffect;
@@ -9,11 +10,13 @@ import de.ralfhergert.hearthstone.game.effect.TauntEffect;
 import de.ralfhergert.hearthstone.game.minion.MinionFactory;
 import de.ralfhergert.hearthstone.game.model.Card;
 import de.ralfhergert.hearthstone.game.model.CardSet;
+import de.ralfhergert.hearthstone.game.model.Character;
 import de.ralfhergert.hearthstone.game.model.HearthstoneGameState;
 import de.ralfhergert.hearthstone.game.model.HeroClass;
 import de.ralfhergert.hearthstone.game.model.MinionCard;
 import de.ralfhergert.hearthstone.game.model.MinionType;
 import de.ralfhergert.hearthstone.game.model.Rarity;
+import de.ralfhergert.hearthstone.game.model.TargetRef;
 
 import java.util.Arrays;
 import java.util.List;
@@ -28,6 +31,19 @@ public final class CardRepository {
 		new MinionCardEntry(24,  CardSet.Classic, Rarity.Common, HeroClass.Neutral, 1, "Shieldbearer", new MinionFactory().setPower(0).setHitPoints(4).addEffect(new TauntEffect())),
 		new MinionCardEntry(27,  CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 5, "Booty Bay Bodyguard", new MinionFactory().setPower(5).setHitPoints(4).addEffect(new TauntEffect())),
 		new MinionCardEntry(31,  CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 4, "Chillwind Yeti", new MinionFactory().setPower(4).setHitPoints(5)),
+		new MinionCardEntry(36,  CardSet.Basic,   Rarity.Free, HeroClass.Warlock, 6, "Dread Infernal", new MinionFactory().setMinionType(MinionType.Demon).setPower(6).setHitPoints(6).addEffect(new BattlecryEffect() {
+			@Override
+			public HearthstoneGameState applyTo(HearthstoneGameState state) {
+				HearthstoneGameState nextState = state;
+				final TargetRef targetRef = state.getEffectOwner(this).getTargetRef();
+				for (Character character : state.getAllCharacters()) {
+					if (!character.getTargetRef().equals(targetRef)) {
+						nextState = new DamageCharacterAtomic(character.getTargetRef(), 1).apply(nextState);
+					}
+				}
+				return nextState;
+			}
+		})),
 		new MinionCardEntry(55,  CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 1, "Murloc Raider", new MinionFactory().setMinionType(MinionType.Murloc).setPower(2).setHitPoints(1)),
 		new MinionCardEntry(60,  CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 6, "Boulderfist Ogre", new MinionFactory().setPower(6).setHitPoints(7)),
 		new MinionCardEntry(76,  CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 1, "Stonetusk Boar", new MinionFactory().setMinionType(MinionType.Beast).setPower(1).setHitPoints(1).addEffect(new ChargeEffect())),
@@ -71,7 +87,6 @@ public final class CardRepository {
 310, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 7, "Stormwind Champion", new MinionFactor().setPower(6).setHitPoints(6)
 667, CardSet.Basic, Rarity.Free, HeroClass.Druid, 6, "Starfire", new Effect()
 658, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 6, "Vanish", new Effect()
-36, CardSet.Basic, Rarity.Free, HeroClass.Warlock, 6, "Dread Infernal", new MinionFactor().setPower(6).setHitPoints(6)
 636, CardSet.Basic, Rarity.Free, HeroClass.Shaman, 6, "Fire Elemental", new MinionFactor().setPower(6).setHitPoints(5)
 182, CardSet.Basic, Rarity.Free, HeroClass.Warrior, 5, "Arcanite Reaper", new WeaponFactory().setAttack(5).setDurability(2)
 433, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 5, "Assassin's Blade", new WeaponFactory().setAttack(3).setDurability(4)

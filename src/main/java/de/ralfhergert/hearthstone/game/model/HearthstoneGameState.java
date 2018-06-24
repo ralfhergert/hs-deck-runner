@@ -216,6 +216,15 @@ public class HearthstoneGameState extends GameState<HearthstoneGameState> implem
 		return null;
 	}
 
+	public List<Character> getAllCharacters() {
+		final List<Character> characters = new ArrayList<>();
+		for (Player player : players) {
+			characters.add(player);
+			characters.addAll(player.getBattlefield());
+		}
+		return characters;
+	}
+
 	public List<Character> findAllEffectedCharacters(final Effect effect) {
 		final List<Character> effectedCharacters = new ArrayList<>();
 		for (Player player : players) {
