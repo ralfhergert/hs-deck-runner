@@ -5,8 +5,10 @@ import de.ralfhergert.hearthstone.atomic.DamageCharacterAtomic;
 import de.ralfhergert.hearthstone.atomic.HealCharacterAtomic;
 import de.ralfhergert.hearthstone.game.effect.BattlecryEffect;
 import de.ralfhergert.hearthstone.game.effect.ChargeEffect;
+import de.ralfhergert.hearthstone.game.effect.ModifyAttackEffect;
 import de.ralfhergert.hearthstone.game.effect.SpellDamageEffect;
 import de.ralfhergert.hearthstone.game.effect.TauntEffect;
+import de.ralfhergert.hearthstone.game.effect.WheneverThisMinionTakesDamage;
 import de.ralfhergert.hearthstone.game.minion.MinionFactory;
 import de.ralfhergert.hearthstone.game.model.Card;
 import de.ralfhergert.hearthstone.game.model.CardSet;
@@ -92,6 +94,15 @@ public final class CardRepository {
 		new MinionCardEntry(576, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 2, "Bloodfen Raptor", new MinionFactory().setMinionType(MinionType.Beast).setPower(3).setHitPoints(2)),
 		new MinionCardEntry(603, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 4, "Stormwind Knight", new MinionFactory().setPower(2).setHitPoints(5).addEffect(new ChargeEffect())),
 		new MinionCardEntry(611, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 3, "Silverback Patriarch", new MinionFactory().setMinionType(MinionType.Beast).setPower(1).setHitPoints(4).addEffect(new TauntEffect())),
+		new MinionCardEntry(624, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 5, "Gurubashi Berserker", new MinionFactory().setPower(2).setHitPoints(7).addEffect(new WheneverThisMinionTakesDamage() {
+			@Override
+			public HearthstoneGameState applyTo(HearthstoneGameState state) {
+				Character character = state.getEffectOwner(this);
+				final ModifyAttackEffect effect = new ModifyAttackEffect(3);
+				character.addEffect(effect);
+				return effect.applyTo(state);
+			}
+		})),
 		new MinionCardEntry(659, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 4, "Ogre Magi", new MinionFactory().setPower(4).setHitPoints(4).addEffect(new SpellDamageEffect(1))),
 		new MinionCardEntry(663, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 2, "Frostwolf Grunt", new MinionFactory().setPower(2).setHitPoints(2).addEffect(new TauntEffect()))
 /* Cards which effects are not yet implemented.
@@ -109,7 +120,6 @@ public final class CardRepository {
 671, CardSet.Basic, Rarity.Free, HeroClass.Priest, 5, "Holy Nova", new Effect()
 77486, CardSet.Basic, Rarity.Free, HeroClass.Mage, 5, "Polymorph: ???", new Effect()
 604, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 5, "Frostwolf Warlord", new MinionFactor().setPower(4).setHitPoints(4)
-624, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 5, "Gurubashi Berserker", new MinionFactor().setPower(2).setHitPoints(7)
 184, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 5, "Nightblade", new MinionFactor().setPower(4).setHitPoints(4)
 101, CardSet.Basic, Rarity.Free, HeroClass.Hunter, 5, "Starving Buzzard", new MinionFactor().setPower(3).setHitPoints(2)
 325, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 5, "Stormpike Commando", new MinionFactor().setPower(4).setHitPoints(2)
