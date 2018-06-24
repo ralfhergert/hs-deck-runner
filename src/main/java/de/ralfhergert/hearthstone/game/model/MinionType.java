@@ -5,7 +5,9 @@ package de.ralfhergert.hearthstone.game.model;
  */
 public enum MinionType {
 	Beast,
+	Demon,
 	Elemental,
+	Murloc,
 	SilverHandRecruit,
 	Totem
 }

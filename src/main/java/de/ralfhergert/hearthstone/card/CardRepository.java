@@ -2,6 +2,7 @@ package de.ralfhergert.hearthstone.card;
 
 import de.ralfhergert.hearthstone.action.ActionDiscovery;
 import de.ralfhergert.hearthstone.game.effect.ChargeEffect;
+import de.ralfhergert.hearthstone.game.effect.SpellDamageEffect;
 import de.ralfhergert.hearthstone.game.effect.TauntEffect;
 import de.ralfhergert.hearthstone.game.minion.MinionFactory;
 import de.ralfhergert.hearthstone.game.model.Card;
@@ -24,21 +25,36 @@ public final class CardRepository {
 		new MinionCardEntry(24,  CardSet.Classic, Rarity.Common, HeroClass.Neutral, 1, "Shieldbearer", new MinionFactory().setPower(0).setHitPoints(4).addEffect(new TauntEffect())),
 		new MinionCardEntry(27,  CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 5, "Booty Bay Bodyguard", new MinionFactory().setPower(5).setHitPoints(4).addEffect(new TauntEffect())),
 		new MinionCardEntry(31,  CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 4, "Chillwind Yeti", new MinionFactory().setPower(4).setHitPoints(5)),
+		new MinionCardEntry(55,  CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 1, "Murloc Raider", new MinionFactory().setMinionType(MinionType.Murloc).setPower(2).setHitPoints(1)),
 		new MinionCardEntry(60,  CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 6, "Boulderfist Ogre", new MinionFactory().setPower(6).setHitPoints(7)),
+		new MinionCardEntry(76,  CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 1, "Stonetusk Boar", new MinionFactory().setMinionType(MinionType.Beast).setPower(1).setHitPoints(1).addEffect(new ChargeEffect())),
 		new MinionCardEntry(124, CardSet.Classic, Rarity.Epic, HeroClass.Shaman, 5, "Earth Elemental", new MinionFactory().setMinionType(MinionType.Elemental).setPower(7).setHitPoints(8).addEffect(new TauntEffect())).setOverloadCost(3),
 		new MinionCardEntry(130, CardSet.Basic,   Rarity.Free, HeroClass.Warrior, 4, "Kor'kron Elite", new MinionFactory().setPower(4).setHitPoints(3).addEffect(new ChargeEffect())),
 		new MinionCardEntry(173, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 7, "Core Hound", new MinionFactory().setMinionType(MinionType.Beast).setPower(9).setHitPoints(5)),
+		new MinionCardEntry(174, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 3, "Wolfrider", new MinionFactory().setPower(3).setHitPoints(1).addEffect(new ChargeEffect())),
 		new MinionCardEntry(194, CardSet.Classic, Rarity.Legendary, HeroClass.Hunter, 9, "King Krush", new MinionFactory().setMinionType(MinionType.Beast).setPower(8).setHitPoints(8).addEffect(new ChargeEffect())),
 		new MinionCardEntry(238, CardSet.Basic,   Rarity.Free, HeroClass.Druid, 8, "Ironbark Protector", new MinionFactory().setPower(8).setHitPoints(8).addEffect(new TauntEffect())),
 		new MinionCardEntry(273, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 0, "Wisp", new MinionFactory().setPower(1).setHitPoints(1)),
+		new MinionCardEntry(289, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 2, "Bluegill Warrior", new MinionFactory().setMinionType(MinionType.Murloc).setPower(2).setHitPoints(1).addEffect(new ChargeEffect())),
 		new MinionCardEntry(323, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 7, "War Golem", new MinionFactory().setPower(7).setHitPoints(7)),
 		new MinionCardEntry(326, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 4, "Sen'jin Shieldmasta", new MinionFactory().setPower(3).setHitPoints(5).addEffect(new TauntEffect())),
+		new MinionCardEntry(340, CardSet.Basic,   Rarity.Free, HeroClass.Warlock, 1, "Voidwalker", new MinionFactory().setMinionType(MinionType.Demon).setPower(1).setHitPoints(3).addEffect(new TauntEffect())),
 		new MinionCardEntry(346, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 4, "Mogu'shan Warden", new MinionFactory().setPower(1).setHitPoints(7).addEffect(new TauntEffect())),
+		new MinionCardEntry(362, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 3, "Magma Rager", new MinionFactory().setMinionType(MinionType.Elemental).setPower(5).setHitPoints(1)),
+		new MinionCardEntry(388, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 3, "Dalaran Mage", new MinionFactory().setPower(1).setHitPoints(4).addEffect(new SpellDamageEffect(1))),
 		new MinionCardEntry(414, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 6, "Lord of the Arena", new MinionFactory().setPower(6).setHitPoints(5).addEffect(new TauntEffect())),
 		new MinionCardEntry(476, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 5, "Fen Creeper", new MinionFactory().setPower(3).setHitPoints(6).addEffect(new TauntEffect())),
+		new MinionCardEntry(479, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 2, "Kobold Geomancer", new MinionFactory().setPower(2).setHitPoints(2).addEffect(new SpellDamageEffect(1))),
 		new MinionCardEntry(519, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 3, "Ironfur Grizzly", new MinionFactory().setMinionType(MinionType.Beast).setPower(3).setHitPoints(3).addEffect(new TauntEffect())),
+		new MinionCardEntry(535, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 2, "River Crocolisk", new MinionFactory().setMinionType(MinionType.Beast).setPower(2).setHitPoints(3)),
+		new MinionCardEntry(545, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 6, "Archmage", new MinionFactory().setPower(4).setHitPoints(7).addEffect(new SpellDamageEffect(1))),
 		new MinionCardEntry(560, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 6, "Reckless Rocketeer", new MinionFactory().setPower(5).setHitPoints(2).addEffect(new ChargeEffect())),
-		new MinionCardEntry(603, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 4, "Stormwind Knight", new MinionFactory().setPower(2).setHitPoints(5).addEffect(new ChargeEffect()))
+		new MinionCardEntry(564, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 1, "Goldshire Footman", new MinionFactory().setPower(1).setHitPoints(2).addEffect(new TauntEffect())),
+		new MinionCardEntry(576, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 2, "Bloodfen Raptor", new MinionFactory().setMinionType(MinionType.Beast).setPower(3).setHitPoints(2)),
+		new MinionCardEntry(603, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 4, "Stormwind Knight", new MinionFactory().setPower(2).setHitPoints(5).addEffect(new ChargeEffect())),
+		new MinionCardEntry(611, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 3, "Silverback Patriarch", new MinionFactory().setMinionType(MinionType.Beast).setPower(1).setHitPoints(4).addEffect(new TauntEffect())),
+		new MinionCardEntry(659, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 4, "Ogre Magi", new MinionFactory().setPower(4).setHitPoints(4).addEffect(new SpellDamageEffect(1))),
+		new MinionCardEntry(663, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 2, "Frostwolf Grunt", new MinionFactory().setPower(2).setHitPoints(2).addEffect(new TauntEffect()))
 /* Cards which effects are not yet implemented.
 401, CardSet.Basic, Rarity.Free, HeroClass.Priest, 10, "Mind Control", new Effect()
 44, CardSet.Basic, Rarity.Free, HeroClass.Mage, 7, "Flamestrike", new Effect()
@@ -47,7 +63,6 @@ public final class CardRepository {
 310, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 7, "Stormwind Champion", new MinionFactor().setPower(6).setHitPoints(6)
 667, CardSet.Basic, Rarity.Free, HeroClass.Druid, 6, "Starfire", new Effect()
 658, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 6, "Vanish", new Effect()
-545, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 6, "Archmage", new MinionFactor().setPower(4).setHitPoints(7)
 36, CardSet.Basic, Rarity.Free, HeroClass.Warlock, 6, "Dread Infernal", new MinionFactor().setPower(6).setHitPoints(6)
 636, CardSet.Basic, Rarity.Free, HeroClass.Shaman, 6, "Fire Elemental", new MinionFactor().setPower(6).setHitPoints(5)
 182, CardSet.Basic, Rarity.Free, HeroClass.Warrior, 5, "Arcanite Reaper", new WeaponFactory().setAttack(5).setDurability(2)
@@ -76,7 +91,6 @@ public final class CardRepository {
 472, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 4, "Dragonling Mechanic", new MinionFactor().setPower(2).setHitPoints(4)
 246, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 4, "Gnomish Inventor", new MinionFactor().setPower(2).setHitPoints(4)
 225, CardSet.Basic, Rarity.Free, HeroClass.Hunter, 4, "Houndmaster", new MinionFactor().setPower(4).setHitPoints(3)
-659, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 4, "Ogre Magi", new MinionFactor().setPower(4).setHitPoints(4)
 274, CardSet.Basic, Rarity.Free, HeroClass.Mage, 4, "Water Elemental", new MinionFactor().setPower(3).setHitPoints(6)
 151, CardSet.Basic, Rarity.Free, HeroClass.Shaman, 4, "Windspeaker", new MinionFactor().setPower(3).setHitPoints(3)
 77495, CardSet.Basic, Rarity.Free, HeroClass.Warrior, 3, "Blazing Longsword", new WeaponFactory().setAttack(2).setDurability(3)
@@ -93,15 +107,11 @@ public final class CardRepository {
 647, CardSet.Basic, Rarity.Free, HeroClass.Warlock, 3, "Shadow Bolt", new Effect()
 547, CardSet.Basic, Rarity.Free, HeroClass.Priest, 3, "Shadow Word: Death", new Effect()
 493, CardSet.Basic, Rarity.Free, HeroClass.Warrior, 3, "Shield Block", new Effect()
-388, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 3, "Dalaran Mage", new MinionFactor().setPower(1).setHitPoints(4)
 41, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 3, "Ironforge Rifleman", new MinionFactor().setPower(2).setHitPoints(2)
-362, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 3, "Magma Rager", new MinionFactor().setPower(5).setHitPoints(1)
 502, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 3, "Raid Leader", new MinionFactor().setPower(2).setHitPoints(2)
 47, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 3, "Razorfen Hunter", new MinionFactor().setPower(2).setHitPoints(3)
 434, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 3, "Shattered Sun Cleric", new MinionFactor().setPower(3).setHitPoints(2)
-611, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 3, "Silverback Patriarch", new MinionFactor().setPower(1).setHitPoints(4)
 193, CardSet.Basic, Rarity.Free, HeroClass.Warrior, 3, "Warsong Commander", new MinionFactor().setPower(2).setHitPoints(3)
-174, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 3, "Wolfrider", new MinionFactor().setPower(3).setHitPoints(1)
 56, CardSet.Basic, Rarity.Free, HeroClass.Mage, 2, "Arcane Explosion", new Effect()
 81, CardSet.Basic, Rarity.Free, HeroClass.Warrior, 2, "Cleave", new Effect()
 77484, CardSet.Basic, Rarity.Free, HeroClass.Hunter, 2, "Deadeye", new Effect()
@@ -120,14 +130,9 @@ public final class CardRepository {
 282, CardSet.Basic, Rarity.Free, HeroClass.Druid, 2, "Wild Growth", new Effect()
 146, CardSet.Basic, Rarity.Free, HeroClass.Shaman, 2, "Windfury", new Effect()
 74, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 2, "Acidic Swamp Ooze", new MinionFactor().setPower(3).setHitPoints(2)
-576, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 2, "Bloodfen Raptor", new MinionFactor().setPower(3).setHitPoints(2)
-289, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 2, "Bluegill Warrior", new MinionFactor().setPower(2).setHitPoints(1)
 390, CardSet.Basic, Rarity.Free, HeroClass.Shaman, 2, "Flametongue Totem", new MinionFactor().setPower(0).setHitPoints(3)
-663, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 2, "Frostwolf Grunt", new MinionFactor().setPower(2).setHitPoints(2)
-479, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 2, "Kobold Geomancer", new MinionFactor().setPower(2).setHitPoints(2)
 357, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 2, "Murloc Tidehunter", new MinionFactor().setPower(2).setHitPoints(1)
 435, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 2, "Novice Engineer", new MinionFactor().setPower(1).setHitPoints(1)
-535, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 2, "River Crocolisk", new MinionFactor().setPower(2).setHitPoints(3)
 208, CardSet.Basic, Rarity.Free, HeroClass.Warlock, 2, "Succubus", new MinionFactor().setPower(4).setHitPoints(3)
 250, CardSet.Basic, Rarity.Free, HeroClass.Paladin, 1, "Light's Justice", new WeaponFactory().setAttack(1).setDurability(4)
 183, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 1, "Wicked Knife", new WeaponFactory().setAttack(1).setDurability(2)
@@ -154,17 +159,13 @@ public final class CardRepository {
 163, CardSet.Basic, Rarity.Free, HeroClass.Hunter, 1, "Tracking", new Effect()
 161, CardSet.Basic, Rarity.Free, HeroClass.Warrior, 1, "Whirlwind", new Effect()
 356, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 1, "Elven Archer", new MinionFactor().setPower(1).setHitPoints(1)
-564, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 1, "Goldshire Footman", new MinionFactor().setPower(1).setHitPoints(2)
 510, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 1, "Grimscale Oracle", new MinionFactor().setPower(1).setHitPoints(1)
 275, CardSet.Basic, Rarity.Free, HeroClass.Shaman, 1, "Healing Totem", new MinionFactor().setPower(0).setHitPoints(2)
-55, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 1, "Murloc Raider", new MinionFactor().setPower(2).setHitPoints(1)
 600, CardSet.Basic, Rarity.Free, HeroClass.Priest, 1, "Northshire Cleric", new MinionFactor().setPower(1).setHitPoints(3)
 98, CardSet.Basic, Rarity.Free, HeroClass.Shaman, 1, "Searing Totem", new MinionFactor().setPower(1).setHitPoints(1)
 268, CardSet.Basic, Rarity.Free, HeroClass.Paladin, 1, "Silver Hand Recruit", new MinionFactor().setPower(1).setHitPoints(1)
 298, CardSet.Basic, Rarity.Free, HeroClass.Shaman, 1, "Stoneclaw Totem", new MinionFactor().setPower(0).setHitPoints(2)
-76, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 1, "Stonetusk Boar", new MinionFactor().setPower(1).setHitPoints(1)
 86, CardSet.Basic, Rarity.Free, HeroClass.Hunter, 1, "Timber Wolf", new MinionFactor().setPower(1).setHitPoints(1)
-340, CardSet.Basic, Rarity.Free, HeroClass.Warlock, 1, "Voidwalker", new MinionFactor().setPower(1).setHitPoints(3)
 410, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 1, "Voodoo Doctor", new MinionFactor().setPower(2).setHitPoints(1)
 365, CardSet.Basic, Rarity.Free, HeroClass.Shaman, 1, "Wrath of Air Totem", new MinionFactor().setPower(0).setHitPoints(2)
 216, CardSet.Basic, Rarity.Free, HeroClass.Shaman, 0, "Ancestral Healing", new Effect()
