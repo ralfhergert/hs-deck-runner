@@ -231,24 +231,25 @@ public class Character<Self extends Character<Self>> implements Target, GameEven
 
 	@Override
 	public HearthstoneGameState onEvent(HearthstoneGameState state, GameEvent event) {
+		HearthstoneGameState nextState = state;
 		// effects may try to remove themselves, so a copied list is used to avoid concurrent modifications.
-		new ArrayList<>(effects).forEach(effect -> {
+		for (Effect effect : new ArrayList<>(effects)) {
 			if (effect instanceof GameEventListener) {
-				((GameEventListener<HearthstoneGameState>)effect).onEvent(state, event);
+				nextState = ((GameEventListener<HearthstoneGameState>)effect).onEvent(nextState, event);
 			}
-		});
+		}
 		if (event instanceof StartTurnEvent) {
 			StartTurnEvent startTurnEvent = (StartTurnEvent)event;
-			if (state.findOwnerOrdinal(targetRef) == startTurnEvent.getPlayerOrdinal()) {
-				state.findTarget(targetRef).setNumberOfAttacksThisTurn(0);
+			if (nextState.findOwnerOrdinal(targetRef) == startTurnEvent.getPlayerOrdinal()) {
+				nextState.findTarget(targetRef).setNumberOfAttacksThisTurn(0);
 			}
 		} else if (event instanceof CharacterAttackedEvent) {
 			CharacterAttackedEvent attackedEvent = (CharacterAttackedEvent)event;
 			if (targetRef.equals(attackedEvent.getAttackerTargetRef())) {
-				Character attacker = state.findTarget(targetRef);
+				Character attacker = nextState.findTarget(targetRef);
 				attacker.setNumberOfAttacksThisTurn(1 + attacker.getNumberOfAttacksThisTurn());
 			}
 		}
-		return state;
+		return nextState;
 	}
 }

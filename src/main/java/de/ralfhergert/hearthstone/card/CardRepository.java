@@ -1,12 +1,15 @@
 package de.ralfhergert.hearthstone.card;
 
 import de.ralfhergert.hearthstone.action.ActionDiscovery;
+import de.ralfhergert.hearthstone.atomic.HealCharacterAtomic;
+import de.ralfhergert.hearthstone.game.effect.BattlecryEffect;
 import de.ralfhergert.hearthstone.game.effect.ChargeEffect;
 import de.ralfhergert.hearthstone.game.effect.SpellDamageEffect;
 import de.ralfhergert.hearthstone.game.effect.TauntEffect;
 import de.ralfhergert.hearthstone.game.minion.MinionFactory;
 import de.ralfhergert.hearthstone.game.model.Card;
 import de.ralfhergert.hearthstone.game.model.CardSet;
+import de.ralfhergert.hearthstone.game.model.HearthstoneGameState;
 import de.ralfhergert.hearthstone.game.model.HeroClass;
 import de.ralfhergert.hearthstone.game.model.MinionCard;
 import de.ralfhergert.hearthstone.game.model.MinionType;
@@ -35,6 +38,12 @@ public final class CardRepository {
 		new MinionCardEntry(194, CardSet.Classic, Rarity.Legendary, HeroClass.Hunter, 9, "King Krush", new MinionFactory().setMinionType(MinionType.Beast).setPower(8).setHitPoints(8).addEffect(new ChargeEffect())),
 		new MinionCardEntry(238, CardSet.Basic,   Rarity.Free, HeroClass.Druid, 8, "Ironbark Protector", new MinionFactory().setPower(8).setHitPoints(8).addEffect(new TauntEffect())),
 		new MinionCardEntry(273, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 0, "Wisp", new MinionFactory().setPower(1).setHitPoints(1)),
+		new MinionCardEntry(283, CardSet.Basic,   Rarity.Free, HeroClass.Paladin, 7, "Guardian of Kings", new MinionFactory().setPower(5).setHitPoints(6).addEffect(new BattlecryEffect() {
+			@Override
+			public HearthstoneGameState applyTo(HearthstoneGameState state) {
+				return new HealCharacterAtomic(state.getOwner(this).getTargetRef(), 6).applyTo(state);
+			}
+		})),
 		new MinionCardEntry(289, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 2, "Bluegill Warrior", new MinionFactory().setMinionType(MinionType.Murloc).setPower(2).setHitPoints(1).addEffect(new ChargeEffect())),
 		new MinionCardEntry(323, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 7, "War Golem", new MinionFactory().setPower(7).setHitPoints(7)),
 		new MinionCardEntry(326, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 4, "Sen'jin Shieldmasta", new MinionFactory().setPower(3).setHitPoints(5).addEffect(new TauntEffect())),
@@ -59,7 +68,6 @@ public final class CardRepository {
 401, CardSet.Basic, Rarity.Free, HeroClass.Priest, 10, "Mind Control", new Effect()
 44, CardSet.Basic, Rarity.Free, HeroClass.Mage, 7, "Flamestrike", new Effect()
 90, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 7, "Sprint", new Effect()
-283, CardSet.Basic, Rarity.Free, HeroClass.Paladin, 7, "Guardian of Kings", new MinionFactor().setPower(5).setHitPoints(6)
 310, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 7, "Stormwind Champion", new MinionFactor().setPower(6).setHitPoints(6)
 667, CardSet.Basic, Rarity.Free, HeroClass.Druid, 6, "Starfire", new Effect()
 658, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 6, "Vanish", new Effect()
