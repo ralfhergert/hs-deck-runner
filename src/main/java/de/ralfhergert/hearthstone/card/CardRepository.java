@@ -13,8 +13,10 @@ import de.ralfhergert.hearthstone.game.model.CardSet;
 import de.ralfhergert.hearthstone.game.model.Character;
 import de.ralfhergert.hearthstone.game.model.HearthstoneGameState;
 import de.ralfhergert.hearthstone.game.model.HeroClass;
+import de.ralfhergert.hearthstone.game.model.Minion;
 import de.ralfhergert.hearthstone.game.model.MinionCard;
 import de.ralfhergert.hearthstone.game.model.MinionType;
+import de.ralfhergert.hearthstone.game.model.Player;
 import de.ralfhergert.hearthstone.game.model.Rarity;
 import de.ralfhergert.hearthstone.game.model.TargetRef;
 
@@ -47,6 +49,18 @@ public final class CardRepository {
 		new MinionCardEntry(55,  CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 1, "Murloc Raider", new MinionFactory().setMinionType(MinionType.Murloc).setPower(2).setHitPoints(1)),
 		new MinionCardEntry(60,  CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 6, "Boulderfist Ogre", new MinionFactory().setPower(6).setHitPoints(7)),
 		new MinionCardEntry(76,  CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 1, "Stonetusk Boar", new MinionFactory().setMinionType(MinionType.Beast).setPower(1).setHitPoints(1).addEffect(new ChargeEffect())),
+		new MinionCardEntry(84,  CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 5, "Darkscale Healer", new MinionFactory().setPower(4).setHitPoints(5).addEffect(new BattlecryEffect() {
+			@Override
+			public HearthstoneGameState applyTo(HearthstoneGameState state) {
+				HearthstoneGameState nextState = state;
+				final Player player = state.getOwner(this);
+				nextState = new HealCharacterAtomic(player.getTargetRef(), 2).apply(nextState);
+				for (Minion minion : player.getBattlefield()) {
+					nextState = new HealCharacterAtomic(minion.getTargetRef(), 2).apply(nextState);
+				}
+				return nextState;
+			}
+		})),
 		new MinionCardEntry(124, CardSet.Classic, Rarity.Epic, HeroClass.Shaman, 5, "Earth Elemental", new MinionFactory().setMinionType(MinionType.Elemental).setPower(7).setHitPoints(8).addEffect(new TauntEffect())).setOverloadCost(3),
 		new MinionCardEntry(130, CardSet.Basic,   Rarity.Free, HeroClass.Warrior, 4, "Kor'kron Elite", new MinionFactory().setPower(4).setHitPoints(3).addEffect(new ChargeEffect())),
 		new MinionCardEntry(173, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 7, "Core Hound", new MinionFactory().setMinionType(MinionType.Beast).setPower(9).setHitPoints(5)),
@@ -94,7 +108,6 @@ public final class CardRepository {
 256, CardSet.Basic, Rarity.Free, HeroClass.Shaman, 5, "Bloodlust", new Effect()
 671, CardSet.Basic, Rarity.Free, HeroClass.Priest, 5, "Holy Nova", new Effect()
 77486, CardSet.Basic, Rarity.Free, HeroClass.Mage, 5, "Polymorph: ???", new Effect()
-84, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 5, "Darkscale Healer", new MinionFactor().setPower(4).setHitPoints(5)
 604, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 5, "Frostwolf Warlord", new MinionFactor().setPower(4).setHitPoints(4)
 624, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 5, "Gurubashi Berserker", new MinionFactor().setPower(2).setHitPoints(7)
 184, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 5, "Nightblade", new MinionFactor().setPower(4).setHitPoints(4)
