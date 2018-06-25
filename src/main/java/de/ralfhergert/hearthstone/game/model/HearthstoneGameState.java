@@ -5,6 +5,7 @@ import de.ralfhergert.generic.game.model.GameState;
 import de.ralfhergert.hearthstone.effect.Effect;
 import de.ralfhergert.hearthstone.event.GameEvent;
 import de.ralfhergert.hearthstone.event.GameEventListener;
+import de.ralfhergert.hearthstone.play.GeneralPlay;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,8 @@ public class HearthstoneGameState extends GameState<HearthstoneGameState> implem
 
 	private Turn turn = Turn.DrawStartingHand;
 	private GameOutcome outcome = GameOutcome.Undecided;
+
+	private GeneralPlay intendedPlay;
 
 	private Random random;
 
@@ -37,6 +40,7 @@ public class HearthstoneGameState extends GameState<HearthstoneGameState> implem
 			players[1] = new Player(parent.players[1]);
 			turn = parent.turn;
 			outcome = parent.outcome;
+			intendedPlay = parent.intendedPlay;
 			random = parent.random;
 		} else {
 			random = new Random();
@@ -248,5 +252,20 @@ public class HearthstoneGameState extends GameState<HearthstoneGameState> implem
 	public HearthstoneGameState setRandom(Random random) {
 		this.random = random;
 		return this;
+	}
+
+	public GeneralPlay getIntendedPlay() {
+		return intendedPlay;
+	}
+
+	public HearthstoneGameState setIntendedPlay(GeneralPlay intendedPlay) {
+		this.intendedPlay = intendedPlay;
+		return this;
+	}
+
+	public GeneralPlay removeIntendedPlay() {
+		GeneralPlay play = intendedPlay;
+		intendedPlay = null;
+		return play;
 	}
 }

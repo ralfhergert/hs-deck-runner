@@ -7,7 +7,9 @@ import de.ralfhergert.hearthstone.game.model.HearthstoneGameState;
  */
 public interface Effect {
 
-	boolean isApplicableTo(HearthstoneGameState state);
+	default boolean isApplicableTo(HearthstoneGameState state) {
+		return true;
+	}
 
 	default HearthstoneGameState unapplyOn(HearthstoneGameState state) {
 		return state;

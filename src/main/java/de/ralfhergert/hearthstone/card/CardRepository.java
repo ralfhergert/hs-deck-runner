@@ -3,6 +3,8 @@ package de.ralfhergert.hearthstone.card;
 import de.ralfhergert.hearthstone.action.ActionDiscovery;
 import de.ralfhergert.hearthstone.atomic.DamageCharacterAtomic;
 import de.ralfhergert.hearthstone.atomic.HealCharacterAtomic;
+import de.ralfhergert.hearthstone.effect.Effect;
+import de.ralfhergert.hearthstone.effect.GeneralEffect;
 import de.ralfhergert.hearthstone.game.effect.BattlecryEffect;
 import de.ralfhergert.hearthstone.game.effect.ChargeEffect;
 import de.ralfhergert.hearthstone.game.effect.ModifyAttackEffect;
@@ -10,6 +12,7 @@ import de.ralfhergert.hearthstone.game.effect.SpellDamageEffect;
 import de.ralfhergert.hearthstone.game.effect.TauntEffect;
 import de.ralfhergert.hearthstone.game.effect.WheneverThisMinionTakesDamage;
 import de.ralfhergert.hearthstone.game.minion.MinionFactory;
+import de.ralfhergert.hearthstone.game.model.AbilityCard;
 import de.ralfhergert.hearthstone.game.model.Card;
 import de.ralfhergert.hearthstone.game.model.CardSet;
 import de.ralfhergert.hearthstone.game.model.Character;
@@ -22,6 +25,7 @@ import de.ralfhergert.hearthstone.game.model.Player;
 import de.ralfhergert.hearthstone.game.model.Rarity;
 import de.ralfhergert.hearthstone.game.model.TargetRef;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -63,6 +67,16 @@ public final class CardRepository {
 				return nextState;
 			}
 		})),
+		new AbilityCardEntry(122, CardSet.Basic, Rarity.Free, HeroClass.Warlock, 4, "Hellfire", new GeneralEffect() {
+			@Override
+			public HearthstoneGameState applyTo(HearthstoneGameState state) {
+				HearthstoneGameState nextState = state;
+				for (Character character : new ArrayList<>(nextState.getAllCharacters())) {
+					nextState = new DamageCharacterAtomic(character.getTargetRef(), 3).apply(nextState);
+				}
+				return nextState;
+			}
+		}),
 		new MinionCardEntry(124, CardSet.Classic, Rarity.Epic, HeroClass.Shaman, 5, "Earth Elemental", new MinionFactory().setMinionType(MinionType.Elemental).setPower(7).setHitPoints(8).addEffect(new TauntEffect())).setOverloadCost(3),
 		new MinionCardEntry(130, CardSet.Basic,   Rarity.Free, HeroClass.Warrior, 4, "Kor'kron Elite", new MinionFactory().setPower(4).setHitPoints(3).addEffect(new ChargeEffect())),
 		new MinionCardEntry(173, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 7, "Core Hound", new MinionFactory().setMinionType(MinionType.Beast).setPower(9).setHitPoints(5)),
@@ -129,7 +143,6 @@ public final class CardRepository {
 260, CardSet.Basic, Rarity.Free, HeroClass.Paladin, 4, "Consecration", new Effect()
 522, CardSet.Basic, Rarity.Free, HeroClass.Mage, 4, "Fireball", new Effect()
 350, CardSet.Basic, Rarity.Free, HeroClass.Paladin, 4, "Hammer of Wrath", new Effect()
-122, CardSet.Basic, Rarity.Free, HeroClass.Warlock, 4, "Hellfire", new Effect()
 270, CardSet.Basic, Rarity.Free, HeroClass.Shaman, 4, "Hex", new Effect()
 407, CardSet.Basic, Rarity.Free, HeroClass.Hunter, 4, "Multi-Shot", new Effect()
 595, CardSet.Basic, Rarity.Free, HeroClass.Mage, 4, "Polymorph", new Effect()
@@ -515,6 +528,7 @@ public final class CardRepository {
 
 		public final Card create() {
 			return (Card)createInstance()
+				.setManaCost(manaCost)
 				.setActionDiscovery(actionDiscovery)
 				.setOverloadCost(overloadCost);
 		}
@@ -541,6 +555,28 @@ public final class CardRepository {
 		@Override
 		public MinionCard createInstance() {
 			return new MinionCard(minionFactory).setId(getId());
+		}
+	}
+
+	/**
+	 * This is a card entry for an ability card.
+	 */
+	private static class AbilityCardEntry extends CardEntry<AbilityCardEntry,AbilityCard> {
+
+		private final Effect effect;
+
+		public AbilityCardEntry(int id, CardSet cardSet, Rarity rarity, HeroClass heroClass, int manaCost, String name, Effect effect) {
+			this(id, cardSet, rarity, heroClass, manaCost, name, effect, new DefaultAbilityCardActionDiscovery());
+		}
+
+		public AbilityCardEntry(int id, CardSet cardSet, Rarity rarity, HeroClass heroClass, int manaCost, String name, Effect effect, ActionDiscovery<AbilityCard> actionDiscovery) {
+			super(id, cardSet, rarity, heroClass, manaCost, name, actionDiscovery);
+			this.effect = effect;
+		}
+
+		@Override
+		public AbilityCard createInstance() {
+			return new AbilityCard(effect).setId(getId());
 		}
 	}
 }
