@@ -1,6 +1,7 @@
 package de.ralfhergert.hearthstone.card;
 
 import de.ralfhergert.hearthstone.action.ActionDiscovery;
+import de.ralfhergert.hearthstone.action.DrawCardsAction;
 import de.ralfhergert.hearthstone.atomic.DamageCharacterAtomic;
 import de.ralfhergert.hearthstone.atomic.HealCharacterAtomic;
 import de.ralfhergert.hearthstone.effect.Effect;
@@ -98,6 +99,12 @@ public final class CardRepository {
 		new MinionCardEntry(362, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 3, "Magma Rager", new MinionFactory().setMinionType(MinionType.Elemental).setPower(5).setHitPoints(1)),
 		new MinionCardEntry(388, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 3, "Dalaran Mage", new MinionFactory().setPower(1).setHitPoints(4).addEffect(new SpellDamageEffect(1))),
 		new MinionCardEntry(414, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 6, "Lord of the Arena", new MinionFactory().setPower(6).setHitPoints(5).addEffect(new TauntEffect())),
+		new MinionCardEntry(428, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 3, "Acolyte of Pain", new MinionFactory().setPower(1).setHitPoints(3).addEffect(new WheneverThisMinionTakesDamage() {
+			@Override
+			public HearthstoneGameState applyTo(HearthstoneGameState state) {
+				return new DrawCardsAction(state.getPlayerOrdinal(state.getOwner(this)), 1).apply(state);
+			}
+		})),
 		new MinionCardEntry(476, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 5, "Fen Creeper", new MinionFactory().setPower(3).setHitPoints(6).addEffect(new TauntEffect())),
 		new MinionCardEntry(479, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 2, "Kobold Geomancer", new MinionFactory().setPower(2).setHitPoints(2).addEffect(new SpellDamageEffect(1))),
 		new MinionCardEntry(519, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 3, "Ironfur Grizzly", new MinionFactory().setMinionType(MinionType.Beast).setPower(3).setHitPoints(3).addEffect(new TauntEffect())),
@@ -349,7 +356,6 @@ public final class CardRepository {
 62, CardSet.Classic, Rarity.Common, HeroClass.Priest, 3, "Thoughtsteal", new Effect()
 317, CardSet.Classic, Rarity.Common, HeroClass.Hunter, 3, "Unleash the Hounds", new Effect()
 160, CardSet.Classic, Rarity.Rare, HeroClass.Mage, 3, "Vaporize", new Effect()
-428, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 3, "Acolyte of Pain", new MinionFactory().setPower(1).setHitPoints(3)
 425, CardSet.Classic, Rarity.Rare, HeroClass.Neutral, 3, "Alarm-o-Bot", new MinionFactory().setPower(0).setHitPoints(3)
 23, CardSet.Classic, Rarity.Rare, HeroClass.Paladin, 3, "Aldor Peacekeeper", new MinionFactory().setPower(3).setHitPoints(3)
 97, CardSet.Classic, Rarity.Rare, HeroClass.Neutral, 3, "Arcane Golem", new MinionFactory().setPower(4).setHitPoints(4)
@@ -529,11 +535,26 @@ public final class CardRepository {
 		public final Card create() {
 			return (Card)createInstance()
 				.setManaCost(manaCost)
+				.setName(name)
 				.setActionDiscovery(actionDiscovery)
 				.setOverloadCost(overloadCost);
 		}
 
 		protected abstract Card createInstance();
+
+		@Override
+		public String toString() {
+			return "CardEntry{" +
+				"id=" + id +
+				", cardSet=" + cardSet +
+				", rarity=" + rarity +
+				", heroClass=" + heroClass +
+				", manaCost=" + manaCost +
+				", name='" + name + '\'' +
+				", actionDiscovery=" + actionDiscovery +
+				", overloadCost=" + overloadCost +
+				'}';
+		}
 	}
 
 	/**

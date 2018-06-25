@@ -80,17 +80,18 @@ public class Minion extends Character<Minion> implements GameEventListener<Heart
 
 	@Override
 	public HearthstoneGameState onEvent(HearthstoneGameState state, GameEvent event) {
+		HearthstoneGameState nextState = state;
 		if (event instanceof MinionTakesDamageEvent) {
 			MinionTakesDamageEvent minionTakesDamageEvent = (MinionTakesDamageEvent)event;
 			if (minionTakesDamageEvent.getCharacter().getTargetRef().equals(getTargetRef())) {
-				Minion minion = (Minion)state.findTarget(getTargetRef());
+				Minion minion = (Minion)nextState.findTarget(getTargetRef());
 				if (minion.getCurrentHitPoints() <= 0) {
-					return state.apply(new DestroyMinionAtomic(this));
+					nextState = nextState.apply(new DestroyMinionAtomic(this));
 				}
 			}
 		} else if (event instanceof EndTurnEvent) {
 			hasSummoningSickness = false;
 		}
-		return super.onEvent(state, event);
+		return super.onEvent(nextState, event);
 	}
 }

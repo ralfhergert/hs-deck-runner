@@ -189,6 +189,11 @@ public class HearthstoneGameState extends GameState<HearthstoneGameState> implem
 					return minion;
 				}
 			}
+			for (Minion minion : player.getGraveyard()) {
+				if (minion.isEffectedBy(effect)) {
+					return minion;
+				}
+			}
 		}
 		return null;
 	}

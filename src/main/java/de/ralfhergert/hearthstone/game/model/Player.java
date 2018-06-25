@@ -81,12 +81,21 @@ public class Player extends Character<Player> implements GameEventListener<Heart
 		return this;
 	}
 
+	public List<Card> getLibrary() {
+		return new ArrayList<>(library);
+	}
+
 	public Card removeTopCardFromLibrary() {
 		try {
 			return library.pop();
 		} catch (EmptyStackException e) {
 			return null;
 		}
+	}
+
+	public Player addToLibrary(Card card) {
+		library.add(card);
+		return this;
 	}
 
 	public Player addToLibrary(Collection<Card> cards) {
@@ -269,6 +278,11 @@ public class Player extends Character<Player> implements GameEventListener<Heart
 
 	public boolean isOwnerOf(Effect effect) {
 		for (Minion minion : battlefield) {
+			if (minion.isEffectedBy(effect)) {
+				return true;
+			}
+		}
+		for (Minion minion : graveyard) {
 			if (minion.isEffectedBy(effect)) {
 				return true;
 			}
