@@ -1,7 +1,6 @@
 package de.ralfhergert.hearthstone.game.model;
 
 import de.ralfhergert.hearthstone.atomic.DestroyMinionAtomic;
-import de.ralfhergert.hearthstone.effect.Effect;
 import de.ralfhergert.hearthstone.event.EndTurnEvent;
 import de.ralfhergert.hearthstone.event.GameEvent;
 import de.ralfhergert.hearthstone.event.GameEventListener;
@@ -18,7 +17,6 @@ public class Minion extends Character<Minion> implements GameEventListener<Heart
 	private Card card;
 	private MinionFactory minionFactory;
 	private MinionType minionType;
-	private Effect battlecry;
 
 	private boolean hasCharge;
 	private boolean hasSummoningSickness = true;
@@ -30,7 +28,6 @@ public class Minion extends Character<Minion> implements GameEventListener<Heart
 		card = other.card;
 		minionFactory = other.minionFactory;
 		minionType = other.minionType;
-		battlecry = other.battlecry;
 		hasCharge = other.hasCharge;
 		hasSummoningSickness = other.hasSummoningSickness;
 	}
@@ -54,15 +51,6 @@ public class Minion extends Character<Minion> implements GameEventListener<Heart
 
 	public Minion setMinionType(MinionType minionType) {
 		this.minionType = minionType;
-		return this;
-	}
-
-	public Effect getBattlecry() {
-		return battlecry;
-	}
-
-	public Minion setBattlecry(Effect battlecry) {
-		this.battlecry = battlecry;
 		return this;
 	}
 

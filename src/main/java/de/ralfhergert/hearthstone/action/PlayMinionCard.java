@@ -1,8 +1,6 @@
 package de.ralfhergert.hearthstone.action;
 
 import de.ralfhergert.generic.game.model.Action;
-import de.ralfhergert.hearthstone.effect.Effect;
-import de.ralfhergert.hearthstone.effect.GeneralEffect;
 import de.ralfhergert.hearthstone.event.MinionEntersBattlefieldEvent;
 import de.ralfhergert.hearthstone.game.model.Card;
 import de.ralfhergert.hearthstone.game.model.CardRef;
@@ -36,12 +34,6 @@ public class PlayMinionCard implements Action<HearthstoneGameState> {
 			player.removeFromHand(minionCard);
 			player.addToPlayedCards(minionCard);
 			final Minion minion = minionCard.getMinionFactory().create();
-			Effect effect = minion.getBattlecry();
-			if (effect != null) {
-				if (effect instanceof GeneralEffect) {
-					nextState = ((GeneralEffect)effect).applyTo(nextState);
-				}
-			}
 			nextState.getActivePlayer().addToBattlefield(minion, position);
 			return nextState.onEvent(new MinionEntersBattlefieldEvent(minion.getTargetRef()));
 		}
