@@ -53,6 +53,16 @@ public final class CardRepository {
 				return nextState;
 			}
 		})),
+		new AbilityCardEntry(44, CardSet.Basic, Rarity.Free, HeroClass.Mage, 7, "Flamestrike", new GeneralEffect() {
+			@Override
+			public HearthstoneGameState applyTo(HearthstoneGameState state) {
+				HearthstoneGameState nextState = state;
+				for (Minion minion : state.getOpposingPlayer(state.getActivePlayer()).getBattlefield()) {
+					nextState = new DamageCharacterAtomic(minion.getTargetRef(), 4).apply(nextState);
+				}
+				return nextState;
+			}
+		}),
 		new MinionCardEntry(55,  CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 1, "Murloc Raider", new MinionFactory().setMinionType(MinionType.Murloc).setPower(2).setHitPoints(1)),
 		new MinionCardEntry(60,  CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 6, "Boulderfist Ogre", new MinionFactory().setPower(6).setHitPoints(7)),
 		new MinionCardEntry(76,  CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 1, "Stonetusk Boar", new MinionFactory().setMinionType(MinionType.Beast).setPower(1).setHitPoints(1).addEffect(new ChargeEffect())),
@@ -128,7 +138,6 @@ public final class CardRepository {
 		new MinionCardEntry(663, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 2, "Frostwolf Grunt", new MinionFactory().setPower(2).setHitPoints(2).addEffect(new TauntEffect()))
 /* Cards which effects are not yet implemented.
 401, CardSet.Basic, Rarity.Free, HeroClass.Priest, 10, "Mind Control", new Effect()
-44, CardSet.Basic, Rarity.Free, HeroClass.Mage, 7, "Flamestrike", new Effect()
 90, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 7, "Sprint", new Effect()
 310, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 7, "Stormwind Champion", new MinionFactor().setPower(6).setHitPoints(6)
 667, CardSet.Basic, Rarity.Free, HeroClass.Druid, 6, "Starfire", new Effect()
