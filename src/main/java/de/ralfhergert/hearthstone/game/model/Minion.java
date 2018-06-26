@@ -36,6 +36,11 @@ public class Minion extends Character<Minion> implements GameEventListener<Heart
 		return card;
 	}
 
+	public Minion setCard(MinionCard card) {
+		this.card = card;
+		return this;
+	}
+
 	public MinionFactory getMinionFactory() {
 		return minionFactory;
 	}

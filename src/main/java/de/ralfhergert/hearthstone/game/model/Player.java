@@ -113,6 +113,7 @@ public class Player extends Character<Player> implements GameEventListener<Heart
 	}
 
 	public Player addToHand(Card card) {
+		Objects.requireNonNull(card, "card must not be null");
 		hand.add(card);
 		return this;
 	}

@@ -2,6 +2,7 @@ package de.ralfhergert.hearthstone.card;
 
 import de.ralfhergert.hearthstone.action.ActionDiscovery;
 import de.ralfhergert.hearthstone.action.DrawCardsAction;
+import de.ralfhergert.hearthstone.atomic.BounceMinionToHandAtomic;
 import de.ralfhergert.hearthstone.atomic.DamageCharacterAtomic;
 import de.ralfhergert.hearthstone.atomic.HealCharacterAtomic;
 import de.ralfhergert.hearthstone.effect.Effect;
@@ -23,11 +24,14 @@ import de.ralfhergert.hearthstone.game.model.Minion;
 import de.ralfhergert.hearthstone.game.model.MinionCard;
 import de.ralfhergert.hearthstone.game.model.MinionType;
 import de.ralfhergert.hearthstone.game.model.Player;
+import de.ralfhergert.hearthstone.game.model.PlayerOrdinal;
 import de.ralfhergert.hearthstone.game.model.Rarity;
 import de.ralfhergert.hearthstone.game.model.TargetRef;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -140,13 +144,38 @@ public final class CardRepository {
 				return effect.applyTo(state);
 			}
 		})),
+		new AbilityCardEntry(658, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 6, "Vanish", new GeneralEffect() {
+			/**
+			 * Return all minions to their owner's hand.
+			 *  - The minions are returned in the order of play. (oldest minion first)
+			 *  - Cards which can not be returned because the hand is already full are destroyed. (Thus deathrattle triggers.)
+			 *  - TODO: for cards which generate tokens, the tokens enter play first, thus vanish returns them first. (for instance "Dr. Boom")
+			 */
+			@Override
+			public HearthstoneGameState applyTo(HearthstoneGameState state) {
+				HearthstoneGameState nextState = state;
+				List<Minion> minions = new ArrayList<>();
+				minions.addAll(nextState.getPlayer(PlayerOrdinal.One).getBattlefield());
+				minions.addAll(nextState.getPlayer(PlayerOrdinal.Two).getBattlefield());
+				// sort the minion by creation-time (implicitly stored in the targetRef)
+				Collections.sort(minions, new Comparator<Minion>() {
+					@Override
+					public int compare(Minion o1, Minion o2) {
+						return (int)(o1.getTargetRef().getId() - o2.getTargetRef().getId());
+					}
+				});
+				for (Minion minion : minions) {
+					nextState = new BounceMinionToHandAtomic(minion.getTargetRef()).apply(nextState);
+				}
+				return nextState;
+			}
+		}),
 		new MinionCardEntry(659, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 4, "Ogre Magi", new MinionFactory().setPower(4).setHitPoints(4).addEffect(new SpellDamageEffect(1))),
 		new MinionCardEntry(663, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 2, "Frostwolf Grunt", new MinionFactory().setPower(2).setHitPoints(2).addEffect(new TauntEffect()))
 /* Cards which effects are not yet implemented.
 401, CardSet.Basic, Rarity.Free, HeroClass.Priest, 10, "Mind Control", new Effect()
 310, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 7, "Stormwind Champion", new MinionFactor().setPower(6).setHitPoints(6)
 667, CardSet.Basic, Rarity.Free, HeroClass.Druid, 6, "Starfire", new Effect()
-658, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 6, "Vanish", new Effect()
 636, CardSet.Basic, Rarity.Free, HeroClass.Shaman, 6, "Fire Elemental", new MinionFactor().setPower(6).setHitPoints(5)
 182, CardSet.Basic, Rarity.Free, HeroClass.Warrior, 5, "Arcanite Reaper", new WeaponFactory().setAttack(5).setDurability(2)
 433, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 5, "Assassin's Blade", new WeaponFactory().setAttack(3).setDurability(4)

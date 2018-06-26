@@ -35,4 +35,8 @@ public class MinionCard extends Card<MinionCard> {
 		this.minionFactory = minionFactory;
 		return this;
 	}
+
+	public Minion createMinion() {
+		return minionFactory.create().setCard(this);
+	}
 }
