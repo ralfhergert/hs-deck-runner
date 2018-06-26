@@ -78,6 +78,12 @@ public final class CardRepository {
 				return nextState;
 			}
 		})),
+		new AbilityCardEntry(90, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 7, "Sprint", new GeneralEffect() {
+			@Override
+			public HearthstoneGameState applyTo(HearthstoneGameState state) {
+				return new DrawCardsAction(state.getPlayerOrdinal(state.getActivePlayer()), 4).apply(state);
+			}
+		}),
 		new AbilityCardEntry(122, CardSet.Basic, Rarity.Free, HeroClass.Warlock, 4, "Hellfire", new GeneralEffect() {
 			@Override
 			public HearthstoneGameState applyTo(HearthstoneGameState state) {
@@ -138,7 +144,6 @@ public final class CardRepository {
 		new MinionCardEntry(663, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 2, "Frostwolf Grunt", new MinionFactory().setPower(2).setHitPoints(2).addEffect(new TauntEffect()))
 /* Cards which effects are not yet implemented.
 401, CardSet.Basic, Rarity.Free, HeroClass.Priest, 10, "Mind Control", new Effect()
-90, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 7, "Sprint", new Effect()
 310, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 7, "Stormwind Champion", new MinionFactor().setPower(6).setHitPoints(6)
 667, CardSet.Basic, Rarity.Free, HeroClass.Druid, 6, "Starfire", new Effect()
 658, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 6, "Vanish", new Effect()
