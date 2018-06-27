@@ -61,6 +61,20 @@ public final class CardRepository {
 				return nextState;
 			}
 		})),
+		new AbilityCardEntry(38, CardSet.Classic, Rarity.Common, HeroClass.Priest, 0, "Circle of Healing", new GeneralEffect() {
+			/** Restore 4 Health to ALL minions. */
+			@Override
+			public HearthstoneGameState applyTo(HearthstoneGameState state) {
+				HearthstoneGameState nextState = state;
+				for (Minion minion : state.getActivePlayer().getBattlefield()) {
+					nextState = new HealCharacterAtomic(minion.getTargetRef(), 4).apply(nextState);
+				}
+				for (Minion minion : state.getPassivePlayer().getBattlefield()) {
+					nextState = new HealCharacterAtomic(minion.getTargetRef(), 4).apply(nextState);
+				}
+				return nextState;
+			}
+		}),
 		new AbilityCardEntry(44, CardSet.Basic, Rarity.Free, HeroClass.Mage, 7, "Flamestrike", new GeneralEffect() {
 			@Override
 			public HearthstoneGameState applyTo(HearthstoneGameState state) {
@@ -543,12 +557,10 @@ public final class CardRepository {
 112, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 1, "Worgen Infiltrator", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(1)
 629, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 1, "Young Dragonhawk", CardType.Minion, new MinionFactory().setPower(1).setHitPoints(1)
 123, CardSet.Classic, Rarity.Rare, HeroClass.Neutral, 1, "Young Priestess", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(1)
-38, CardSet.Classic, Rarity.Common, HeroClass.Priest, 0, "Circle of Healing", new Effect()
 366, CardSet.Classic, Rarity.Common, HeroClass.Warrior, 0, "Inner Rage", new Effect()
 364, CardSet.Classic, Rarity.Epic, HeroClass.Rogue, 0, "Preparation", new Effect()
 550, CardSet.Classic, Rarity.Common, HeroClass.Rogue, 0, "Shadowstep", new Effect()
 544, CardSet.Classic, Rarity.Common, HeroClass.Priest, 0, "Silence", new Effect()
-273, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 0, "Wisp", CardType.Minion, new MinionFactory().setPower(1).setHitPoints(1)
 */
 	);
 
