@@ -5,15 +5,18 @@ import de.ralfhergert.hearthstone.event.GameEvent;
 import de.ralfhergert.hearthstone.event.GameEventListener;
 import de.ralfhergert.hearthstone.game.model.Character;
 import de.ralfhergert.hearthstone.game.model.HearthstoneGameState;
+import de.ralfhergert.hearthstone.game.model.TargetRef;
 
 /**
  * This effect is a permanent modification of the attack of a character.
  */
 public class ModifyAttackEffect implements GeneralEffect, GameEventListener<HearthstoneGameState> {
 
-	private int modification;
+	private final TargetRef targetRef;
+	private final int modification;
 
-	public ModifyAttackEffect(int modification) {
+	public ModifyAttackEffect(TargetRef targetRef, int modification) {
+		this.targetRef = targetRef;
 		this.modification = modification;
 	}
 
@@ -22,7 +25,8 @@ public class ModifyAttackEffect implements GeneralEffect, GameEventListener<Hear
 	 */
 	@Override
 	public HearthstoneGameState applyTo(HearthstoneGameState state) {
-		Character character = state.getEffectOwner(this);
+		Character character = state.findTarget(targetRef);
+		character.addEffect(this);
 		character.setPower(character.getPower() + modification);
 		return state;
 	}
@@ -33,6 +37,7 @@ public class ModifyAttackEffect implements GeneralEffect, GameEventListener<Hear
 	@Override
 	public HearthstoneGameState unapplyOn(HearthstoneGameState state) {
 		Character character = state.getEffectOwner(this);
+		character.removeEffect(this);
 		character.setPower(character.getPower() - modification);
 		return state;
 	}

@@ -5,15 +5,18 @@ import de.ralfhergert.hearthstone.event.GameEvent;
 import de.ralfhergert.hearthstone.event.GameEventListener;
 import de.ralfhergert.hearthstone.game.model.Character;
 import de.ralfhergert.hearthstone.game.model.HearthstoneGameState;
+import de.ralfhergert.hearthstone.game.model.TargetRef;
 
 /**
  * This effect is a permanent modification of the health of a character.
  */
 public class ModifyHealthEffect implements GeneralEffect, GameEventListener<HearthstoneGameState> {
 
-	private int modification;
+	private final TargetRef targetRef;
+	private final int modification;
 
-	public ModifyHealthEffect(int modification) {
+	public ModifyHealthEffect(TargetRef targetRef, int modification) {
+		this.targetRef = targetRef;
 		this.modification = modification;
 	}
 
@@ -22,7 +25,8 @@ public class ModifyHealthEffect implements GeneralEffect, GameEventListener<Hear
 	 */
 	@Override
 	public HearthstoneGameState applyTo(HearthstoneGameState state) {
-		Character character = state.getEffectOwner(this);
+		Character character = state.findTarget(targetRef);
+		character.addEffect(this);
 		character.setCurrentHitPoints(character.getCurrentHitPoints() + modification);
 		character.setMaxHitPoints(character.getMaxHitPoints() + modification);
 		return state;
@@ -34,6 +38,7 @@ public class ModifyHealthEffect implements GeneralEffect, GameEventListener<Hear
 	@Override
 	public HearthstoneGameState unapplyOn(HearthstoneGameState state) {
 		Character character = state.getEffectOwner(this);
+		character.removeEffect(this);
 		character.setCurrentHitPoints(character.getCurrentHitPoints() - modification);
 		character.setMaxHitPoints(character.getMaxHitPoints() - modification);
 		return state;

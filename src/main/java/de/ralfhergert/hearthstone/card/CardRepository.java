@@ -12,6 +12,7 @@ import de.ralfhergert.hearthstone.game.effect.AfterYouSummonAMinion;
 import de.ralfhergert.hearthstone.game.effect.BattlecryEffect;
 import de.ralfhergert.hearthstone.game.effect.ChargeEffect;
 import de.ralfhergert.hearthstone.game.effect.ModifyAttackEffect;
+import de.ralfhergert.hearthstone.game.effect.ModifyHealthEffect;
 import de.ralfhergert.hearthstone.game.effect.SpellDamageEffect;
 import de.ralfhergert.hearthstone.game.effect.TauntEffect;
 import de.ralfhergert.hearthstone.game.effect.WheneverThisMinionTakesDamage;
@@ -161,14 +162,23 @@ public final class CardRepository {
 		new MinionCardEntry(564, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 1, "Goldshire Footman", CardType.Minion, new MinionFactory().setPower(1).setHitPoints(2).addEffect(new TauntEffect())),
 		new MinionCardEntry(576, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 2, "Bloodfen Raptor", CardType.Minion, new MinionFactory().setMinionType(MinionType.Beast).setPower(3).setHitPoints(2)),
 		new MinionCardEntry(603, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 4, "Stormwind Knight", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(5).addEffect(new ChargeEffect())),
+		new MinionCardEntry(604, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 5, "Frostwolf Warlord", CardType.Minion, new MinionFactory().setPower(4).setHitPoints(4).addEffect(new BattlecryEffect() {
+			@Override
+			public HearthstoneGameState applyTo(HearthstoneGameState state) {
+				final Player owner = state.getOwner(this);
+				final TargetRef targetRef = state.getEffectOwner(this).getTargetRef();
+				final int friendlyMinions = (int)owner.getBattlefield().stream()
+					.filter(minion -> !minion.getTargetRef().equals(targetRef))
+					.count();
+				HearthstoneGameState nextState = new ModifyAttackEffect(targetRef, friendlyMinions).applyTo(state);
+				return new ModifyHealthEffect(targetRef, friendlyMinions).applyTo(nextState);
+			}
+		})),
 		new MinionCardEntry(611, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 3, "Silverback Patriarch", CardType.Minion, new MinionFactory().setMinionType(MinionType.Beast).setPower(1).setHitPoints(4).addEffect(new TauntEffect())),
 		new MinionCardEntry(624, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 5, "Gurubashi Berserker", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(7).addEffect(new WheneverThisMinionTakesDamage() {
 			@Override
 			public HearthstoneGameState applyTo(HearthstoneGameState state) {
-				Character character = state.getEffectOwner(this);
-				final ModifyAttackEffect effect = new ModifyAttackEffect(3);
-				character.addEffect(effect);
-				return effect.applyTo(state);
+				return new ModifyAttackEffect(state.getEffectOwner(this).getTargetRef(), 3).applyTo(state);
 			}
 		})),
 		new AbilityCardEntry(658, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 6, "Vanish", new GeneralEffect() {
@@ -231,7 +241,6 @@ public final class CardRepository {
 568, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 5, "Assassinate", new Effect()
 256, CardSet.Basic, Rarity.Free, HeroClass.Shaman, 5, "Bloodlust", new Effect()
 77486, CardSet.Basic, Rarity.Free, HeroClass.Mage, 5, "Polymorph: ???", new Effect()
-604, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 5, "Frostwolf Warlord", CardType.Minion, new MinionFactory().setPower(4).setHitPoints(4)
 184, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 5, "Nightblade", CardType.Minion, new MinionFactory().setPower(4).setHitPoints(4)
 101, CardSet.Basic, Rarity.Free, HeroClass.Hunter, 5, "Starving Buzzard", CardType.Minion, new MinionFactory().setPower(3).setHitPoints(2)
 325, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 5, "Stormpike Commando", CardType.Minion, new MinionFactory().setPower(4).setHitPoints(2)
