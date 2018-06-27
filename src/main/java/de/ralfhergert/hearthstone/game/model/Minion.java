@@ -7,6 +7,8 @@ import de.ralfhergert.hearthstone.event.GameEventListener;
 import de.ralfhergert.hearthstone.event.MinionTakesDamageEvent;
 import de.ralfhergert.hearthstone.game.minion.MinionFactory;
 
+import java.util.function.Supplier;
+
 /**
  * Represents a minion on the battlefield.
  */
@@ -14,7 +16,7 @@ public class Minion extends Character<Minion> implements GameEventListener<Heart
 
 	/* The card this minion was summoned from. Can be null, if the minion was created
 	 * by a hero power or other effect. */
-	private Card card;
+	private Supplier<MinionCard> cardSupplier;
 	private MinionFactory minionFactory;
 	private MinionType minionType;
 
@@ -25,19 +27,19 @@ public class Minion extends Character<Minion> implements GameEventListener<Heart
 
 	public Minion(Minion other) {
 		super(other);
-		card = other.card;
+		cardSupplier = other.cardSupplier;
 		minionFactory = other.minionFactory;
 		minionType = other.minionType;
 		hasCharge = other.hasCharge;
 		hasSummoningSickness = other.hasSummoningSickness;
 	}
 
-	public Card getCard() {
-		return card;
+	public MinionCard getCardSupplier() {
+		return cardSupplier.get();
 	}
 
-	public Minion setCard(MinionCard card) {
-		this.card = card;
+	public Minion setCardSupplier(Supplier<MinionCard> cardSupplier) {
+		this.cardSupplier = cardSupplier;
 		return this;
 	}
 

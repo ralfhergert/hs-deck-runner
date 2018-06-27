@@ -5,5 +5,6 @@ package de.ralfhergert.hearthstone.game.model;
  */
 public enum CardSet {
 	Basic,
-	Classic
+	Classic,
+	Blackrock
 }

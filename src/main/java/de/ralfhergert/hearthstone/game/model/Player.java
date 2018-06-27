@@ -9,6 +9,7 @@ import de.ralfhergert.hearthstone.event.PlayerTakesDamageEvent;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.EmptyStackException;
 import java.util.List;
 import java.util.Objects;
@@ -318,5 +319,18 @@ public class Player extends Character<Player> implements GameEventListener<Heart
 			}
 		}
 		return false;
+	}
+
+	public List<Character> getAllCharactersInOrderOfPlay() {
+		List<Character> characters = new ArrayList<>();
+		characters.add(this);
+		characters.addAll(battlefield);
+		characters.sort(new Comparator<Character>() {
+			@Override
+			public int compare(Character o1, Character o2) {
+				return (int)(o1.getTargetRef().getId() - o2.getTargetRef().getId());
+			}
+		});
+		return characters;
 	}
 }

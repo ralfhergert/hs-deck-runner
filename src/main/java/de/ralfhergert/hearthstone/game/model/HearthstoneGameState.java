@@ -66,6 +66,17 @@ public class HearthstoneGameState extends GameState<HearthstoneGameState> implem
 		}
 	}
 
+	/**
+	 * @return the player who is on turn currently.
+	 */
+	public Player getPassivePlayer() {
+		switch (turn) {
+			case Player1Turn: return players[1];
+			case Player2Turn: return players[0];
+			default: return null;
+		}
+	}
+
 	public Player getOpposingPlayer(Player currentPlayer) {
 		for (Player player : players) {
 			if (player != currentPlayer) {

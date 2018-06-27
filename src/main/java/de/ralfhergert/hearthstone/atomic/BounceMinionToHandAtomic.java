@@ -34,7 +34,7 @@ public class BounceMinionToHandAtomic implements Action<HearthstoneGameState> {
 		Player owner = nextState.getOwner(minion);
 		if (owner.getHand().size() < 10) {
 			owner.removeFromBattlefield(minion);
-			owner.addToHand(minion.getCard());
+			owner.addToHand(minion.getCardSupplier());
 			return nextState.onEvent(new MinionDestroyedEvent(minion));
 		} else { // hand is full - destroy the minion.
 			return new DestroyMinionAtomic(minion).apply(nextState);

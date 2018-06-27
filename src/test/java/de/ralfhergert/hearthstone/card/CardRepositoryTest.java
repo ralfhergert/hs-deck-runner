@@ -19,10 +19,9 @@ public class CardRepositoryTest {
 		Assert.assertEquals("name should be", "Wisp", card.getName());
 	}
 
-	@Test
+	@Test(expected = CardNotFoundException.class)
 	public void testRetrievalOfUnknownCardById() {
 		final Card card = CardRepository.createById(-1);
-		Assert.assertNull("card should be null", card);
 	}
 
 	@Test

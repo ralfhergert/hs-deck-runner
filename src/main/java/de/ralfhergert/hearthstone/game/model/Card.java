@@ -16,6 +16,7 @@ public class Card<Self extends Card> implements GameEventListener<HearthstoneGam
 	private int manaCost;
 	private int overloadCost;
 	private String name;
+	private CardType cardType;
 
 	private ActionDiscovery<Self> actionDiscovery;
 
@@ -79,6 +80,15 @@ public class Card<Self extends Card> implements GameEventListener<HearthstoneGam
 
 	public Self setName(String name) {
 		this.name = name;
+		return (Self)this;
+	}
+
+	public CardType getCardType() {
+		return cardType;
+	}
+
+	public Self setCardType(CardType cardType) {
+		this.cardType = cardType;
 		return (Self)this;
 	}
 
