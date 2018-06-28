@@ -15,6 +15,7 @@ import de.ralfhergert.hearthstone.game.effect.ModifyAttackEffect;
 import de.ralfhergert.hearthstone.game.effect.ModifyHealthEffect;
 import de.ralfhergert.hearthstone.game.effect.SpellDamageEffect;
 import de.ralfhergert.hearthstone.game.effect.TauntEffect;
+import de.ralfhergert.hearthstone.game.effect.modifier.UntilEndOfTurn;
 import de.ralfhergert.hearthstone.game.effect.WheneverThisMinionTakesDamage;
 import de.ralfhergert.hearthstone.game.minion.MinionFactory;
 import de.ralfhergert.hearthstone.game.model.AbilityCard;
@@ -123,6 +124,16 @@ public final class CardRepository {
 		new MinionCardEntry(174, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 3, "Wolfrider", CardType.Minion, new MinionFactory().setPower(3).setHitPoints(1).addEffect(new ChargeEffect())),
 		new MinionCardEntry(194, CardSet.Classic, Rarity.Legendary, HeroClass.Hunter, 9, "King Krush", CardType.Minion, new MinionFactory().setMinionType(MinionType.Beast).setPower(8).setHitPoints(8).addEffect(new ChargeEffect())),
 		new MinionCardEntry(238, CardSet.Basic,   Rarity.Free, HeroClass.Druid, 8, "Ironbark Protector", CardType.Minion, new MinionFactory().setPower(8).setHitPoints(8).addEffect(new TauntEffect())),
+		new AbilityCardEntry(256, CardSet.Basic, Rarity.Free, HeroClass.Shaman, 5, "Bloodlust", new GeneralEffect() {
+			@Override
+			public HearthstoneGameState applyTo(HearthstoneGameState state) {
+				HearthstoneGameState nextState = state;
+				for (Minion minion : state.getActivePlayer().getBattlefield()) {
+					nextState = new ModifyAttackEffect(minion.getTargetRef(), 3, new UntilEndOfTurn<>()).applyTo(nextState);
+				}
+				return nextState;
+			}
+		}),
 		new MinionCardEntry(273, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 0, "Wisp", CardType.Minion, new MinionFactory().setPower(1).setHitPoints(1)),
 		new MinionCardEntry(283, CardSet.Basic,   Rarity.Free, HeroClass.Paladin, 7, "Guardian of Kings", CardType.Minion, new MinionFactory().setPower(5).setHitPoints(6).addEffect(new BattlecryEffect() {
 			@Override
@@ -239,7 +250,6 @@ public final class CardRepository {
 182, CardSet.Basic, Rarity.Free, HeroClass.Warrior, 5, "Arcanite Reaper", new WeaponFactory().setAttack(5).setDurability(2)
 433, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 5, "Assassin's Blade", new WeaponFactory().setAttack(3).setDurability(4)
 568, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 5, "Assassinate", new Effect()
-256, CardSet.Basic, Rarity.Free, HeroClass.Shaman, 5, "Bloodlust", new Effect()
 77486, CardSet.Basic, Rarity.Free, HeroClass.Mage, 5, "Polymorph: ???", new Effect()
 184, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 5, "Nightblade", CardType.Minion, new MinionFactory().setPower(4).setHitPoints(4)
 101, CardSet.Basic, Rarity.Free, HeroClass.Hunter, 5, "Starving Buzzard", CardType.Minion, new MinionFactory().setPower(3).setHitPoints(2)

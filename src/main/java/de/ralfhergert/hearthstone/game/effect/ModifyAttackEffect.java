@@ -3,6 +3,8 @@ package de.ralfhergert.hearthstone.game.effect;
 import de.ralfhergert.hearthstone.effect.GeneralEffect;
 import de.ralfhergert.hearthstone.event.GameEvent;
 import de.ralfhergert.hearthstone.event.GameEventListener;
+import de.ralfhergert.hearthstone.game.effect.modifier.EffectEventListener;
+import de.ralfhergert.hearthstone.game.effect.modifier.NoEffectEventListener;
 import de.ralfhergert.hearthstone.game.model.Character;
 import de.ralfhergert.hearthstone.game.model.HearthstoneGameState;
 import de.ralfhergert.hearthstone.game.model.TargetRef;
@@ -14,10 +16,16 @@ public class ModifyAttackEffect implements GeneralEffect, GameEventListener<Hear
 
 	private final TargetRef targetRef;
 	private final int modification;
+	private final EffectEventListener<ModifyAttackEffect> eventListener;
 
 	public ModifyAttackEffect(TargetRef targetRef, int modification) {
+		this(targetRef, modification, new NoEffectEventListener<>());
+	}
+
+	public ModifyAttackEffect(TargetRef targetRef, int modification, EffectEventListener<ModifyAttackEffect> eventListener) {
 		this.targetRef = targetRef;
 		this.modification = modification;
+		this.eventListener = eventListener;
 	}
 
 	/**
@@ -44,7 +52,7 @@ public class ModifyAttackEffect implements GeneralEffect, GameEventListener<Hear
 
 	@Override
 	public HearthstoneGameState onEvent(HearthstoneGameState state, GameEvent event) {
-		return state;
+		return eventListener.onEvent(state, event, this);
 	}
 
 	@Override
