@@ -32,6 +32,8 @@ import de.ralfhergert.hearthstone.game.model.Player;
 import de.ralfhergert.hearthstone.game.model.PlayerOrdinal;
 import de.ralfhergert.hearthstone.game.model.Rarity;
 import de.ralfhergert.hearthstone.game.model.TargetRef;
+import de.ralfhergert.hearthstone.game.model.WeaponCard;
+import de.ralfhergert.hearthstone.game.weapon.WeaponFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -120,10 +122,13 @@ public final class CardRepository {
 		}),
 		new MinionCardEntry(124, CardSet.Classic, Rarity.Epic, HeroClass.Shaman, 5, "Earth Elemental", CardType.Minion, new MinionFactory().setMinionType(MinionType.Elemental).setPower(7).setHitPoints(8).addEffect(new TauntEffect())).setOverloadCost(3),
 		new MinionCardEntry(130, CardSet.Basic,   Rarity.Free, HeroClass.Warrior, 4, "Kor'kron Elite", CardType.Minion, new MinionFactory().setPower(4).setHitPoints(3).addEffect(new ChargeEffect())),
+		new WeaponCardEntry(152, CardSet.Classic, Rarity.Common, HeroClass.Shaman, 2, "Stormforged Axe", new WeaponFactory().setAttack(2).setDurability(3)).setOverloadCost(1),
 		new MinionCardEntry(173, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 7, "Core Hound", CardType.Minion, new MinionFactory().setMinionType(MinionType.Beast).setPower(9).setHitPoints(5)),
 		new MinionCardEntry(174, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 3, "Wolfrider", CardType.Minion, new MinionFactory().setPower(3).setHitPoints(1).addEffect(new ChargeEffect())),
+		new WeaponCardEntry(182, CardSet.Basic,   Rarity.Free, HeroClass.Warrior, 5, "Arcanite Reaper", new WeaponFactory().setAttack(5).setDurability(2)),
 		new MinionCardEntry(194, CardSet.Classic, Rarity.Legendary, HeroClass.Hunter, 9, "King Krush", CardType.Minion, new MinionFactory().setMinionType(MinionType.Beast).setPower(8).setHitPoints(8).addEffect(new ChargeEffect())),
 		new MinionCardEntry(238, CardSet.Basic,   Rarity.Free, HeroClass.Druid, 8, "Ironbark Protector", CardType.Minion, new MinionFactory().setPower(8).setHitPoints(8).addEffect(new TauntEffect())),
+		new WeaponCardEntry(250, CardSet.Basic, Rarity.Free, HeroClass.Paladin, 1, "Light's Justice", new WeaponFactory().setAttack(1).setDurability(4)),
 		new AbilityCardEntry(256, CardSet.Basic, Rarity.Free, HeroClass.Shaman, 5, "Bloodlust", new GeneralEffect() {
 			@Override
 			public HearthstoneGameState applyTo(HearthstoneGameState state) {
@@ -164,6 +169,7 @@ public final class CardRepository {
 				return new DrawCardsAction(state.getPlayerOrdinal(state.getOwner(this)), 1).apply(state);
 			}
 		})),
+		new WeaponCardEntry(433, CardSet.Basic,   Rarity.Free, HeroClass.Rogue, 5, "Assassin's Blade", new WeaponFactory().setAttack(3).setDurability(4)),
 		new MinionCardEntry(476, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 5, "Fen Creeper", CardType.Minion, new MinionFactory().setPower(3).setHitPoints(6).addEffect(new TauntEffect())),
 		new MinionCardEntry(479, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 2, "Kobold Geomancer", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(2).addEffect(new SpellDamageEffect(1))),
 		new MinionCardEntry(519, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 3, "Ironfur Grizzly", CardType.Minion, new MinionFactory().setMinionType(MinionType.Beast).setPower(3).setHitPoints(3).addEffect(new TauntEffect())),
@@ -192,6 +198,7 @@ public final class CardRepository {
 				return new ModifyAttackEffect(state.getEffectOwner(this).getTargetRef(), 3).applyTo(state);
 			}
 		})),
+		new WeaponCardEntry(632, CardSet.Basic, Rarity.Free, HeroClass.Warrior, 3, "Fiery War Axe", new WeaponFactory().setAttack(3).setDurability(2)),
 		new AbilityCardEntry(658, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 6, "Vanish", new GeneralEffect() {
 			/**
 			 * Return all minions to their owner's hand.
@@ -247,8 +254,6 @@ public final class CardRepository {
 310, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 7, "Stormwind Champion", CardType.Minion, new MinionFactory().setPower(6).setHitPoints(6)
 667, CardSet.Basic, Rarity.Free, HeroClass.Druid, 6, "Starfire", new Effect()
 636, CardSet.Basic, Rarity.Free, HeroClass.Shaman, 6, "Fire Elemental", CardType.Minion, new MinionFactory().setPower(6).setHitPoints(5)
-182, CardSet.Basic, Rarity.Free, HeroClass.Warrior, 5, "Arcanite Reaper", new WeaponFactory().setAttack(5).setDurability(2)
-433, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 5, "Assassin's Blade", new WeaponFactory().setAttack(3).setDurability(4)
 568, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 5, "Assassinate", new Effect()
 77486, CardSet.Basic, Rarity.Free, HeroClass.Mage, 5, "Polymorph: ???", new Effect()
 184, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 5, "Nightblade", CardType.Minion, new MinionFactory().setPower(4).setHitPoints(4)
@@ -270,7 +275,6 @@ public final class CardRepository {
 274, CardSet.Basic, Rarity.Free, HeroClass.Mage, 4, "Water Elemental", CardType.Minion, new MinionFactory().setPower(3).setHitPoints(6)
 151, CardSet.Basic, Rarity.Free, HeroClass.Shaman, 4, "Windspeaker", CardType.Minion, new MinionFactory().setPower(3).setHitPoints(3)
 77495, CardSet.Basic, Rarity.Free, HeroClass.Warrior, 3, "Blazing Longsword", new WeaponFactory().setAttack(2).setDurability(3)
-632, CardSet.Basic, Rarity.Free, HeroClass.Warrior, 3, "Fiery War Axe", new WeaponFactory().setAttack(3).setDurability(2)
 578, CardSet.Basic, Rarity.Free, HeroClass.Hunter, 3, "Animal Companion", new Effect()
 489, CardSet.Basic, Rarity.Free, HeroClass.Mage, 3, "Arcane Intellect", new Effect()
 332, CardSet.Basic, Rarity.Free, HeroClass.Warlock, 3, "Drain Life", new Effect()
@@ -310,7 +314,6 @@ public final class CardRepository {
 357, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 2, "Murloc Tidehunter", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(1)
 435, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 2, "Novice Engineer", CardType.Minion, new MinionFactory().setPower(1).setHitPoints(1)
 208, CardSet.Basic, Rarity.Free, HeroClass.Warlock, 2, "Succubus", CardType.Minion, new MinionFactory().setPower(4).setHitPoints(3)
-250, CardSet.Basic, Rarity.Free, HeroClass.Paladin, 1, "Light's Justice", new WeaponFactory().setAttack(1).setDurability(4)
 183, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 1, "Wicked Knife", new WeaponFactory().setAttack(1).setDurability(2)
 589, CardSet.Basic, Rarity.Free, HeroClass.Mage, 1, "Arcane Missiles", new Effect()
 167, CardSet.Basic, Rarity.Free, HeroClass.Hunter, 1, "Arcane Shot", new Effect()
@@ -498,7 +501,6 @@ public final class CardRepository {
 245, CardSet.Classic, Rarity.Legendary, HeroClass.Neutral, 3, "Tinkmaster Overspark", CardType.Minion, new MinionFactory().setPower(3).setHitPoints(3)
 51, CardSet.Classic, Rarity.Common, HeroClass.Shaman, 3, "Unbound Elemental", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(4)
 119, CardSet.Classic, Rarity.Rare, HeroClass.Warlock, 3, "Void Terror", CardType.Minion, new MinionFactory().setPower(3).setHitPoints(3)
-152, CardSet.Classic, Rarity.Common, HeroClass.Shaman, 2, "Stormforged Axe", new WeaponFactory.setAttack(2).setDurability(3)
 526, CardSet.Classic, Rarity.Rare, HeroClass.Shaman, 2, "Ancestral Spirit", new Effect()
 664, CardSet.Classic, Rarity.Common, HeroClass.Warrior, 2, "Battle Rage", new Effect()
 198, CardSet.Classic, Rarity.Common, HeroClass.Rogue, 2, "Betrayal", new Effect()
@@ -718,6 +720,28 @@ public final class CardRepository {
 		@Override
 		public AbilityCard createInstance() {
 			return new AbilityCard(effect).setId(getId());
+		}
+	}
+
+	/**
+	 * This is a card entry for a weapon card.
+	 */
+	private static class WeaponCardEntry extends CardEntry<WeaponCardEntry,WeaponCard> {
+
+		private final WeaponFactory weaponFactory;
+
+		public WeaponCardEntry(int id, CardSet cardSet, Rarity rarity, HeroClass heroClass, int manaCost, String name, WeaponFactory weaponFactory) {
+			this(id, cardSet, rarity, heroClass, manaCost, name, weaponFactory, new DefaultWeaponCardActionDiscovery());
+		}
+
+		public WeaponCardEntry(int id, CardSet cardSet, Rarity rarity, HeroClass heroClass, int manaCost, String name, WeaponFactory weaponFactory, ActionDiscovery<WeaponCard> actionDiscovery) {
+			super(id, cardSet, rarity, heroClass, manaCost, name, CardType.Weapon, actionDiscovery);
+			this.weaponFactory = weaponFactory.setManaCost(manaCost).setWeaponName(name);
+		}
+
+		@Override
+		public WeaponCard createInstance() {
+			return new WeaponCard(weaponFactory).setId(getId());
 		}
 	}
 }

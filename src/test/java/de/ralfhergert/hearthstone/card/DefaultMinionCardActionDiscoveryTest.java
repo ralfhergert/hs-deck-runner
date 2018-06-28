@@ -85,7 +85,6 @@ public class DefaultMinionCardActionDiscoveryTest {
 		// ask the action factory for all possible plays.
 		List<Action<HearthstoneGameState>> actions = new ActionFactory().createAllApplicableActions(startState);
 		actions = ActionUtil.remove(actions, EndTurnAction.class);
-		actions = ActionUtil.remove(actions, CharacterAttacksAction.class);
 		Assert.assertNotNull("actions should not be null", actions);
 		Assert.assertEquals("number of found actions", 0, actions.size());
 		Assert.assertEquals("active player should still have one card in hand", 1, startState.getActivePlayer().getHand().size());

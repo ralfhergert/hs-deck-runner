@@ -1,22 +1,34 @@
 package de.ralfhergert.hearthstone.game.model;
 
 import de.ralfhergert.hearthstone.atomic.DestroyWeaponAtomic;
+import de.ralfhergert.hearthstone.effect.Effect;
 import de.ralfhergert.hearthstone.event.CharacterAttackedEvent;
 import de.ralfhergert.hearthstone.event.EndTurnEvent;
 import de.ralfhergert.hearthstone.event.GameEvent;
 import de.ralfhergert.hearthstone.event.GameEventListener;
 import de.ralfhergert.hearthstone.event.StartTurnEvent;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.function.Supplier;
+
 /**
  * Represents a played and active weapon on the board.
  */
 public class Weapon implements GameEventListener<HearthstoneGameState> {
 
+	/** The card this weapon was created from. */
+	private Supplier<WeaponCard> cardSupplier;
+
 	private WeaponRef weaponRef;
 
+	private String name;
 	private int attack;
 	private int durability;
 	private boolean isActive;
+
+	private List<Effect> effects = new ArrayList<>();
 
 	public Weapon() {
 		weaponRef = new WeaponRef();
@@ -27,12 +39,23 @@ public class Weapon implements GameEventListener<HearthstoneGameState> {
 	 */
 	public Weapon(Weapon weapon) {
 		if (weapon == null) {
-			throw new IllegalArgumentException("weapon can not be null");
+			throw new IllegalArgumentException("weapon must not be null");
 		}
 		weaponRef = weapon.weaponRef;
+		name = weapon.name;
 		attack = weapon.attack;
 		durability = weapon.durability;
 		isActive = weapon.isActive;
+		effects.addAll(weapon.effects);
+	}
+
+	public Supplier<WeaponCard> getCardSupplier() {
+		return cardSupplier;
+	}
+
+	public Weapon setCardSupplier(Supplier<WeaponCard> cardSupplier) {
+		this.cardSupplier = cardSupplier;
+		return this;
 	}
 
 	public WeaponRef getWeaponRef() {
@@ -41,6 +64,15 @@ public class Weapon implements GameEventListener<HearthstoneGameState> {
 
 	public Weapon setWeaponRef(WeaponRef weaponRef) {
 		this.weaponRef = weaponRef;
+		return this;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public Weapon setName(String name) {
+		this.name = name;
 		return this;
 	}
 
@@ -69,6 +101,25 @@ public class Weapon implements GameEventListener<HearthstoneGameState> {
 	public Weapon setActive(boolean active) {
 		isActive = active;
 		return this;
+	}
+
+	public Weapon addEffects(Collection<Effect> effects) {
+		this.effects.addAll(effects);
+		return this;
+	}
+
+	public Weapon addEffect(Effect effect) {
+		effects.add(effect);
+		return this;
+	}
+
+	public Weapon removeEffect(Effect effect) {
+		effects.remove(effect);
+		return this;
+	}
+
+	public boolean isEffectedBy(Effect effect) {
+		return effects.contains(effect);
 	}
 
 	@Override

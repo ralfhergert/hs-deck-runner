@@ -19,6 +19,7 @@ public final class ActionUtil {
 	 */
 	public static List<Action<HearthstoneGameState>> remove(List<Action<HearthstoneGameState>> actions, Class<? extends Action<HearthstoneGameState>> actionClass) {
 		Assert.assertNotNull("actions should not be null", actions);
+		Assert.assertNotEquals("actions did not contain any actions of class " + actionClass, 0, actions.stream().filter(action -> action.getClass().equals(actionClass)).count());
 		// filter the given action class and return the remaining actions.
 		return actions.stream().filter(action -> !(action.getClass().equals(actionClass))).collect(Collectors.toList());
 	}

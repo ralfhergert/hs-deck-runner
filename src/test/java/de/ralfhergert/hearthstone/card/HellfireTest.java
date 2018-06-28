@@ -3,7 +3,6 @@ package de.ralfhergert.hearthstone.card;
 import de.ralfhergert.generic.game.model.Action;
 import de.ralfhergert.hearthstone.action.ActionFactory;
 import de.ralfhergert.hearthstone.action.ActionUtil;
-import de.ralfhergert.hearthstone.action.CharacterAttacksAction;
 import de.ralfhergert.hearthstone.action.EndTurnAction;
 import de.ralfhergert.hearthstone.action.PlayAbilityCard;
 import de.ralfhergert.hearthstone.game.model.HearthstoneGameState;
@@ -37,7 +36,6 @@ public class HellfireTest {
 		// ask the action factory for all possible plays.
 		List<Action<HearthstoneGameState>> actions = new ActionFactory().createAllApplicableActions(startState);
 		actions = ActionUtil.remove(actions, EndTurnAction.class);
-		actions = ActionUtil.remove(actions, CharacterAttacksAction.class);
 		Assert.assertNotNull("actions should not be null", actions);
 		Assert.assertEquals("number of found actions", 1, actions.size());
 		Action<HearthstoneGameState> foundAction = actions.get(0);
