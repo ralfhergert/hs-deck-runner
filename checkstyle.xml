@@ -144,7 +144,9 @@
             <property name="severity" value="ignore"/>
         </module>
         <module name="MethodLength"/>
-        <module name="ParameterNumber"/>
+        <module name="ParameterNumber">
+            <property name="tokens" value="METHOD_DEF"/>
+        </module>
 
         <!-- Whitespaces -->
         <module name="GenericWhitespace"/>
