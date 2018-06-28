@@ -4,6 +4,7 @@ import de.ralfhergert.hearthstone.action.ActionDiscovery;
 import de.ralfhergert.hearthstone.action.DrawCardsAction;
 import de.ralfhergert.hearthstone.atomic.BounceMinionToHandAtomic;
 import de.ralfhergert.hearthstone.atomic.DamageCharacterAtomic;
+import de.ralfhergert.hearthstone.atomic.DestroyWeaponAtomic;
 import de.ralfhergert.hearthstone.atomic.HealCharacterAtomic;
 import de.ralfhergert.hearthstone.atomic.SummonTokenAtomic;
 import de.ralfhergert.hearthstone.effect.Effect;
@@ -91,6 +92,15 @@ public final class CardRepository {
 		}),
 		new MinionCardEntry(55,  CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 1, "Murloc Raider", CardType.Minion, new MinionFactory().setMinionType(MinionType.Murloc).setPower(2).setHitPoints(1)),
 		new MinionCardEntry(60,  CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 6, "Boulderfist Ogre", CardType.Minion, new MinionFactory().setPower(6).setHitPoints(7)),
+		new MinionCardEntry(74,  CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 2, "Acidic Swamp Ooze", CardType.Minion, new MinionFactory().setPower(3).setHitPoints(2).addEffect(new BattlecryEffect() {
+			@Override
+			public HearthstoneGameState applyTo(HearthstoneGameState state) {
+				final Player opponent = state.getPassivePlayer();
+				return (opponent.getWeapon() != null)
+					? new DestroyWeaponAtomic(state.getPlayerOrdinal(opponent)).apply(state)
+					: state;
+			}
+		})),
 		new MinionCardEntry(76,  CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 1, "Stonetusk Boar", CardType.Minion, new MinionFactory().setMinionType(MinionType.Beast).setPower(1).setHitPoints(1).addEffect(new ChargeEffect())),
 		new MinionCardEntry(84,  CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 5, "Darkscale Healer", CardType.Minion, new MinionFactory().setPower(4).setHitPoints(5).addEffect(new BattlecryEffect() {
 			@Override
@@ -309,7 +319,6 @@ public final class CardRepository {
 164, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 2, "Shiv", new Effect()
 282, CardSet.Basic, Rarity.Free, HeroClass.Druid, 2, "Wild Growth", new Effect()
 146, CardSet.Basic, Rarity.Free, HeroClass.Shaman, 2, "Windfury", new Effect()
-74, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 2, "Acidic Swamp Ooze", CardType.Minion, new MinionFactory().setPower(3).setHitPoints(2)
 390, CardSet.Basic, Rarity.Free, HeroClass.Shaman, 2, "Flametongue Totem", CardType.Minion, new MinionFactory().setPower(0).setHitPoints(3)
 357, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 2, "Murloc Tidehunter", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(1)
 435, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 2, "Novice Engineer", CardType.Minion, new MinionFactory().setPower(1).setHitPoints(1)
