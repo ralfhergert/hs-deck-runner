@@ -140,6 +140,12 @@ public final class CardRepository {
 		new WeaponCardEntry(182, CardSet.Basic,   Rarity.Free, HeroClass.Warrior, 5, "Arcanite Reaper", new WeaponFactory().setAttack(5).setDurability(2)),
 		new MinionCardEntry(194, CardSet.Classic, Rarity.Legendary, HeroClass.Hunter, 9, "King Krush", CardType.Minion, new MinionFactory().setMinionType(MinionType.Beast).setPower(8).setHitPoints(8).addEffect(new ChargeEffect())),
 		new MinionCardEntry(238, CardSet.Basic,   Rarity.Free, HeroClass.Druid, 8, "Ironbark Protector", CardType.Minion, new MinionFactory().setPower(8).setHitPoints(8).addEffect(new TauntEffect())),
+		new MinionCardEntry(246, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 4, "Gnomish Inventor", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(4).addEffect(new BattlecryEffect() {
+			@Override
+			public HearthstoneGameState applyTo(HearthstoneGameState state) {
+				return new DrawCardsAction(state.getPlayerOrdinal(state.getOwner(this)), 1).apply(state);
+			}
+		})),
 		new WeaponCardEntry(250, CardSet.Basic, Rarity.Free, HeroClass.Paladin, 1, "Light's Justice", new WeaponFactory().setAttack(1).setDurability(4)),
 		new AbilityCardEntry(256, CardSet.Basic, Rarity.Free, HeroClass.Shaman, 5, "Bloodlust", new GeneralEffect() {
 			@Override
@@ -338,7 +344,6 @@ public final class CardRepository {
 595, CardSet.Basic, Rarity.Free, HeroClass.Mage, 4, "Polymorph", new Effect()
 620, CardSet.Basic, Rarity.Free, HeroClass.Druid, 4, "Swipe", new Effect()
 472, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 4, "Dragonling Mechanic", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(4)
-246, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 4, "Gnomish Inventor", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(4)
 225, CardSet.Basic, Rarity.Free, HeroClass.Hunter, 4, "Houndmaster", CardType.Minion, new MinionFactory().setPower(4).setHitPoints(3)
 274, CardSet.Basic, Rarity.Free, HeroClass.Mage, 4, "Water Elemental", CardType.Minion, new MinionFactory().setPower(3).setHitPoints(6)
 151, CardSet.Basic, Rarity.Free, HeroClass.Shaman, 4, "Windspeaker", CardType.Minion, new MinionFactory().setPower(3).setHitPoints(3)
