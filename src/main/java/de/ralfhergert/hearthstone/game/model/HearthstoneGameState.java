@@ -5,6 +5,7 @@ import de.ralfhergert.generic.game.model.GameState;
 import de.ralfhergert.hearthstone.effect.Effect;
 import de.ralfhergert.hearthstone.event.GameEvent;
 import de.ralfhergert.hearthstone.event.GameEventListener;
+import de.ralfhergert.hearthstone.game.helper.OrderOfPlayComparator;
 import de.ralfhergert.hearthstone.play.GeneralPlay;
 
 import java.util.ArrayList;
@@ -190,6 +191,15 @@ public class HearthstoneGameState extends GameState<HearthstoneGameState> implem
 		return null;
 	}
 
+	public Player getOwner(CardRef weaponRef) {
+		for (Player player : players) {
+			if (player.isOwnerOf(weaponRef)) {
+				return player;
+			}
+		}
+		return null;
+	}
+
 	public Character getEffectOwner(Effect effect) {
 		for (Player player : players) {
 			if (player.isEffectedBy(effect)) {
@@ -243,6 +253,15 @@ public class HearthstoneGameState extends GameState<HearthstoneGameState> implem
 			characters.addAll(player.getBattlefield());
 		}
 		return characters;
+	}
+
+	public List<Minion> getAllMinionInOrderOfPlay() {
+		final List<Minion> minions = new ArrayList<>();
+		for (Player player : players) {
+			minions.addAll(player.getBattlefield());
+		}
+		minions.sort(new OrderOfPlayComparator());
+		return minions;
 	}
 
 	public List<Character> findAllEffectedCharacters(final Effect effect) {

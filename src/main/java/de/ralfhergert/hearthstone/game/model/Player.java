@@ -297,6 +297,20 @@ public class Player extends Character<Player> implements GameEventListener<Heart
 		return weapon != null && weapon.getWeaponRef().equals(weaponRef);
 	}
 
+	public boolean isOwnerOf(CardRef cardRef) {
+		for (Card card : hand) {
+			if (card.getCardRef().equals(cardRef)) {
+				return true;
+			}
+		}
+		for (Card card : library) {
+			if (card.getCardRef().equals(cardRef)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public Minion findTarget(TargetRef targetRef) {
 		for (Minion minion : battlefield) {
 			if (minion.getTargetRef().equals(targetRef)) {

@@ -4,7 +4,9 @@ import de.ralfhergert.hearthstone.action.ActionDiscovery;
 import de.ralfhergert.hearthstone.action.DrawCardsAction;
 import de.ralfhergert.hearthstone.atomic.BounceMinionToHandAtomic;
 import de.ralfhergert.hearthstone.atomic.DamageCharacterAtomic;
+import de.ralfhergert.hearthstone.atomic.DestroyMinionAtomic;
 import de.ralfhergert.hearthstone.atomic.DestroyWeaponAtomic;
+import de.ralfhergert.hearthstone.atomic.DiscardCardAtomic;
 import de.ralfhergert.hearthstone.atomic.HealCharacterAtomic;
 import de.ralfhergert.hearthstone.atomic.SummonTokenAtomic;
 import de.ralfhergert.hearthstone.effect.Effect;
@@ -180,6 +182,26 @@ public final class CardRepository {
 			}
 		})),
 		new WeaponCardEntry(433, CardSet.Basic,   Rarity.Free, HeroClass.Rogue, 5, "Assassin's Blade", new WeaponFactory().setAttack(3).setDurability(4)),
+		new MinionCardEntry(474, CardSet.Classic, Rarity.Legendary, HeroClass.Neutral, 10, "Deathwing", CardType.Minion, new MinionFactory().setMinionType(MinionType.Dragon).setPower(12).setHitPoints(12).addEffect(new BattlecryEffect() {
+			/** Battlecry: Destroy all other minions and discard your hand.
+			 * Note that discarding happens first. */
+			@Override
+			public HearthstoneGameState applyTo(HearthstoneGameState state) {
+				HearthstoneGameState nextState = state;
+				// discard the entire hand.
+				for (Card card : state.getActivePlayer().getHand()) {
+					nextState = new DiscardCardAtomic(card.getCardRef()).apply(nextState);
+				}
+				TargetRef selfRef = nextState.getEffectOwner(this).getTargetRef();
+				// destroy all other minions
+				for (Minion minion : nextState.getAllMinionInOrderOfPlay()) {
+					if (!minion.getTargetRef().equals(selfRef)) {
+						nextState = new DestroyMinionAtomic(minion).apply(nextState);
+					}
+				}
+				return nextState;
+			}
+		})),
 		new MinionCardEntry(476, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 5, "Fen Creeper", CardType.Minion, new MinionFactory().setPower(3).setHitPoints(6).addEffect(new TauntEffect())),
 		new MinionCardEntry(479, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 2, "Kobold Geomancer", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(2).addEffect(new SpellDamageEffect(1))),
 		new MinionCardEntry(519, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 3, "Ironfur Grizzly", CardType.Minion, new MinionFactory().setMinionType(MinionType.Beast).setPower(3).setHitPoints(3).addEffect(new TauntEffect())),
@@ -366,7 +388,6 @@ public final class CardRepository {
 367, CardSet.Basic, Rarity.Free, HeroClass.Shaman, 0, "Totemic Might", new Effect()
 264, CardSet.Classic, Rarity.Epic, HeroClass.Neutral, 12, "Mountain Giant", CardType.Minion, new MinionFactory().setPower(8).setHitPoints(8) "Costs (1) less for each other card in your hand."
 496, CardSet.Classic, Rarity.Epic, HeroClass.Mage, 10, "Pyroblast", new Effect() "Deal 10 damage."
-474, CardSet.Classic, Rarity.Legendary, HeroClass.Neutral, 10, "Deathwing", CardType.Minion, new MinionFactory().setPower(12).setHitPoints(12) "Battlecry: Destroy all other minions and discard your hand."
 614, CardSet.Classic, Rarity.Epic, HeroClass.Neutral, 10, "Sea Giant", CardType.Minion, new MinionFactory().setPower(8).setHitPoints(8) "Costs (1) less for each other minion on the battlefield."
 303, CardSet.Classic, Rarity.Legendary, HeroClass.Neutral, 9, "Alexstrasza", CardType.Minion, new MinionFactory().setPower(8).setHitPoints(8) "Battlecry: Set a hero's remaining health to 15."
 605, CardSet.Classic, Rarity.Legendary, HeroClass.Druid, 9, "Cenarius", CardType.Minion, new MinionFactory().setPower(5).setHitPoints(8) "Choose one: Give your other minions +2/+2; or summon two 2/2 Treants with taunt."
