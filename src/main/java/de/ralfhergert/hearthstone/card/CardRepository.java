@@ -151,6 +151,16 @@ public final class CardRepository {
 				return nextState;
 			}
 		}),
+		new AbilityCardEntry(260, CardSet.Basic, Rarity.Free, HeroClass.Paladin, 4, "Consecration", new GeneralEffect() {
+			@Override
+			public HearthstoneGameState applyTo(HearthstoneGameState state) {
+				HearthstoneGameState nextState = state;
+				for (Character character : state.getPassivePlayer().getAllCharactersInOrderOfPlay()) {
+					nextState = new DamageCharacterAtomic(character.getTargetRef(), 2).apply(nextState);
+				}
+				return nextState;
+			}
+		}),
 		new MinionCardEntry(273, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 0, "Wisp", CardType.Minion, new MinionFactory().setPower(1).setHitPoints(1)),
 		new MinionCardEntry(283, CardSet.Basic,   Rarity.Free, HeroClass.Paladin, 7, "Guardian of Kings", CardType.Minion, new MinionFactory().setPower(5).setHitPoints(6).addEffect(new BattlecryEffect() {
 			@Override
@@ -161,6 +171,16 @@ public final class CardRepository {
 		new MinionCardEntry(289, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 2, "Bluegill Warrior", CardType.Minion, new MinionFactory().setMinionType(MinionType.Murloc).setPower(2).setHitPoints(1).addEffect(new ChargeEffect())),
 		new MinionCardEntry(323, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 7, "War Golem", CardType.Minion, new MinionFactory().setPower(7).setHitPoints(7)),
 		new MinionCardEntry(326, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 4, "Sen'jin Shieldmasta", CardType.Minion, new MinionFactory().setPower(3).setHitPoints(5).addEffect(new TauntEffect())),
+		new AbilityCardEntry(329, CardSet.Basic, Rarity.Free, HeroClass.Druid, 3, "Savage Roar", new GeneralEffect() {
+			@Override
+			public HearthstoneGameState applyTo(HearthstoneGameState state) {
+				HearthstoneGameState nextState = state;
+				for (Character character : state.getActivePlayer().getAllCharactersInOrderOfPlay()) {
+					nextState = new ModifyAttackEffect(character.getTargetRef(), 2, new UntilEndOfTurn<>()).applyTo(nextState);
+				}
+				return nextState;
+			}
+		}),
 		new MinionCardEntry(340, CardSet.Basic,   Rarity.Free, HeroClass.Warlock, 1, "Voidwalker", CardType.Minion, new MinionFactory().setMinionType(MinionType.Demon).setPower(1).setHitPoints(3).addEffect(new TauntEffect())),
 		new MinionCardEntry(346, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 4, "Mogu'shan Warden", CardType.Minion, new MinionFactory().setPower(1).setHitPoints(7).addEffect(new TauntEffect())),
 		new MinionCardEntry(362, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 3, "Magma Rager", CardType.Minion, new MinionFactory().setMinionType(MinionType.Elemental).setPower(5).setHitPoints(1)),
@@ -215,6 +235,12 @@ public final class CardRepository {
 		})),
 		new MinionCardEntry(476, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 5, "Fen Creeper", CardType.Minion, new MinionFactory().setPower(3).setHitPoints(6).addEffect(new TauntEffect())),
 		new MinionCardEntry(479, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 2, "Kobold Geomancer", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(2).addEffect(new SpellDamageEffect(1))),
+		new AbilityCardEntry(489, CardSet.Basic, Rarity.Free, HeroClass.Mage, 3, "Arcane Intellect", new GeneralEffect() {
+			@Override
+			public HearthstoneGameState applyTo(HearthstoneGameState state) {
+				return new DrawCardsAction(state.getPlayerOrdinal(state.getActivePlayer()), 2).apply(state);
+			}
+		}),
 		new MinionCardEntry(519, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 3, "Ironfur Grizzly", CardType.Minion, new MinionFactory().setMinionType(MinionType.Beast).setPower(3).setHitPoints(3).addEffect(new TauntEffect())),
 		new MinionCardEntry(535, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 2, "River Crocolisk", CardType.Minion, new MinionFactory().setMinionType(MinionType.Beast).setPower(2).setHitPoints(3)),
 		new MinionCardEntry(545, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 6, "Archmage", CardType.Minion, new MinionFactory().setPower(4).setHitPoints(7).addEffect(new SpellDamageEffect(1))),
@@ -305,7 +331,6 @@ public final class CardRepository {
 162, CardSet.Basic, Rarity.Free, HeroClass.Hunter, 5, "Tundra Rhino", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(5)
 293, CardSet.Basic, Rarity.Free, HeroClass.Paladin, 4, "Truesilver Champion", new WeaponFactory().setAttack(4).setDurability(2)
 29, CardSet.Basic, Rarity.Free, HeroClass.Paladin, 4, "Blessing of Kings", new Effect()
-260, CardSet.Basic, Rarity.Free, HeroClass.Paladin, 4, "Consecration", new Effect()
 522, CardSet.Basic, Rarity.Free, HeroClass.Mage, 4, "Fireball", new Effect()
 350, CardSet.Basic, Rarity.Free, HeroClass.Paladin, 4, "Hammer of Wrath", new Effect()
 270, CardSet.Basic, Rarity.Free, HeroClass.Shaman, 4, "Hex", new Effect()
@@ -319,13 +344,11 @@ public final class CardRepository {
 151, CardSet.Basic, Rarity.Free, HeroClass.Shaman, 4, "Windspeaker", CardType.Minion, new MinionFactory().setPower(3).setHitPoints(3)
 77495, CardSet.Basic, Rarity.Free, HeroClass.Warrior, 3, "Blazing Longsword", new WeaponFactory().setAttack(2).setDurability(3)
 578, CardSet.Basic, Rarity.Free, HeroClass.Hunter, 3, "Animal Companion", new Effect()
-489, CardSet.Basic, Rarity.Free, HeroClass.Mage, 3, "Arcane Intellect", new Effect()
 332, CardSet.Basic, Rarity.Free, HeroClass.Warlock, 3, "Drain Life", new Effect()
 49, CardSet.Basic, Rarity.Free, HeroClass.Mage, 3, "Frost Nova", new Effect()
 258, CardSet.Basic, Rarity.Free, HeroClass.Druid, 3, "Healing Touch", new Effect()
 488, CardSet.Basic, Rarity.Free, HeroClass.Hunter, 3, "Kill Command", new Effect()
 77487, CardSet.Basic, Rarity.Free, HeroClass.Druid, 3, "Nature's Champion", new Effect()
-329, CardSet.Basic, Rarity.Free, HeroClass.Druid, 3, "Savage Roar", new Effect()
 647, CardSet.Basic, Rarity.Free, HeroClass.Warlock, 3, "Shadow Bolt", new Effect()
 547, CardSet.Basic, Rarity.Free, HeroClass.Priest, 3, "Shadow Word: Death", new Effect()
 493, CardSet.Basic, Rarity.Free, HeroClass.Warrior, 3, "Shield Block", new Effect()
