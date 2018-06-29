@@ -164,6 +164,17 @@ public final class CardRepository {
 		new MinionCardEntry(340, CardSet.Basic,   Rarity.Free, HeroClass.Warlock, 1, "Voidwalker", CardType.Minion, new MinionFactory().setMinionType(MinionType.Demon).setPower(1).setHitPoints(3).addEffect(new TauntEffect())),
 		new MinionCardEntry(346, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 4, "Mogu'shan Warden", CardType.Minion, new MinionFactory().setPower(1).setHitPoints(7).addEffect(new TauntEffect())),
 		new MinionCardEntry(362, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 3, "Magma Rager", CardType.Minion, new MinionFactory().setMinionType(MinionType.Elemental).setPower(5).setHitPoints(1)),
+		new AbilityCardEntry(378, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 3, "Fan of Knives", new GeneralEffect() {
+			/** Deal 1 damage to all enemy minions. Draw a card. */
+			@Override
+			public HearthstoneGameState applyTo(HearthstoneGameState state) {
+				HearthstoneGameState nextState = state;
+				for (Minion minion : state.getPassivePlayer().getAllMinionsInOrderOfPlay()) {
+					nextState = new DamageCharacterAtomic(minion.getTargetRef(), 1).apply(nextState);
+				}
+				return new DrawCardsAction(nextState.getPlayerOrdinal(nextState.getActivePlayer()), 1).apply(nextState);
+			}
+		}),
 		new MinionCardEntry(388, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 3, "Dalaran Mage", CardType.Minion, new MinionFactory().setPower(1).setHitPoints(4).addEffect(new SpellDamageEffect(1))),
 		new MinionCardEntry(414, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 6, "Lord of the Arena", CardType.Minion, new MinionFactory().setPower(6).setHitPoints(5).addEffect(new TauntEffect())),
 		new MinionCardEntry(422, CardSet.Classic, Rarity.Rare, HeroClass.Neutral, 2, "Knife Juggler", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(2).addEffect(new AfterYouSummonAMinion() {
@@ -310,7 +321,6 @@ public final class CardRepository {
 578, CardSet.Basic, Rarity.Free, HeroClass.Hunter, 3, "Animal Companion", new Effect()
 489, CardSet.Basic, Rarity.Free, HeroClass.Mage, 3, "Arcane Intellect", new Effect()
 332, CardSet.Basic, Rarity.Free, HeroClass.Warlock, 3, "Drain Life", new Effect()
-378, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 3, "Fan of Knives", new Effect()
 49, CardSet.Basic, Rarity.Free, HeroClass.Mage, 3, "Frost Nova", new Effect()
 258, CardSet.Basic, Rarity.Free, HeroClass.Druid, 3, "Healing Touch", new Effect()
 488, CardSet.Basic, Rarity.Free, HeroClass.Hunter, 3, "Kill Command", new Effect()

@@ -1,16 +1,16 @@
 package de.ralfhergert.hearthstone.game.helper;
 
-import de.ralfhergert.hearthstone.game.model.Minion;
+import de.ralfhergert.hearthstone.game.model.Character;
 
 import java.util.Comparator;
 
 /**
  * This comparator uses the targetRef to sort the minions to their play order.
  */
-public class OrderOfPlayComparator implements Comparator<Minion> {
+public class OrderOfPlayComparator implements Comparator<Character> {
 
 	@Override
-	public int compare(Minion o1, Minion o2) {
+	public int compare(Character o1, Character o2) {
 		return (int)(o1.getTargetRef().getId() - o2.getTargetRef().getId());
 	}
 }
