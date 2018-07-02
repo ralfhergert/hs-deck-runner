@@ -21,7 +21,7 @@ public class SummonTokenAtomic implements Action<HearthstoneGameState> {
 			throw new IllegalArgumentException("playerOrdinal must not be null");
 		}
 		if (tokenName == null) {
-			throw new IllegalArgumentException("tokenName must be nulll");
+			throw new IllegalArgumentException("tokenName must be null");
 		}
 		this.playerOrdinal = playerOrdinal;
 		this.tokenName = tokenName;
