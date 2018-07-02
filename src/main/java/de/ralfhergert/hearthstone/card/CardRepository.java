@@ -7,6 +7,7 @@ import de.ralfhergert.hearthstone.atomic.DamageCharacterAtomic;
 import de.ralfhergert.hearthstone.atomic.DestroyMinionAtomic;
 import de.ralfhergert.hearthstone.atomic.DestroyWeaponAtomic;
 import de.ralfhergert.hearthstone.atomic.DiscardCardAtomic;
+import de.ralfhergert.hearthstone.atomic.EquipWeaponAtomic;
 import de.ralfhergert.hearthstone.atomic.HealCharacterAtomic;
 import de.ralfhergert.hearthstone.atomic.SummonTokenAtomic;
 import de.ralfhergert.hearthstone.effect.Effect;
@@ -248,6 +249,12 @@ public final class CardRepository {
 				return new DrawCardsAction(state.getPlayerOrdinal(state.getActivePlayer()), 2).apply(state);
 			}
 		}),
+		new MinionCardEntry(504, CardSet.Classic, Rarity.Common, HeroClass.Warrior, 4, "Arathi Weaponsmith", CardType.Minion, new MinionFactory().setPower(3).setHitPoints(3).addEffect(new BattlecryEffect() {
+			@Override
+			public HearthstoneGameState applyTo(HearthstoneGameState state) {
+				return new EquipWeaponAtomic(state.getPlayerOrdinal(state.getActivePlayer()), new Weapon().setName("Battle Axe").setAttack(2).setDurability(2)).apply(state);
+			}
+		})),
 		new MinionCardEntry(519, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 3, "Ironfur Grizzly", CardType.Minion, new MinionFactory().setMinionType(MinionType.Beast).setPower(3).setHitPoints(3).addEffect(new TauntEffect())),
 		new MinionCardEntry(535, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 2, "River Crocolisk", CardType.Minion, new MinionFactory().setMinionType(MinionType.Beast).setPower(2).setHitPoints(3)),
 		new MinionCardEntry(545, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 6, "Archmage", CardType.Minion, new MinionFactory().setPower(4).setHitPoints(7).addEffect(new SpellDamageEffect(1))),
@@ -281,7 +288,7 @@ public final class CardRepository {
 				final Player player = state.getActivePlayer();
 				final Weapon weapon = player.getWeapon();
 				if (weapon == null) {
-					player.setWeapon(new Weapon().setName("Heavy Axe").setAttack(1).setDurability(3));
+					return new EquipWeaponAtomic(state.getPlayerOrdinal(player), new Weapon().setName("Heavy Axe").setAttack(1).setDurability(3)).apply(state);
 				} else {
 					weapon.setAttack(1 + weapon.getAttack());
 					weapon.setDurability(1 + weapon.getDurability());
@@ -515,7 +522,6 @@ public final class CardRepository {
 311, CardSet.Classic, Rarity.Common, HeroClass.Druid, 4, "Soul of the Forest", new Effect()
 572, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 4, "Ancient Brewmaster", CardType.Minion, new MinionFactory().setPower(5).setHitPoints(4)
 176, CardSet.Classic, Rarity.Rare, HeroClass.Neutral, 4, "Ancient Mage", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(5)
-504, CardSet.Classic, Rarity.Common, HeroClass.Warrior, 4, "Arathi Weaponsmith", CardType.Minion, new MinionFactory().setPower(3).setHitPoints(3)
 656, CardSet.Classic, Rarity.Rare, HeroClass.Priest, 4, "Auchenai Soulpriest", CardType.Minion, new MinionFactory().setPower(3).setHitPoints(5)
 140, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 4, "Cult Master", CardType.Minion, new MinionFactory().setPower(4).setHitPoints(2)
 128, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 4, "Dark Iron Dwarf", CardType.Minion, new MinionFactory().setPower(4).setHitPoints(4)
