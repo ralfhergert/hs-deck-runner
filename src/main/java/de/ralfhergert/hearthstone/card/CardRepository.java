@@ -35,6 +35,7 @@ import de.ralfhergert.hearthstone.game.model.Player;
 import de.ralfhergert.hearthstone.game.model.PlayerOrdinal;
 import de.ralfhergert.hearthstone.game.model.Rarity;
 import de.ralfhergert.hearthstone.game.model.TargetRef;
+import de.ralfhergert.hearthstone.game.model.Weapon;
 import de.ralfhergert.hearthstone.game.model.WeaponCard;
 import de.ralfhergert.hearthstone.game.weapon.WeaponFactory;
 
@@ -274,6 +275,20 @@ public final class CardRepository {
 			}
 		})),
 		new WeaponCardEntry(632, CardSet.Basic, Rarity.Free, HeroClass.Warrior, 3, "Fiery War Axe", new WeaponFactory().setAttack(3).setDurability(2)),
+		new AbilityCardEntry(638, CardSet.Classic, Rarity.Rare, HeroClass.Warrior, 1, "Upgrade!", new GeneralEffect() {
+			@Override
+			public HearthstoneGameState applyTo(HearthstoneGameState state) {
+				final Player player = state.getActivePlayer();
+				final Weapon weapon = player.getWeapon();
+				if (weapon == null) {
+					player.setWeapon(new Weapon().setName("Heavy Axe").setAttack(1).setDurability(3));
+				} else {
+					weapon.setAttack(1 + weapon.getAttack());
+					weapon.setDurability(1 + weapon.getDurability());
+				}
+				return state;
+			}
+		}),
 		new AbilityCardEntry(658, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 6, "Vanish", new GeneralEffect() {
 			/**
 			 * Return all minions to their owner's hand.
@@ -628,7 +643,6 @@ public final class CardRepository {
 642, CardSet.Classic, Rarity.Common, HeroClass.Paladin, 1, "Repentance", new Effect()
 148, CardSet.Classic, Rarity.Rare, HeroClass.Druid, 1, "Savagery", new Effect()
 50, CardSet.Classic, Rarity.Epic, HeroClass.Warrior, 1, "Shield Slam", new Effect()
-638, CardSet.Classic, Rarity.Rare, HeroClass.Warrior, 1, "Upgrade!", new Effect()
 577, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 1, "Abusive Sergeant", CardType.Minion, new MinionFactory().setPower(1).setHitPoints(1)
 57, CardSet.Classic, Rarity.Rare, HeroClass.Neutral, 1, "Angry Chicken", CardType.Minion, new MinionFactory().setPower(1).setHitPoints(1)
 473, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 1, "Argent Squire", CardType.Minion, new MinionFactory().setPower(1).setHitPoints(1)
