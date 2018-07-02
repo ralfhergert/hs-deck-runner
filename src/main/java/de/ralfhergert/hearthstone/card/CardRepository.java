@@ -53,6 +53,12 @@ import java.util.function.Predicate;
 public final class CardRepository {
 
 	private static List<CardEntry<? extends CardEntry, ? extends Card>> cards = Arrays.asList(
+		new AbilityCardEntry(1, CardSet.Basic, Rarity.Free, HeroClass.Warrior, 2, "Heroic Strike", new GeneralEffect() {
+			@Override
+			public HearthstoneGameState applyTo(HearthstoneGameState state) {
+				return new ModifyAttackEffect(state.getActivePlayer().getTargetRef(), 4, new UntilEndOfTurn<>()).applyTo(state);
+			}
+		}),
 		new MinionCardEntry(15,  CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 4, "Oasis Snapjaw", CardType.Minion, new MinionFactory().setMinionType(MinionType.Beast).setPower(2).setHitPoints(7)),
 		new MinionCardEntry(24,  CardSet.Classic, Rarity.Common, HeroClass.Neutral, 1, "Shieldbearer", CardType.Minion, new MinionFactory().setPower(0).setHitPoints(4).addEffect(new TauntEffect())),
 		new MinionCardEntry(27,  CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 5, "Booty Bay Bodyguard", CardType.Minion, new MinionFactory().setPower(5).setHitPoints(4).addEffect(new TauntEffect())),
@@ -391,7 +397,6 @@ public final class CardRepository {
 227, CardSet.Basic, Rarity.Free, HeroClass.Warrior, 2, "Execute", new Effect()
 177, CardSet.Basic, Rarity.Free, HeroClass.Mage, 2, "Frostbolt", new Effect()
 77490, CardSet.Basic, Rarity.Free, HeroClass.Priest, 2, "Generous Spirit", new Effect()
-1, CardSet.Basic, Rarity.Free, HeroClass.Warrior, 2, "Heroic Strike", new Effect()
 108, CardSet.Basic, Rarity.Free, HeroClass.Paladin, 2, "Holy Light", new Effect()
 480, CardSet.Basic, Rarity.Free, HeroClass.Druid, 2, "Mark of the Wild", new Effect()
 415, CardSet.Basic, Rarity.Free, HeroClass.Priest, 2, "Mind Blast", new Effect()
