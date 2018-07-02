@@ -262,6 +262,7 @@ public final class CardRepository {
 			}
 		})),
 		new MinionCardEntry(519, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 3, "Ironfur Grizzly", CardType.Minion, new MinionFactory().setMinionType(MinionType.Beast).setPower(3).setHitPoints(3).addEffect(new TauntEffect())),
+		new MinionCardEntry(527, CardSet.Classic, Rarity.Free, HeroClass.Neutral, 1, "Whelp", CardType.Token, new MinionFactory().setMinionType(MinionType.Dragon).setPower(1).setHitPoints(1)),
 		new MinionCardEntry(535, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 2, "River Crocolisk", CardType.Minion, new MinionFactory().setMinionType(MinionType.Beast).setPower(2).setHitPoints(3)),
 		new MinionCardEntry(545, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 6, "Archmage", CardType.Minion, new MinionFactory().setPower(4).setHitPoints(7).addEffect(new SpellDamageEffect(1))),
 		new MinionCardEntry(560, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 6, "Reckless Rocketeer", CardType.Minion, new MinionFactory().setPower(5).setHitPoints(2).addEffect(new ChargeEffect())),
@@ -344,6 +345,14 @@ public final class CardRepository {
 				return nextState;
 			}
 		}),
+		new MinionCardEntry(674, CardSet.Classic, Rarity.Legendary, HeroClass.Neutral, 5, "Leeroy Jenkins", CardType.Minion, new MinionFactory().setPower(6).setHitPoints(2).addEffect(new ChargeEffect()).addEffect(new BattlecryEffect() {
+			@Override
+			public HearthstoneGameState applyTo(HearthstoneGameState state) {
+				PlayerOrdinal opponentOrdinal = state.getPlayerOrdinal(state.getPassivePlayer());
+				HearthstoneGameState nextState = new SummonTokenAtomic(opponentOrdinal, "Whelp").apply(state);
+				return new SummonTokenAtomic(opponentOrdinal, "Whelp").apply(nextState);
+			}
+		})),
 		new MinionCardEntry(14443, CardSet.Blackrock, Rarity.Common, HeroClass.Warlock, 3, "Imp Gang Boss", CardType.Minion, new MinionFactory().setMinionType(MinionType.Demon).setPower(2).setHitPoints(4).addEffect(new WheneverThisMinionTakesDamage() {
 			/** Whenever this minion takes damage, summon a 1/1 imp. */
 			@Override
@@ -510,7 +519,6 @@ public final class CardRepository {
 587, CardSet.Classic, Rarity.Common, HeroClass.Druid, 5, "Druid of the Claw", CardType.Minion, new MinionFactory().setPower(4).setHitPoints(4)
 450, CardSet.Classic, Rarity.Epic, HeroClass.Neutral, 5, "Faceless Manipulator", CardType.Minion, new MinionFactory().setPower(3).setHitPoints(3)
 602, CardSet.Classic, Rarity.Legendary, HeroClass.Neutral, 5, "Harrison Jones", CardType.Minion, new MinionFactory().setPower(5).setHitPoints(4)
-674, CardSet.Classic, Rarity.Legendary, HeroClass.Neutral, 5, "Leeroy Jenkins", CardType.Minion, new MinionFactory().setPower(6).setHitPoints(2)
 648, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 5, "Silver Hand Knight", CardType.Minion, new MinionFactory().setPower(4).setHitPoints(4)
 627, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 5, "Spiteful Smith", CardType.Minion, new MinionFactory().setPower(4).setHitPoints(6)
 389, CardSet.Classic, Rarity.Rare, HeroClass.Neutral, 5, "Stampeding Kodo", CardType.Minion, new MinionFactory().setPower(3).setHitPoints(5)

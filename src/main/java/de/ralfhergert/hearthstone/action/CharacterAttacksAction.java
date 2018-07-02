@@ -66,6 +66,10 @@ public class CharacterAttacksAction implements Action<HearthstoneGameState> {
 			(state.findTarget(targetRef).hasTaunt() || !state.getPlayer(opponentPlayerOrdinal).hasTauntsOnBoard());
 	}
 
+	public TargetRef getAttackerRef() {
+		return attackerRef;
+	}
+
 	public TargetRef getTargetRef() {
 		return targetRef;
 	}
