@@ -20,6 +20,7 @@ import de.ralfhergert.hearthstone.game.effect.ModifyAttackEffect;
 import de.ralfhergert.hearthstone.game.effect.ModifyHealthEffect;
 import de.ralfhergert.hearthstone.game.effect.SpellDamageEffect;
 import de.ralfhergert.hearthstone.game.effect.TauntEffect;
+import de.ralfhergert.hearthstone.game.effect.WheneverYouSummonAMinionOfType;
 import de.ralfhergert.hearthstone.game.effect.modifier.UntilEndOfTurn;
 import de.ralfhergert.hearthstone.game.effect.WheneverThisMinionTakesDamage;
 import de.ralfhergert.hearthstone.game.minion.MinionFactory;
@@ -132,6 +133,13 @@ public final class CardRepository {
 				return new DrawCardsAction(state.getPlayerOrdinal(state.getActivePlayer()), 4).apply(state);
 			}
 		}),
+		new MinionCardEntry(101, CardSet.Basic, Rarity.Free, HeroClass.Hunter, 5, "Starving Buzzard", CardType.Minion, new MinionFactory().setPower(3).setHitPoints(2).addEffect(new WheneverYouSummonAMinionOfType(MinionType.Beast) {
+			/** Whenever you summon a Beast, draw a card. */
+			@Override
+			public HearthstoneGameState applyTo(HearthstoneGameState state) {
+				return new DrawCardsAction(state.getPlayerOrdinal(state.getActivePlayer()), 1).apply(state);
+			}
+		})),
 		new AbilityCardEntry(122, CardSet.Basic, Rarity.Free, HeroClass.Warlock, 4, "Hellfire", new GeneralEffect() {
 			@Override
 			public HearthstoneGameState applyTo(HearthstoneGameState state) {
@@ -384,7 +392,6 @@ public final class CardRepository {
 636, CardSet.Basic, Rarity.Free, HeroClass.Shaman, 6, "Fire Elemental", CardType.Minion, new MinionFactory().setPower(6).setHitPoints(5)
 568, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 5, "Assassinate", new Effect()
 77486, CardSet.Basic, Rarity.Free, HeroClass.Mage, 5, "Polymorph: ???", new Effect()
-101, CardSet.Basic, Rarity.Free, HeroClass.Hunter, 5, "Starving Buzzard", CardType.Minion, new MinionFactory().setPower(3).setHitPoints(2)
 325, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 5, "Stormpike Commando", CardType.Minion, new MinionFactory().setPower(4).setHitPoints(2)
 162, CardSet.Basic, Rarity.Free, HeroClass.Hunter, 5, "Tundra Rhino", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(5)
 293, CardSet.Basic, Rarity.Free, HeroClass.Paladin, 4, "Truesilver Champion", new WeaponFactory().setAttack(4).setDurability(2)
