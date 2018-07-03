@@ -246,6 +246,16 @@ public class HearthstoneGameState extends GameState<HearthstoneGameState> implem
 		return null;
 	}
 
+	public Minion findTarget(MinionRef minionRef) {
+		for (Player player : players) {
+			final Minion target = player.findTarget(minionRef);
+			if (target != null) {
+				return target;
+			}
+		}
+		return null;
+	}
+
 	public List<Character> getAllCharacters() {
 		final List<Character> characters = new ArrayList<>();
 		for (Player player : players) {
@@ -302,5 +312,9 @@ public class HearthstoneGameState extends GameState<HearthstoneGameState> implem
 		GeneralPlay play = intendedPlay;
 		intendedPlay = null;
 		return play;
+	}
+
+	public <T> T randomlyOneOf(List<T> items) {
+		return items.get(random.nextInt(items.size()));
 	}
 }

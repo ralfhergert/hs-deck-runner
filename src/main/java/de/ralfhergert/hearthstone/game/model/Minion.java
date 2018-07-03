@@ -85,6 +85,10 @@ public class Minion extends Character<Minion> implements GameEventListener<Heart
 		return super.canAttack() && (!hasSummoningSickness || hasCharge);
 	}
 
+	public MinionRef getMinionRef() {
+		return new MinionRef(getTargetRef().getId());
+	}
+
 	@Override
 	public HearthstoneGameState onEvent(HearthstoneGameState state, GameEvent event) {
 		HearthstoneGameState nextState = state;

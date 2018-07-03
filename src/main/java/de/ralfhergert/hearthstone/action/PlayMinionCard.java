@@ -35,7 +35,7 @@ public class PlayMinionCard implements Action<HearthstoneGameState> {
 			player.addToPlayedCards(minionCard);
 			final Minion minion = minionCard.getMinionFactory().create();
 			nextState.getActivePlayer().addToBattlefield(minion, position);
-			return nextState.onEvent(new MinionEntersBattlefieldEvent(minion.getTargetRef()));
+			return nextState.onEvent(new MinionEntersBattlefieldEvent(minion.getMinionRef()));
 		}
 		return nextState;
 	}

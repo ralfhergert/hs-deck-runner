@@ -15,6 +15,7 @@ import de.ralfhergert.hearthstone.effect.GeneralEffect;
 import de.ralfhergert.hearthstone.game.effect.AfterYouSummonAMinion;
 import de.ralfhergert.hearthstone.game.effect.BattlecryEffect;
 import de.ralfhergert.hearthstone.game.effect.ChargeEffect;
+import de.ralfhergert.hearthstone.game.effect.ModifyAllOtherFriendlyMinionAttackEffect;
 import de.ralfhergert.hearthstone.game.effect.ModifyAttackEffect;
 import de.ralfhergert.hearthstone.game.effect.ModifyHealthEffect;
 import de.ralfhergert.hearthstone.game.effect.SpellDamageEffect;
@@ -59,11 +60,12 @@ public final class CardRepository {
 				return new ModifyAttackEffect(state.getActivePlayer().getTargetRef(), 4, new UntilEndOfTurn<>()).applyTo(state);
 			}
 		}),
-		new MinionCardEntry(15,  CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 4, "Oasis Snapjaw", CardType.Minion, new MinionFactory().setMinionType(MinionType.Beast).setPower(2).setHitPoints(7)),
-		new MinionCardEntry(24,  CardSet.Classic, Rarity.Common, HeroClass.Neutral, 1, "Shieldbearer", CardType.Minion, new MinionFactory().setPower(0).setHitPoints(4).addEffect(new TauntEffect())),
-		new MinionCardEntry(27,  CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 5, "Booty Bay Bodyguard", CardType.Minion, new MinionFactory().setPower(5).setHitPoints(4).addEffect(new TauntEffect())),
-		new MinionCardEntry(31,  CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 4, "Chillwind Yeti", CardType.Minion, new MinionFactory().setPower(4).setHitPoints(5)),
-		new MinionCardEntry(36,  CardSet.Basic,   Rarity.Free, HeroClass.Warlock, 6, "Dread Infernal", CardType.Minion, new MinionFactory().setMinionType(MinionType.Demon).setPower(6).setHitPoints(6).addEffect(new BattlecryEffect() {
+		new MinionCardEntry(15, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 4, "Oasis Snapjaw", CardType.Minion, new MinionFactory().setMinionType(MinionType.Beast).setPower(2).setHitPoints(7)),
+		new MinionCardEntry(24, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 1, "Shieldbearer", CardType.Minion, new MinionFactory().setPower(0).setHitPoints(4).addEffect(new TauntEffect())),
+		new MinionCardEntry(27, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 5, "Booty Bay Bodyguard", CardType.Minion, new MinionFactory().setPower(5).setHitPoints(4).addEffect(new TauntEffect())),
+		new MinionCardEntry(31, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 4, "Chillwind Yeti", CardType.Minion, new MinionFactory().setPower(4).setHitPoints(5)),
+		new MinionCardEntry(32, CardSet.Basic,   Rarity.Common, HeroClass.Hunter, 3, "Leokk", CardType.Token, new MinionFactory().setMinionType(MinionType.Beast).setPower(2).setHitPoints(4).addEffect(new ModifyAllOtherFriendlyMinionAttackEffect(1))),
+		new MinionCardEntry(36, CardSet.Basic,   Rarity.Free, HeroClass.Warlock, 6, "Dread Infernal", CardType.Minion, new MinionFactory().setMinionType(MinionType.Demon).setPower(6).setHitPoints(6).addEffect(new BattlecryEffect() {
 			@Override
 			public HearthstoneGameState applyTo(HearthstoneGameState state) {
 				HearthstoneGameState nextState = state;
@@ -198,6 +200,7 @@ public final class CardRepository {
 		new MinionCardEntry(340, CardSet.Basic,   Rarity.Free, HeroClass.Warlock, 1, "Voidwalker", CardType.Minion, new MinionFactory().setMinionType(MinionType.Demon).setPower(1).setHitPoints(3).addEffect(new TauntEffect())),
 		new MinionCardEntry(346, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 4, "Mogu'shan Warden", CardType.Minion, new MinionFactory().setPower(1).setHitPoints(7).addEffect(new TauntEffect())),
 		new MinionCardEntry(362, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 3, "Magma Rager", CardType.Minion, new MinionFactory().setMinionType(MinionType.Elemental).setPower(5).setHitPoints(1)),
+		new MinionCardEntry(369, CardSet.Basic,   Rarity.Common, HeroClass.Hunter, 3, "Huffer", CardType.Token, new MinionFactory().setMinionType(MinionType.Beast).setPower(4).setHitPoints(2).addEffect(new ChargeEffect())),
 		new AbilityCardEntry(378, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 3, "Fan of Knives", new GeneralEffect() {
 			/** Deal 1 damage to all enemy minions. Draw a card. */
 			@Override
@@ -268,6 +271,13 @@ public final class CardRepository {
 		new MinionCardEntry(560, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 6, "Reckless Rocketeer", CardType.Minion, new MinionFactory().setPower(5).setHitPoints(2).addEffect(new ChargeEffect())),
 		new MinionCardEntry(564, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 1, "Goldshire Footman", CardType.Minion, new MinionFactory().setPower(1).setHitPoints(2).addEffect(new TauntEffect())),
 		new MinionCardEntry(576, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 2, "Bloodfen Raptor", CardType.Minion, new MinionFactory().setMinionType(MinionType.Beast).setPower(3).setHitPoints(2)),
+		new AbilityCardEntry(578, CardSet.Basic, Rarity.Free, HeroClass.Hunter, 3, "Animal Companion", new GeneralEffect() {
+			@Override
+			public HearthstoneGameState applyTo(HearthstoneGameState state) {
+				return new SummonTokenAtomic(state.getPlayerOrdinal(state.getActivePlayer()), state.randomlyOneOf(Arrays.asList("Huffer", "Leokk", "Misha"))).apply(state);
+			}
+		}),
+		new MinionCardEntry(593, CardSet.Basic,   Rarity.Common, HeroClass.Hunter, 3, "Misha", CardType.Token, new MinionFactory().setMinionType(MinionType.Beast).setPower(4).setHitPoints(4).addEffect(new TauntEffect())),
 		new MinionCardEntry(603, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 4, "Stormwind Knight", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(5).addEffect(new ChargeEffect())),
 		new MinionCardEntry(604, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 5, "Frostwolf Warlord", CardType.Minion, new MinionFactory().setPower(4).setHitPoints(4).addEffect(new BattlecryEffect() {
 			@Override
@@ -385,7 +395,6 @@ public final class CardRepository {
 274, CardSet.Basic, Rarity.Free, HeroClass.Mage, 4, "Water Elemental", CardType.Minion, new MinionFactory().setPower(3).setHitPoints(6)
 151, CardSet.Basic, Rarity.Free, HeroClass.Shaman, 4, "Windspeaker", CardType.Minion, new MinionFactory().setPower(3).setHitPoints(3)
 77495, CardSet.Basic, Rarity.Free, HeroClass.Warrior, 3, "Blazing Longsword", new WeaponFactory().setAttack(2).setDurability(3)
-578, CardSet.Basic, Rarity.Free, HeroClass.Hunter, 3, "Animal Companion", new Effect()
 332, CardSet.Basic, Rarity.Free, HeroClass.Warlock, 3, "Drain Life", new Effect()
 49, CardSet.Basic, Rarity.Free, HeroClass.Mage, 3, "Frost Nova", new Effect()
 258, CardSet.Basic, Rarity.Free, HeroClass.Druid, 3, "Healing Touch", new Effect()

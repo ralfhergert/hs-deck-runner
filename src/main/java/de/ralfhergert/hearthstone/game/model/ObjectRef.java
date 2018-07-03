@@ -28,7 +28,7 @@ public class ObjectRef {
 		if (this == o) {
 			return true;
 		}
-		if (o == null || getClass() != o.getClass()) {
+		if (o == null || !(o instanceof ObjectRef)) {
 			return false;
 		}
 		ObjectRef targetRef = (ObjectRef)o;

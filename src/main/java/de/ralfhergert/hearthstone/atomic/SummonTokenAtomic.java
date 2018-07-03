@@ -34,7 +34,7 @@ public class SummonTokenAtomic implements Action<HearthstoneGameState> {
 		if (player.getBattlefield().size() < 7) {
 			Minion token = CardRepository.createTokenByName(tokenName);
 			player.addToBattlefield(token);
-			nextState = nextState.onEvent(new MinionEntersBattlefieldEvent(token.getTargetRef()));
+			nextState = nextState.onEvent(new MinionEntersBattlefieldEvent(token.getMinionRef()));
 		}
 		return nextState;
 	}

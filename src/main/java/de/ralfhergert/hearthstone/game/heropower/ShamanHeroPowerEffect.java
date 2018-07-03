@@ -65,7 +65,7 @@ public class ShamanHeroPowerEffect implements GeneralEffect {
 		final MinionFactory factory = totemFactories.get(state.getRandom().nextInt(totemFactories.size()));
 		final Minion minion = factory.create();
 		owner.addToBattlefield(minion);
-		return state.onEvent(new MinionEntersBattlefieldEvent(minion.getTargetRef()));
+		return state.onEvent(new MinionEntersBattlefieldEvent(minion.getMinionRef()));
 	}
 
 	@Override
