@@ -148,6 +148,12 @@ public final class CardRepository {
 		new MinionCardEntry(173, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 7, "Core Hound", CardType.Minion, new MinionFactory().setMinionType(MinionType.Beast).setPower(9).setHitPoints(5)),
 		new MinionCardEntry(174, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 3, "Wolfrider", CardType.Minion, new MinionFactory().setPower(3).setHitPoints(1).addEffect(new ChargeEffect())),
 		new WeaponCardEntry(182, CardSet.Basic,   Rarity.Free, HeroClass.Warrior, 5, "Arcanite Reaper", new WeaponFactory().setAttack(5).setDurability(2)),
+		new MinionCardEntry(184, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 5, "Nightblade", CardType.Minion, new MinionFactory().setPower(4).setHitPoints(4).addEffect(new BattlecryEffect() {
+			@Override
+			public HearthstoneGameState applyTo(HearthstoneGameState state) {
+				return new DamageCharacterAtomic(state.getPassivePlayer().getTargetRef(), 3).apply(state);
+			}
+		})),
 		new MinionCardEntry(194, CardSet.Classic, Rarity.Legendary, HeroClass.Hunter, 9, "King Krush", CardType.Minion, new MinionFactory().setMinionType(MinionType.Beast).setPower(8).setHitPoints(8).addEffect(new ChargeEffect())),
 		new MinionCardEntry(238, CardSet.Basic,   Rarity.Free, HeroClass.Druid, 8, "Ironbark Protector", CardType.Minion, new MinionFactory().setPower(8).setHitPoints(8).addEffect(new TauntEffect())),
 		new MinionCardEntry(246, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 4, "Gnomish Inventor", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(4).addEffect(new BattlecryEffect() {
@@ -378,7 +384,6 @@ public final class CardRepository {
 636, CardSet.Basic, Rarity.Free, HeroClass.Shaman, 6, "Fire Elemental", CardType.Minion, new MinionFactory().setPower(6).setHitPoints(5)
 568, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 5, "Assassinate", new Effect()
 77486, CardSet.Basic, Rarity.Free, HeroClass.Mage, 5, "Polymorph: ???", new Effect()
-184, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 5, "Nightblade", CardType.Minion, new MinionFactory().setPower(4).setHitPoints(4)
 101, CardSet.Basic, Rarity.Free, HeroClass.Hunter, 5, "Starving Buzzard", CardType.Minion, new MinionFactory().setPower(3).setHitPoints(2)
 325, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 5, "Stormpike Commando", CardType.Minion, new MinionFactory().setPower(4).setHitPoints(2)
 162, CardSet.Basic, Rarity.Free, HeroClass.Hunter, 5, "Tundra Rhino", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(5)
