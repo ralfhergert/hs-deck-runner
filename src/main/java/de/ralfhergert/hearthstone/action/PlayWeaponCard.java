@@ -36,6 +36,7 @@ public class PlayWeaponCard implements Action<HearthstoneGameState> {
 				nextState = new DestroyWeaponAtomic(nextState.getPlayerOrdinal(player)).apply(nextState);
 			}
 			final Weapon weapon = weaponCard.getWeaponFactory().create();
+			weapon.setActive(true);
 			nextState.getActivePlayer().setWeapon(weapon);
 			return nextState.onEvent(new WeaponEntersBattlefieldEvent(weapon.getWeaponRef()));
 		}

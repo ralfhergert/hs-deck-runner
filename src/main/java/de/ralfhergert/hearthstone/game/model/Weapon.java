@@ -124,28 +124,35 @@ public class Weapon implements GameEventListener<HearthstoneGameState> {
 
 	@Override
 	public HearthstoneGameState onEvent(HearthstoneGameState state, GameEvent event) {
+		HearthstoneGameState nextState = state;
+		for (Effect effect : new ArrayList<>(effects)) {
+			if (effect instanceof GameEventListener) {
+				nextState = ((GameEventListener<HearthstoneGameState>)effect).onEvent(nextState, event);
+			}
+		}
 		if (event instanceof CharacterAttackedEvent) {
 			CharacterAttackedEvent characterAttackedEvent = (CharacterAttackedEvent)event;
 			// was the owner of this weapon the attacker?
-			if (characterAttackedEvent.getAttackerTargetRef().equals(state.getOwner(weaponRef).getTargetRef())) {
+			if (characterAttackedEvent.getAttackerTargetRef().equals(nextState.getOwner(weaponRef).getTargetRef())) {
 				durability--;
 				if (durability == 0) {
-					return state.apply(new DestroyWeaponAtomic(state.getPlayerOrdinal(state.getOwner(weaponRef))));
+					return nextState.apply(new DestroyWeaponAtomic(nextState.getPlayerOrdinal(nextState.getOwner(weaponRef))));
 				}
 			}
 		} else if (event instanceof EndTurnEvent) {
 			EndTurnEvent endTurnEvent = (EndTurnEvent)event;
 			// is it this weapon's owner end of turn?
-			if (endTurnEvent.getPlayerOrdinal() == state.getPlayerOrdinal(state.getOwner(weaponRef))) {
-				state.getPlayer(endTurnEvent.getPlayerOrdinal()).getWeapon().setActive(false);
+			if (endTurnEvent.getPlayerOrdinal() == nextState.getPlayerOrdinal(nextState.getOwner(weaponRef))) {
+				nextState.getPlayer(endTurnEvent.getPlayerOrdinal()).getWeapon().setActive(false);
 			}
 		} else if (event instanceof StartTurnEvent) {
 			StartTurnEvent startTurnEvent = (StartTurnEvent)event;
 			// is it this weapon's owner start of turn?
-			if (startTurnEvent.getPlayerOrdinal() == state.getPlayerOrdinal(state.getOwner(weaponRef))) {
-				state.getPlayer(startTurnEvent.getPlayerOrdinal()).getWeapon().setActive(true);
+			if (startTurnEvent.getPlayerOrdinal() == nextState.getPlayerOrdinal(nextState.getOwner(weaponRef))) {
+				nextState.getPlayer(startTurnEvent.getPlayerOrdinal()).getWeapon().setActive(true);
 			}
 		}
-		return state;
+
+		return nextState;
 	}
 }

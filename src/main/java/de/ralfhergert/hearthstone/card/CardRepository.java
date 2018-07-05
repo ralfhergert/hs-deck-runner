@@ -20,6 +20,7 @@ import de.ralfhergert.hearthstone.game.effect.ModifyAttackEffect;
 import de.ralfhergert.hearthstone.game.effect.ModifyHealthEffect;
 import de.ralfhergert.hearthstone.game.effect.SpellDamageEffect;
 import de.ralfhergert.hearthstone.game.effect.TauntEffect;
+import de.ralfhergert.hearthstone.game.effect.WheneverThisCharacterAttacks;
 import de.ralfhergert.hearthstone.game.effect.WheneverYouSummonAMinionOfType;
 import de.ralfhergert.hearthstone.game.effect.modifier.UntilEndOfTurn;
 import de.ralfhergert.hearthstone.game.effect.WheneverThisMinionTakesDamage;
@@ -199,6 +200,12 @@ public final class CardRepository {
 			}
 		})),
 		new MinionCardEntry(289, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 2, "Bluegill Warrior", CardType.Minion, new MinionFactory().setMinionType(MinionType.Murloc).setPower(2).setHitPoints(1).addEffect(new ChargeEffect())),
+		new WeaponCardEntry(293, CardSet.Basic,   Rarity.Free, HeroClass.Paladin, 4, "Truesilver Champion", new WeaponFactory().setAttack(4).setDurability(2).addEffect(new WheneverThisCharacterAttacks() {
+			@Override
+			public HearthstoneGameState applyTo(HearthstoneGameState state) {
+				return new HealCharacterAtomic(state.getEffectOwner(this).getTargetRef(), 2).apply(state);
+			}
+		})),
 		new MinionCardEntry(323, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 7, "War Golem", CardType.Minion, new MinionFactory().setPower(7).setHitPoints(7)),
 		new MinionCardEntry(326, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 4, "Sen'jin Shieldmasta", CardType.Minion, new MinionFactory().setPower(3).setHitPoints(5).addEffect(new TauntEffect())),
 		new AbilityCardEntry(329, CardSet.Basic, Rarity.Free, HeroClass.Druid, 3, "Savage Roar", new GeneralEffect() {
@@ -394,7 +401,6 @@ public final class CardRepository {
 77486, CardSet.Basic, Rarity.Free, HeroClass.Mage, 5, "Polymorph: ???", new Effect()
 325, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 5, "Stormpike Commando", CardType.Minion, new MinionFactory().setPower(4).setHitPoints(2)
 162, CardSet.Basic, Rarity.Free, HeroClass.Hunter, 5, "Tundra Rhino", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(5)
-293, CardSet.Basic, Rarity.Free, HeroClass.Paladin, 4, "Truesilver Champion", new WeaponFactory().setAttack(4).setDurability(2)
 29, CardSet.Basic, Rarity.Free, HeroClass.Paladin, 4, "Blessing of Kings", new Effect()
 522, CardSet.Basic, Rarity.Free, HeroClass.Mage, 4, "Fireball", new Effect()
 350, CardSet.Basic, Rarity.Free, HeroClass.Paladin, 4, "Hammer of Wrath", new Effect()

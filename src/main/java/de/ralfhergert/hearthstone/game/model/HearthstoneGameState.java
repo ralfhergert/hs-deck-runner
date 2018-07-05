@@ -43,6 +43,8 @@ public class HearthstoneGameState extends GameState<HearthstoneGameState> implem
 			outcome = parent.outcome;
 			intendedPlay = parent.intendedPlay;
 			random = parent.random;
+			currentAttackerRef = parent.currentAttackerRef;
+			currentTargetRef = parent.currentTargetRef;
 		} else {
 			random = new Random();
 		}

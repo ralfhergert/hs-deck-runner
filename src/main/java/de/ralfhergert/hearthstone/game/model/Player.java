@@ -231,6 +231,11 @@ public class Player extends Character<Player> implements GameEventListener<Heart
 	}
 
 	@Override
+	public boolean isEffectedBy(Effect effect) {
+		return super.isEffectedBy(effect) || (weapon != null && weapon.isEffectedBy(effect));
+	}
+
+	@Override
 	public HearthstoneGameState onEvent(HearthstoneGameState state, GameEvent event) {
 		HearthstoneGameState nextState = super.onEvent(state, event);
 		// forward the event.
