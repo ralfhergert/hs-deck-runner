@@ -234,6 +234,21 @@ public final class CardRepository {
 			}
 		}),
 		new MinionCardEntry(388, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 3, "Dalaran Mage", CardType.Minion, new MinionFactory().setPower(1).setHitPoints(4).addEffect(new SpellDamageEffect(1))),
+		new AbilityCardEntry(407, CardSet.Basic, Rarity.Free, HeroClass.Hunter, 4, "Multi-Shot", new GeneralEffect() {
+			/** Deal 3 damage to two random enemy minions. */
+			@Override
+			public HearthstoneGameState applyTo(HearthstoneGameState state) {
+				List<Minion> minions = new ArrayList<>(state.getPassivePlayer().getBattlefield());
+				while (minions.size() > 2) { // remove random minion as long this list has more than 2 of them.
+					minions.remove(state.getRandom().nextInt(minions.size()));
+				}
+				HearthstoneGameState nextState = state;
+				for (Minion minion : minions) {
+					nextState = new DamageCharacterAtomic(minion.getTargetRef(), 3).apply(nextState);
+				}
+				return nextState;
+			}
+		}),
 		new MinionCardEntry(414, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 6, "Lord of the Arena", CardType.Minion, new MinionFactory().setPower(6).setHitPoints(5).addEffect(new TauntEffect())),
 		new MinionCardEntry(422, CardSet.Classic, Rarity.Rare, HeroClass.Neutral, 2, "Knife Juggler", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(2).addEffect(new AfterYouSummonAMinion() {
 			@Override
@@ -405,7 +420,6 @@ public final class CardRepository {
 522, CardSet.Basic, Rarity.Free, HeroClass.Mage, 4, "Fireball", new Effect()
 350, CardSet.Basic, Rarity.Free, HeroClass.Paladin, 4, "Hammer of Wrath", new Effect()
 270, CardSet.Basic, Rarity.Free, HeroClass.Shaman, 4, "Hex", new Effect()
-407, CardSet.Basic, Rarity.Free, HeroClass.Hunter, 4, "Multi-Shot", new Effect()
 595, CardSet.Basic, Rarity.Free, HeroClass.Mage, 4, "Polymorph", new Effect()
 620, CardSet.Basic, Rarity.Free, HeroClass.Druid, 4, "Swipe", new Effect()
 472, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 4, "Dragonling Mechanic", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(4)
