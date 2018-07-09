@@ -16,6 +16,7 @@ import de.ralfhergert.hearthstone.effect.GeneralEffect;
 import de.ralfhergert.hearthstone.game.effect.AfterYouSummonAMinion;
 import de.ralfhergert.hearthstone.game.effect.BattlecryEffect;
 import de.ralfhergert.hearthstone.game.effect.ChargeEffect;
+import de.ralfhergert.hearthstone.game.effect.FreezeCharacterEffect;
 import de.ralfhergert.hearthstone.game.effect.ModifyAllOtherFriendlyMinionAttackEffect;
 import de.ralfhergert.hearthstone.game.effect.ModifyAttackEffect;
 import de.ralfhergert.hearthstone.game.effect.ModifyHealthEffect;
@@ -102,6 +103,17 @@ public final class CardRepository {
 				HearthstoneGameState nextState = state;
 				for (Minion minion : state.getOpposingPlayer(state.getActivePlayer()).getBattlefield()) {
 					nextState = new DamageCharacterAtomic(minion.getTargetRef(), 4).apply(nextState);
+				}
+				return nextState;
+			}
+		}),
+		new AbilityCardEntry(49, CardSet.Basic, Rarity.Free, HeroClass.Mage, 3, "Frost Nova", new GeneralEffect() {
+			/** Freeze all enemy minions. */
+			@Override
+			public HearthstoneGameState applyTo(HearthstoneGameState state) {
+				HearthstoneGameState nextState = state;
+				for (Minion minion : state.getOpposingPlayer(state.getActivePlayer()).getBattlefield()) {
+					nextState = new FreezeCharacterEffect(minion.getTargetRef()).applyTo(nextState);
 				}
 				return nextState;
 			}
@@ -473,7 +485,6 @@ public final class CardRepository {
 151, CardSet.Basic, Rarity.Free, HeroClass.Shaman, 4, "Windspeaker", CardType.Minion, new MinionFactory().setPower(3).setHitPoints(3)
 77495, CardSet.Basic, Rarity.Free, HeroClass.Warrior, 3, "Blazing Longsword", new WeaponFactory().setAttack(2).setDurability(3)
 332, CardSet.Basic, Rarity.Free, HeroClass.Warlock, 3, "Drain Life", new Effect()
-49, CardSet.Basic, Rarity.Free, HeroClass.Mage, 3, "Frost Nova", new Effect()
 258, CardSet.Basic, Rarity.Free, HeroClass.Druid, 3, "Healing Touch", new Effect()
 488, CardSet.Basic, Rarity.Free, HeroClass.Hunter, 3, "Kill Command", new Effect()
 77487, CardSet.Basic, Rarity.Free, HeroClass.Druid, 3, "Nature's Champion", new Effect()

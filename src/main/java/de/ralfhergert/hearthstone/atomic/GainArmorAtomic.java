@@ -1,7 +1,6 @@
 package de.ralfhergert.hearthstone.atomic;
 
 import de.ralfhergert.generic.game.model.Action;
-import de.ralfhergert.hearthstone.event.PlayerTakesDamageEvent;
 import de.ralfhergert.hearthstone.game.model.HearthstoneGameState;
 import de.ralfhergert.hearthstone.game.model.Player;
 import de.ralfhergert.hearthstone.game.model.PlayerOrdinal;
