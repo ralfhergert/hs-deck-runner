@@ -328,6 +328,7 @@ public final class CardRepository {
 				return new DrawCardsAction(state.getPlayerOrdinal(state.getActivePlayer()), 2).apply(state);
 			}
 		}),
+		new MinionCardEntry(502, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 3, "Raid Leader", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(2).addEffect(new ModifyAllOtherFriendlyMinionAttackEffect(1))),
 		new MinionCardEntry(504, CardSet.Classic, Rarity.Common, HeroClass.Warrior, 4, "Arathi Weaponsmith", CardType.Minion, new MinionFactory().setPower(3).setHitPoints(3).addEffect(new BattlecryEffect() {
 			@Override
 			public HearthstoneGameState applyTo(HearthstoneGameState state) {
@@ -470,7 +471,6 @@ public final class CardRepository {
 547, CardSet.Basic, Rarity.Free, HeroClass.Priest, 3, "Shadow Word: Death", new Effect()
 493, CardSet.Basic, Rarity.Free, HeroClass.Warrior, 3, "Shield Block", new Effect()
 41, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 3, "Ironforge Rifleman", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(2)
-502, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 3, "Raid Leader", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(2)
 47, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 3, "Razorfen Hunter", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(3)
 434, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 3, "Shattered Sun Cleric", CardType.Minion, new MinionFactory().setPower(3).setHitPoints(2)
 193, CardSet.Basic, Rarity.Free, HeroClass.Warrior, 3, "Warsong Commander", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(3)
