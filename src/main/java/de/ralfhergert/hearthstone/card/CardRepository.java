@@ -95,6 +95,7 @@ public final class CardRepository {
 			}
 		}),
 		new AbilityCardEntry(44, CardSet.Basic, Rarity.Free, HeroClass.Mage, 7, "Flamestrike", new GeneralEffect() {
+			/** Deal 4 damage to all enemy minions. */
 			@Override
 			public HearthstoneGameState applyTo(HearthstoneGameState state) {
 				HearthstoneGameState nextState = state;
@@ -104,7 +105,18 @@ public final class CardRepository {
 				return nextState;
 			}
 		}),
-		new MinionCardEntry(55,  CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 1, "Murloc Raider", CardType.Minion, new MinionFactory().setMinionType(MinionType.Murloc).setPower(2).setHitPoints(1)),
+		new MinionCardEntry(55, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 1, "Murloc Raider", CardType.Minion, new MinionFactory().setMinionType(MinionType.Murloc).setPower(2).setHitPoints(1)),
+		new AbilityCardEntry(56, CardSet.Basic, Rarity.Free, HeroClass.Mage, 2, "Arcane Explosion", new GeneralEffect() {
+			/** Deal 1 damage to all enemy minions. */
+			@Override
+			public HearthstoneGameState applyTo(HearthstoneGameState state) {
+				HearthstoneGameState nextState = state;
+				for (Minion minion : state.getOpposingPlayer(state.getActivePlayer()).getBattlefield()) {
+					nextState = new DamageCharacterAtomic(minion.getTargetRef(), 1).apply(nextState);
+				}
+				return nextState;
+			}
+		}),
 		new MinionCardEntry(60,  CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 6, "Boulderfist Ogre", CardType.Minion, new MinionFactory().setPower(6).setHitPoints(7)),
 		new MinionCardEntry(74,  CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 2, "Acidic Swamp Ooze", CardType.Minion, new MinionFactory().setPower(3).setHitPoints(2).addEffect(new BattlecryEffect() {
 			@Override
@@ -462,7 +474,6 @@ public final class CardRepository {
 47, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 3, "Razorfen Hunter", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(3)
 434, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 3, "Shattered Sun Cleric", CardType.Minion, new MinionFactory().setPower(3).setHitPoints(2)
 193, CardSet.Basic, Rarity.Free, HeroClass.Warrior, 3, "Warsong Commander", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(3)
-56, CardSet.Basic, Rarity.Free, HeroClass.Mage, 2, "Arcane Explosion", new Effect()
 77484, CardSet.Basic, Rarity.Free, HeroClass.Hunter, 2, "Deadeye", new Effect()
 554, CardSet.Basic, Rarity.Free, HeroClass.Priest, 2, "Divine Spirit", new Effect()
 227, CardSet.Basic, Rarity.Free, HeroClass.Warrior, 2, "Execute", new Effect()
