@@ -250,6 +250,13 @@ public final class CardRepository {
 			}
 		}),
 		new MinionCardEntry(414, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 6, "Lord of the Arena", CardType.Minion, new MinionFactory().setPower(6).setHitPoints(5).addEffect(new TauntEffect())),
+		new AbilityCardEntry(415, CardSet.Basic, Rarity.Free, HeroClass.Priest, 2, "Mind Blast", new GeneralEffect() {
+			/** Deal 5 damage to the enemy hero. */
+			@Override
+			public HearthstoneGameState applyTo(HearthstoneGameState state) {
+				return new DamageCharacterAtomic(state.getPassivePlayer().getTargetRef(), 5).apply(state);
+			}
+		}),
 		new MinionCardEntry(422, CardSet.Classic, Rarity.Rare, HeroClass.Neutral, 2, "Knife Juggler", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(2).addEffect(new AfterYouSummonAMinion() {
 			@Override
 			public HearthstoneGameState applyTo(HearthstoneGameState state) {
@@ -449,7 +456,6 @@ public final class CardRepository {
 77490, CardSet.Basic, Rarity.Free, HeroClass.Priest, 2, "Generous Spirit", new Effect()
 108, CardSet.Basic, Rarity.Free, HeroClass.Paladin, 2, "Holy Light", new Effect()
 480, CardSet.Basic, Rarity.Free, HeroClass.Druid, 2, "Mark of the Wild", new Effect()
-415, CardSet.Basic, Rarity.Free, HeroClass.Priest, 2, "Mind Blast", new Effect()
 491, CardSet.Basic, Rarity.Free, HeroClass.Shaman, 2, "Rockbiter Weapon", new Effect()
 385, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 2, "Sap", new Effect()
 315, CardSet.Basic, Rarity.Free, HeroClass.Priest, 2, "Shadow Word: Pain", new Effect()
