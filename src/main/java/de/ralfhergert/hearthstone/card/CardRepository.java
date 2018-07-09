@@ -116,6 +116,21 @@ public final class CardRepository {
 			}
 		})),
 		new MinionCardEntry(76,  CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 1, "Stonetusk Boar", CardType.Minion, new MinionFactory().setMinionType(MinionType.Beast).setPower(1).setHitPoints(1).addEffect(new ChargeEffect())),
+		new AbilityCardEntry(81, CardSet.Basic, Rarity.Free, HeroClass.Warrior, 2, "Cleave", new GeneralEffect() {
+			/** Deal 2 damage to two random enemy minions. */
+			@Override
+			public HearthstoneGameState applyTo(HearthstoneGameState state) {
+				List<Minion> minions = new ArrayList<>(state.getPassivePlayer().getBattlefield());
+				while (minions.size() > 2) { // remove random minion as long this list has more than 2 of them.
+					minions.remove(state.getRandom().nextInt(minions.size()));
+				}
+				HearthstoneGameState nextState = state;
+				for (Minion minion : minions) {
+					nextState = new DamageCharacterAtomic(minion.getTargetRef(), 2).apply(nextState);
+				}
+				return nextState;
+			}
+		}),
 		new MinionCardEntry(84,  CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 5, "Darkscale Healer", CardType.Minion, new MinionFactory().setPower(4).setHitPoints(5).addEffect(new BattlecryEffect() {
 			@Override
 			public HearthstoneGameState applyTo(HearthstoneGameState state) {
@@ -448,7 +463,6 @@ public final class CardRepository {
 434, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 3, "Shattered Sun Cleric", CardType.Minion, new MinionFactory().setPower(3).setHitPoints(2)
 193, CardSet.Basic, Rarity.Free, HeroClass.Warrior, 3, "Warsong Commander", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(3)
 56, CardSet.Basic, Rarity.Free, HeroClass.Mage, 2, "Arcane Explosion", new Effect()
-81, CardSet.Basic, Rarity.Free, HeroClass.Warrior, 2, "Cleave", new Effect()
 77484, CardSet.Basic, Rarity.Free, HeroClass.Hunter, 2, "Deadeye", new Effect()
 554, CardSet.Basic, Rarity.Free, HeroClass.Priest, 2, "Divine Spirit", new Effect()
 227, CardSet.Basic, Rarity.Free, HeroClass.Warrior, 2, "Execute", new Effect()
