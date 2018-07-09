@@ -8,6 +8,7 @@ import de.ralfhergert.hearthstone.atomic.DestroyMinionAtomic;
 import de.ralfhergert.hearthstone.atomic.DestroyWeaponAtomic;
 import de.ralfhergert.hearthstone.atomic.DiscardCardAtomic;
 import de.ralfhergert.hearthstone.atomic.EquipWeaponAtomic;
+import de.ralfhergert.hearthstone.atomic.GainArmorAtomic;
 import de.ralfhergert.hearthstone.atomic.HealCharacterAtomic;
 import de.ralfhergert.hearthstone.atomic.SummonTokenAtomic;
 import de.ralfhergert.hearthstone.effect.Effect;
@@ -328,6 +329,15 @@ public final class CardRepository {
 				return new DrawCardsAction(state.getPlayerOrdinal(state.getActivePlayer()), 2).apply(state);
 			}
 		}),
+		new AbilityCardEntry(493, CardSet.Basic, Rarity.Free, HeroClass.Warrior, 3, "Shield Block", new GeneralEffect() {
+			/** Gain 5 Armor. Draw a card. */
+			@Override
+			public HearthstoneGameState applyTo(HearthstoneGameState state) {
+				final PlayerOrdinal playerOrdinal = state.getPlayerOrdinal(state.getActivePlayer());
+				HearthstoneGameState nextState = new GainArmorAtomic(playerOrdinal, 5).apply(state);
+				return new DrawCardsAction(playerOrdinal, 1).apply(nextState);
+			}
+		}),
 		new MinionCardEntry(502, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 3, "Raid Leader", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(2).addEffect(new ModifyAllOtherFriendlyMinionAttackEffect(1))),
 		new MinionCardEntry(504, CardSet.Classic, Rarity.Common, HeroClass.Warrior, 4, "Arathi Weaponsmith", CardType.Minion, new MinionFactory().setPower(3).setHitPoints(3).addEffect(new BattlecryEffect() {
 			@Override
@@ -469,7 +479,6 @@ public final class CardRepository {
 77487, CardSet.Basic, Rarity.Free, HeroClass.Druid, 3, "Nature's Champion", new Effect()
 647, CardSet.Basic, Rarity.Free, HeroClass.Warlock, 3, "Shadow Bolt", new Effect()
 547, CardSet.Basic, Rarity.Free, HeroClass.Priest, 3, "Shadow Word: Death", new Effect()
-493, CardSet.Basic, Rarity.Free, HeroClass.Warrior, 3, "Shield Block", new Effect()
 41, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 3, "Ironforge Rifleman", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(2)
 47, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 3, "Razorfen Hunter", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(3)
 434, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 3, "Shattered Sun Cleric", CardType.Minion, new MinionFactory().setPower(3).setHitPoints(2)
