@@ -16,6 +16,7 @@ import de.ralfhergert.hearthstone.effect.GeneralEffect;
 import de.ralfhergert.hearthstone.game.effect.AfterYouSummonAMinion;
 import de.ralfhergert.hearthstone.game.effect.BattlecryEffect;
 import de.ralfhergert.hearthstone.game.effect.ChargeEffect;
+import de.ralfhergert.hearthstone.game.effect.DestroyMinionEffect;
 import de.ralfhergert.hearthstone.game.effect.FreezeCharacterEffect;
 import de.ralfhergert.hearthstone.game.effect.ModifyAllOtherFriendlyMinionAttackEffect;
 import de.ralfhergert.hearthstone.game.effect.ModifyAttackEffect;
@@ -45,6 +46,7 @@ import de.ralfhergert.hearthstone.game.model.TargetRef;
 import de.ralfhergert.hearthstone.game.model.Weapon;
 import de.ralfhergert.hearthstone.game.model.WeaponCard;
 import de.ralfhergert.hearthstone.game.target.AnyNonElusiveCharacter;
+import de.ralfhergert.hearthstone.game.target.AnyNonElusiveOpposingMinion;
 import de.ralfhergert.hearthstone.game.weapon.WeaponFactory;
 
 import java.util.ArrayList;
@@ -366,6 +368,7 @@ public final class CardRepository {
 		new MinionCardEntry(545, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 6, "Archmage", CardType.Minion, new MinionFactory().setPower(4).setHitPoints(7).addEffect(new SpellDamageEffect(1))),
 		new MinionCardEntry(560, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 6, "Reckless Rocketeer", CardType.Minion, new MinionFactory().setPower(5).setHitPoints(2).addEffect(new ChargeEffect())),
 		new MinionCardEntry(564, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 1, "Goldshire Footman", CardType.Minion, new MinionFactory().setPower(1).setHitPoints(2).addEffect(new TauntEffect())),
+		new AbilityCardEntry(568, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 5, "Assassinate", new DestroyMinionEffect(new AnyNonElusiveOpposingMinion())),
 		new MinionCardEntry(576, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 2, "Bloodfen Raptor", CardType.Minion, new MinionFactory().setMinionType(MinionType.Beast).setPower(3).setHitPoints(2)),
 		new AbilityCardEntry(578, CardSet.Basic, Rarity.Free, HeroClass.Hunter, 3, "Animal Companion", new GeneralEffect() {
 			@Override
@@ -478,7 +481,6 @@ public final class CardRepository {
 401, CardSet.Basic, Rarity.Free, HeroClass.Priest, 10, "Mind Control", new Effect()
 310, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 7, "Stormwind Champion", CardType.Minion, new MinionFactory().setPower(6).setHitPoints(6)
 636, CardSet.Basic, Rarity.Free, HeroClass.Shaman, 6, "Fire Elemental", CardType.Minion, new MinionFactory().setPower(6).setHitPoints(5)
-568, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 5, "Assassinate", new Effect()
 77486, CardSet.Basic, Rarity.Free, HeroClass.Mage, 5, "Polymorph: ???", new Effect()
 325, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 5, "Stormpike Commando", CardType.Minion, new MinionFactory().setPower(4).setHitPoints(2)
 162, CardSet.Basic, Rarity.Free, HeroClass.Hunter, 5, "Tundra Rhino", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(5)
