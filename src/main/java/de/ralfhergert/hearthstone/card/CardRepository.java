@@ -254,6 +254,16 @@ public final class CardRepository {
 				return new HealCharacterAtomic(state.getEffectOwner(this).getTargetRef(), 2).apply(state);
 			}
 		})),
+		new AbilityCardEntry(315, CardSet.Basic, Rarity.Free, HeroClass.Priest, 2, "Shadow Word: Pain", new DestroyMinionEffect(new TargetFinder() {
+			@Override
+			public List<TargetRef> findPossibleTargets(HearthstoneGameState state) {
+				return state.getAllMinionInOrderOfPlay().stream()
+					.filter(minion -> !minion.isElusive())
+					.filter(minion -> minion.getAttack() <= 3)
+					.map(Minion::getTargetRef)
+					.collect(Collectors.toList());
+			}
+		})),
 		new MinionCardEntry(323, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 7, "War Golem", CardType.Minion, new MinionFactory().setPower(7).setHitPoints(7)),
 		new MinionCardEntry(326, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 4, "Sen'jin Shieldmasta", CardType.Minion, new MinionFactory().setPower(3).setHitPoints(5).addEffect(new TauntEffect())),
 		new AbilityCardEntry(329, CardSet.Basic, Rarity.Free, HeroClass.Druid, 3, "Savage Roar", new GeneralEffect() {
@@ -557,7 +567,6 @@ public final class CardRepository {
 480, CardSet.Basic, Rarity.Free, HeroClass.Druid, 2, "Mark of the Wild", new Effect()
 491, CardSet.Basic, Rarity.Free, HeroClass.Shaman, 2, "Rockbiter Weapon", new Effect()
 385, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 2, "Sap", new Effect()
-315, CardSet.Basic, Rarity.Free, HeroClass.Priest, 2, "Shadow Word: Pain", new Effect()
 164, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 2, "Shiv", new Effect()
 282, CardSet.Basic, Rarity.Free, HeroClass.Druid, 2, "Wild Growth", new Effect()
 146, CardSet.Basic, Rarity.Free, HeroClass.Shaman, 2, "Windfury", new Effect()
