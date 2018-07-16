@@ -46,6 +46,7 @@ import de.ralfhergert.hearthstone.game.model.TargetRef;
 import de.ralfhergert.hearthstone.game.model.Weapon;
 import de.ralfhergert.hearthstone.game.model.WeaponCard;
 import de.ralfhergert.hearthstone.game.target.AnyNonElusiveCharacter;
+import de.ralfhergert.hearthstone.game.target.AnyNonElusiveOpposingCharacter;
 import de.ralfhergert.hearthstone.game.target.AnyNonElusiveOpposingMinion;
 import de.ralfhergert.hearthstone.game.weapon.WeaponFactory;
 
@@ -398,6 +399,18 @@ public final class CardRepository {
 			}
 		})),
 		new MinionCardEntry(611, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 3, "Silverback Patriarch", CardType.Minion, new MinionFactory().setMinionType(MinionType.Beast).setPower(1).setHitPoints(4).addEffect(new TauntEffect())),
+		new AbilityCardEntry(620, CardSet.Basic, Rarity.Free, HeroClass.Druid, 4, "Swipe", new DamageCharacterBySpellEffect(4, new AnyNonElusiveOpposingCharacter()) {
+			@Override
+			public HearthstoneGameState applyOn(HearthstoneGameState state, TargetRef targetRef) {
+				HearthstoneGameState nextState = super.applyOn(state, targetRef);
+				for (Character character : state.getPassivePlayer().getAllCharactersInOrderOfPlay()) {
+					if (!character.getTargetRef().equals(targetRef)) {
+						nextState = new DamageCharacterAtomic(character.getTargetRef(), 1).apply(nextState);
+					}
+				}
+				return nextState;
+			}
+		}),
 		new MinionCardEntry(624, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 5, "Gurubashi Berserker", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(7).addEffect(new WheneverThisMinionTakesDamage() {
 			@Override
 			public HearthstoneGameState applyTo(HearthstoneGameState state) {
@@ -494,7 +507,6 @@ public final class CardRepository {
 29, CardSet.Basic, Rarity.Free, HeroClass.Paladin, 4, "Blessing of Kings", new Effect()
 270, CardSet.Basic, Rarity.Free, HeroClass.Shaman, 4, "Hex", new Effect()
 595, CardSet.Basic, Rarity.Free, HeroClass.Mage, 4, "Polymorph", new Effect()
-620, CardSet.Basic, Rarity.Free, HeroClass.Druid, 4, "Swipe", new Effect()
 472, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 4, "Dragonling Mechanic", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(4)
 225, CardSet.Basic, Rarity.Free, HeroClass.Hunter, 4, "Houndmaster", CardType.Minion, new MinionFactory().setPower(4).setHitPoints(3)
 274, CardSet.Basic, Rarity.Free, HeroClass.Mage, 4, "Water Elemental", CardType.Minion, new MinionFactory().setPower(3).setHitPoints(6)
