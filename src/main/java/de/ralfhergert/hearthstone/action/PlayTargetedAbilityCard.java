@@ -30,7 +30,7 @@ public class PlayTargetedAbilityCard implements Action<HearthstoneGameState> {
 		HearthstoneGameState nextState = new HearthstoneGameState(state, this);
 		final Player player = nextState.getActivePlayer();
 		final Card card = player.findInHand(abilityCardRef);
-		if (card != null && card instanceof AbilityCard) {
+		if (card instanceof AbilityCard) {
 			AbilityCard abilityCard = (AbilityCard)card;
 			player.setAvailableMana(player.getAvailableMana() - abilityCard.getManaCost());
 			player.setCrystalsLockedNextTurn(player.getCrystalsLockedNextTurn() + abilityCard.getOverloadCost());
@@ -56,8 +56,7 @@ public class PlayTargetedAbilityCard implements Action<HearthstoneGameState> {
 			return false;
 		}
 		Card card = player.findInHand(abilityCardRef);
-		return card != null &&
-			card instanceof AbilityCard &&
+		return card instanceof AbilityCard &&
 			player.getAvailableMana() >= card.getManaCost();
 	}
 }

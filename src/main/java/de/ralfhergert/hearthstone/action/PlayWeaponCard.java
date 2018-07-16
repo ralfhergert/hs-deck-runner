@@ -26,7 +26,7 @@ public class PlayWeaponCard implements Action<HearthstoneGameState> {
 		HearthstoneGameState nextState = new HearthstoneGameState(state, this);
 		final Player player = nextState.getActivePlayer();
 		final Card card = player.findInHand(weaponCardRef);
-		if (card != null && card instanceof WeaponCard) {
+		if (card instanceof WeaponCard) {
 			WeaponCard weaponCard = (WeaponCard)card;
 			player.setAvailableMana(player.getAvailableMana() - weaponCard.getManaCost());
 			player.setCrystalsLockedNextTurn(player.getCrystalsLockedNextTurn() + weaponCard.getOverloadCost());
@@ -50,8 +50,7 @@ public class PlayWeaponCard implements Action<HearthstoneGameState> {
 			return false;
 		}
 		Card card = player.findInHand(weaponCardRef);
-		return card != null &&
-			card instanceof WeaponCard &&
+		return card instanceof WeaponCard &&
 			player.getAvailableMana() >= card.getManaCost();
 	}
 }

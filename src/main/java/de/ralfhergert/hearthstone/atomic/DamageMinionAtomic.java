@@ -33,7 +33,7 @@ public class DamageMinionAtomic implements Action<HearthstoneGameState> {
 		}
 		HearthstoneGameState nextState = new HearthstoneGameState(state, this);
 		Target target = nextState.findTarget(targetRef);
-		if (target == null || !(target instanceof Minion)) {
+		if (!(target instanceof Minion)) {
 			return nextState;
 		}
 		final Minion minion = (Minion)target;

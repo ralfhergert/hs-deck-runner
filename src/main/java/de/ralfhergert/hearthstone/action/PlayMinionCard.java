@@ -27,7 +27,7 @@ public class PlayMinionCard implements Action<HearthstoneGameState> {
 		HearthstoneGameState nextState = new HearthstoneGameState(state, this);
 		final Player player = nextState.getActivePlayer();
 		final Card card = player.findInHand(minionCardRef);
-		if (card != null && card instanceof MinionCard) {
+		if (card instanceof MinionCard) {
 			MinionCard minionCard = (MinionCard)card;
 			player.setAvailableMana(player.getAvailableMana() - minionCard.getManaCost());
 			player.setCrystalsLockedNextTurn(player.getCrystalsLockedNextTurn() + minionCard.getOverloadCost());
@@ -47,8 +47,7 @@ public class PlayMinionCard implements Action<HearthstoneGameState> {
 			return false;
 		}
 		Card card = player.findInHand(minionCardRef);
-		return card != null &&
-			card instanceof MinionCard &&
+		return card instanceof MinionCard &&
 			player.getAvailableMana() >= card.getManaCost();
 	}
 }

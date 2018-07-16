@@ -27,7 +27,7 @@ public class BounceMinionToHandAtomic implements Action<HearthstoneGameState> {
 		HearthstoneGameState nextState = new HearthstoneGameState(state, this);
 		// move the minion from the battlefield into the graveyard.
 		Character character = nextState.findTarget(targetRef);
-		if (character == null || !(character instanceof Minion)) {
+		if (!(character instanceof Minion)) {
 			return nextState;
 		}
 		Minion minion = (Minion)character;

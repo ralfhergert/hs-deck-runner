@@ -16,7 +16,7 @@ public class ChargeEffect implements GeneralEffect, GameEventListener<Hearthston
 	@Override
 	public HearthstoneGameState applyTo(HearthstoneGameState state) {
 		Character character = state.getEffectOwner(this);
-		if (character != null && character instanceof Minion) {
+		if (character instanceof Minion) {
 			((Minion)character).setHasCharge(true);
 		}
 		return state;
@@ -25,7 +25,7 @@ public class ChargeEffect implements GeneralEffect, GameEventListener<Hearthston
 	@Override
 	public HearthstoneGameState unapplyOn(HearthstoneGameState state) {
 		Character character = state.getEffectOwner(this);
-		if (character != null && character instanceof Minion) {
+		if (character instanceof Minion) {
 			((Minion)character).setHasCharge(false);
 		}
 		return state;

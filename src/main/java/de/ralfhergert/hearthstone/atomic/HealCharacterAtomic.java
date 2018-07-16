@@ -7,7 +7,6 @@ import de.ralfhergert.hearthstone.game.model.Character;
 import de.ralfhergert.hearthstone.game.model.HearthstoneGameState;
 import de.ralfhergert.hearthstone.game.model.Minion;
 import de.ralfhergert.hearthstone.game.model.Player;
-import de.ralfhergert.hearthstone.game.model.Target;
 import de.ralfhergert.hearthstone.game.model.TargetRef;
 
 /**
@@ -32,17 +31,16 @@ public class HealCharacterAtomic implements Action<HearthstoneGameState> {
 	@Override
 	public HearthstoneGameState apply(HearthstoneGameState state) {
 		HearthstoneGameState nextState = new HearthstoneGameState(state, this);
-		Target target = nextState.findTarget(targetRef);
-		if (target == null || !(target instanceof Character)) {
+		Character character = nextState.findTarget(targetRef);
+		if (character == null) {
 			return nextState;
 		}
-		Character character = (Character)target;
 		final int hitPointsBefore = character.getCurrentHitPoints();
 		final int hitPointsAfter = character.heal(heal);
 		if (hitPointsBefore < hitPointsAfter) {
-			if (target instanceof Minion) {
+			if (character instanceof Minion) {
 				return nextState.onEvent(new MinionHealedEvent(targetRef, hitPointsAfter));
-			} else if (target instanceof Player) {
+			} else if (character instanceof Player) {
 				return nextState.onEvent(new PlayerHealedEvent(targetRef, hitPointsAfter));
 			}
 		}
