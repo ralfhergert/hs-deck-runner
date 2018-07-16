@@ -4,7 +4,6 @@ import de.ralfhergert.hearthstone.atomic.DamageCharacterAtomic;
 import de.ralfhergert.hearthstone.effect.TargetedEffect;
 import de.ralfhergert.hearthstone.game.model.Character;
 import de.ralfhergert.hearthstone.game.model.HearthstoneGameState;
-import de.ralfhergert.hearthstone.game.model.Player;
 import de.ralfhergert.hearthstone.game.model.TargetFinder;
 import de.ralfhergert.hearthstone.game.model.TargetRef;
 
@@ -26,12 +25,15 @@ public class DamageCharacterBySpellEffect implements TargetedEffect {
 
 	@Override
 	public HearthstoneGameState applyOn(HearthstoneGameState state, final TargetRef targetRef) {
-		final Player player = state.getActivePlayer();
 		final Character target = state.findTarget(targetRef);
 		if (target != null) {
-			return new DamageCharacterAtomic(targetRef, damage + player.getSpellDamage()).apply(state);
+			return new DamageCharacterAtomic(targetRef, getDamage(state)).apply(state);
 		}
 		return state;
+	}
+
+	public int getDamage(HearthstoneGameState state) {
+		return damage + state.getActivePlayer().getSpellDamage();
 	}
 
 	@Override

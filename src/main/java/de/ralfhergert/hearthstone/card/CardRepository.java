@@ -354,6 +354,15 @@ public final class CardRepository {
 		})),
 		new MinionCardEntry(476, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 5, "Fen Creeper", CardType.Minion, new MinionFactory().setPower(3).setHitPoints(6).addEffect(new TauntEffect())),
 		new MinionCardEntry(479, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 2, "Kobold Geomancer", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(2).addEffect(new SpellDamageEffect(1))),
+		new AbilityCardEntry(488, CardSet.Basic, Rarity.Free, HeroClass.Hunter, 3, "Kill Command", new DamageCharacterBySpellEffect(3, new AnyNonElusiveCharacter()) {
+			/* Deal 3 damage. If the owner has at least one beast deal 5 damage instead. */
+			@Override
+			public int getDamage(HearthstoneGameState state) {
+				return state.getActivePlayer().getBattlefield().stream().anyMatch(minion -> minion.getMinionType() == MinionType.Beast)
+					? 2 + super.getDamage(state)
+					: super.getDamage(state);
+			}
+		}),
 		new AbilityCardEntry(489, CardSet.Basic, Rarity.Free, HeroClass.Mage, 3, "Arcane Intellect", new GeneralEffect() {
 			@Override
 			public HearthstoneGameState applyTo(HearthstoneGameState state) {
@@ -520,7 +529,6 @@ public final class CardRepository {
 151, CardSet.Basic, Rarity.Free, HeroClass.Shaman, 4, "Windspeaker", CardType.Minion, new MinionFactory().setPower(3).setHitPoints(3)
 77495, CardSet.Basic, Rarity.Free, HeroClass.Warrior, 3, "Blazing Longsword", new WeaponFactory().setAttack(2).setDurability(3)
 258, CardSet.Basic, Rarity.Free, HeroClass.Druid, 3, "Healing Touch", new Effect()
-488, CardSet.Basic, Rarity.Free, HeroClass.Hunter, 3, "Kill Command", new Effect()
 77487, CardSet.Basic, Rarity.Free, HeroClass.Druid, 3, "Nature's Champion", new Effect()
 647, CardSet.Basic, Rarity.Free, HeroClass.Warlock, 3, "Shadow Bolt", new Effect()
 547, CardSet.Basic, Rarity.Free, HeroClass.Priest, 3, "Shadow Word: Death", new Effect()
