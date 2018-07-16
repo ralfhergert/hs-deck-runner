@@ -212,6 +212,15 @@ public final class CardRepository {
 			}
 		})),
 		new MinionCardEntry(194, CardSet.Classic, Rarity.Legendary, HeroClass.Hunter, 9, "King Krush", CardType.Minion, new MinionFactory().setMinionType(MinionType.Beast).setPower(8).setHitPoints(8).addEffect(new ChargeEffect())),
+		new AbilityCardEntry(227, CardSet.Basic, Rarity.Free, HeroClass.Warrior, 2, "Execute", new DestroyMinionEffect(new TargetFinder() {
+			@Override
+			public List<TargetRef> findPossibleTargets(HearthstoneGameState state) {
+				return state.getPassivePlayer().getAllMinionsInOrderOfPlay().stream()
+					.filter(minion -> !minion.isElusive() && minion.isDamaged())
+					.map(Minion::getTargetRef)
+					.collect(Collectors.toList());
+			}
+		})),
 		new MinionCardEntry(238, CardSet.Basic,   Rarity.Free, HeroClass.Druid, 8, "Ironbark Protector", CardType.Minion, new MinionFactory().setPower(8).setHitPoints(8).addEffect(new TauntEffect())),
 		new MinionCardEntry(246, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 4, "Gnomish Inventor", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(4).addEffect(new BattlecryEffect() {
 			@Override
@@ -560,7 +569,6 @@ public final class CardRepository {
 193, CardSet.Basic, Rarity.Free, HeroClass.Warrior, 3, "Warsong Commander", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(3)
 77484, CardSet.Basic, Rarity.Free, HeroClass.Hunter, 2, "Deadeye", new Effect()
 554, CardSet.Basic, Rarity.Free, HeroClass.Priest, 2, "Divine Spirit", new Effect()
-227, CardSet.Basic, Rarity.Free, HeroClass.Warrior, 2, "Execute", new Effect()
 177, CardSet.Basic, Rarity.Free, HeroClass.Mage, 2, "Frostbolt", new Effect()
 77490, CardSet.Basic, Rarity.Free, HeroClass.Priest, 2, "Generous Spirit", new Effect()
 108, CardSet.Basic, Rarity.Free, HeroClass.Paladin, 2, "Holy Light", new Effect()
