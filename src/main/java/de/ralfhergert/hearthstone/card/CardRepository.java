@@ -42,6 +42,7 @@ import de.ralfhergert.hearthstone.game.model.MinionType;
 import de.ralfhergert.hearthstone.game.model.Player;
 import de.ralfhergert.hearthstone.game.model.PlayerOrdinal;
 import de.ralfhergert.hearthstone.game.model.Rarity;
+import de.ralfhergert.hearthstone.game.model.TargetFinder;
 import de.ralfhergert.hearthstone.game.model.TargetRef;
 import de.ralfhergert.hearthstone.game.model.Weapon;
 import de.ralfhergert.hearthstone.game.model.WeaponCard;
@@ -57,6 +58,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  * This repository hold all known cards.
@@ -391,6 +393,16 @@ public final class CardRepository {
 		new MinionCardEntry(527, CardSet.Classic, Rarity.Free, HeroClass.Neutral, 1, "Whelp", CardType.Token, new MinionFactory().setMinionType(MinionType.Dragon).setPower(1).setHitPoints(1)),
 		new MinionCardEntry(535, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 2, "River Crocolisk", CardType.Minion, new MinionFactory().setMinionType(MinionType.Beast).setPower(2).setHitPoints(3)),
 		new MinionCardEntry(545, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 6, "Archmage", CardType.Minion, new MinionFactory().setPower(4).setHitPoints(7).addEffect(new SpellDamageEffect(1))),
+		new AbilityCardEntry(547, CardSet.Basic, Rarity.Free, HeroClass.Priest, 3, "Shadow Word: Death", new DestroyMinionEffect(new TargetFinder() {
+			@Override
+			public List<TargetRef> findPossibleTargets(HearthstoneGameState state) {
+				return state.getAllMinionInOrderOfPlay().stream()
+					.filter(minion -> !minion.isElusive())
+					.filter(minion -> minion.getAttack() >= 5)
+					.map(Minion::getTargetRef)
+					.collect(Collectors.toList());
+			}
+		})),
 		new MinionCardEntry(560, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 6, "Reckless Rocketeer", CardType.Minion, new MinionFactory().setPower(5).setHitPoints(2).addEffect(new ChargeEffect())),
 		new MinionCardEntry(564, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 1, "Goldshire Footman", CardType.Minion, new MinionFactory().setPower(1).setHitPoints(2).addEffect(new TauntEffect())),
 		new AbilityCardEntry(568, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 5, "Assassinate", new DestroyMinionEffect(new AnyNonElusiveOpposingMinion())),
@@ -532,7 +544,6 @@ public final class CardRepository {
 77495, CardSet.Basic, Rarity.Free, HeroClass.Warrior, 3, "Blazing Longsword", new WeaponFactory().setAttack(2).setDurability(3)
 258, CardSet.Basic, Rarity.Free, HeroClass.Druid, 3, "Healing Touch", new Effect()
 77487, CardSet.Basic, Rarity.Free, HeroClass.Druid, 3, "Nature's Champion", new Effect()
-547, CardSet.Basic, Rarity.Free, HeroClass.Priest, 3, "Shadow Word: Death", new Effect()
 41, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 3, "Ironforge Rifleman", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(2)
 47, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 3, "Razorfen Hunter", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(3)
 434, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 3, "Shattered Sun Cleric", CardType.Minion, new MinionFactory().setPower(3).setHitPoints(2)
