@@ -46,6 +46,7 @@ import de.ralfhergert.hearthstone.game.model.TargetRef;
 import de.ralfhergert.hearthstone.game.model.Weapon;
 import de.ralfhergert.hearthstone.game.model.WeaponCard;
 import de.ralfhergert.hearthstone.game.target.AnyNonElusiveCharacter;
+import de.ralfhergert.hearthstone.game.target.AnyNonElusiveMinion;
 import de.ralfhergert.hearthstone.game.target.AnyNonElusiveOpposingCharacter;
 import de.ralfhergert.hearthstone.game.target.AnyNonElusiveOpposingMinion;
 import de.ralfhergert.hearthstone.game.weapon.WeaponFactory;
@@ -448,6 +449,7 @@ public final class CardRepository {
 				return state;
 			}
 		}),
+		new AbilityCardEntry(647, CardSet.Basic, Rarity.Free, HeroClass.Warlock, 3, "Shadow Bolt", new DamageCharacterBySpellEffect(4, new AnyNonElusiveMinion())),
 		new AbilityCardEntry(658, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 6, "Vanish", new GeneralEffect() {
 			/**
 			 * Return all minions to their owner's hand.
@@ -530,7 +532,6 @@ public final class CardRepository {
 77495, CardSet.Basic, Rarity.Free, HeroClass.Warrior, 3, "Blazing Longsword", new WeaponFactory().setAttack(2).setDurability(3)
 258, CardSet.Basic, Rarity.Free, HeroClass.Druid, 3, "Healing Touch", new Effect()
 77487, CardSet.Basic, Rarity.Free, HeroClass.Druid, 3, "Nature's Champion", new Effect()
-647, CardSet.Basic, Rarity.Free, HeroClass.Warlock, 3, "Shadow Bolt", new Effect()
 547, CardSet.Basic, Rarity.Free, HeroClass.Priest, 3, "Shadow Word: Death", new Effect()
 41, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 3, "Ironforge Rifleman", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(2)
 47, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 3, "Razorfen Hunter", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(3)
