@@ -2,7 +2,7 @@ package de.ralfhergert.hearthstone.action;
 
 import de.ralfhergert.generic.game.model.Action;
 import de.ralfhergert.hearthstone.effect.Effect;
-import de.ralfhergert.hearthstone.effect.GeneralEffect;
+import de.ralfhergert.hearthstone.effect.TargetedEffect;
 import de.ralfhergert.hearthstone.event.PushedPlayOnStackEvent;
 import de.ralfhergert.hearthstone.game.model.AbilityCard;
 import de.ralfhergert.hearthstone.game.model.Card;
@@ -10,7 +10,7 @@ import de.ralfhergert.hearthstone.game.model.CardRef;
 import de.ralfhergert.hearthstone.game.model.HearthstoneGameState;
 import de.ralfhergert.hearthstone.game.model.Player;
 import de.ralfhergert.hearthstone.game.model.TargetRef;
-import de.ralfhergert.hearthstone.play.GeneralPlay;
+import de.ralfhergert.hearthstone.play.TargetedPlay;
 
 /**
  * This action lets the active player play an {@link AbilityCard} from the hand.
@@ -38,8 +38,8 @@ public class PlayTargetedAbilityCard implements Action<HearthstoneGameState> {
 			player.addToPlayedCards(abilityCard);
 			// push the play onto a stack to allow "Counterspell" or "Redirect" to manipulate it.
 			final Effect effect = abilityCard.getEffect();
-			if (effect instanceof GeneralEffect) { // FIXME
-				nextState.setIntendedPlay(new GeneralPlay((GeneralEffect)effect));
+			if (effect instanceof TargetedEffect) {
+				nextState.setIntendedPlay(new TargetedPlay((TargetedEffect)effect, targetRef));
 				nextState = nextState.onEvent(new PushedPlayOnStackEvent(nextState.getPlayerOrdinal(player)));
 			}
 			if (nextState.getIntendedPlay() != null) {
