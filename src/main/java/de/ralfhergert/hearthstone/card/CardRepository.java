@@ -437,6 +437,13 @@ public final class CardRepository {
 		}),
 		new MinionCardEntry(659, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 4, "Ogre Magi", CardType.Minion, new MinionFactory().setPower(4).setHitPoints(4).addEffect(new SpellDamageEffect(1))),
 		new MinionCardEntry(663, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 2, "Frostwolf Grunt", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(2).addEffect(new TauntEffect())),
+		new AbilityCardEntry(667, CardSet.Basic, Rarity.Free, HeroClass.Druid, 6, "Starfire", new SpellDamageCharacterEffect(5, new AnyNonElusiveCharacter()) {
+			@Override
+			public HearthstoneGameState applyOn(HearthstoneGameState state, TargetRef targetRef) {
+				HearthstoneGameState nextState = super.applyOn(state, targetRef);
+				return new DrawCardsAction(state.getPlayerOrdinal(state.getActivePlayer()), 1).apply(nextState);
+			}
+		}),
 		new AbilityCardEntry(671, CardSet.Basic, Rarity.Free, HeroClass.Priest, 5, "Holy Nova", new GeneralEffect() {
 			/** Deal 2 damage to all enemies. Restore 2 Health to all friendly characters. */
 			@Override
@@ -470,7 +477,6 @@ public final class CardRepository {
 /* Cards which effects are not yet implemented.
 401, CardSet.Basic, Rarity.Free, HeroClass.Priest, 10, "Mind Control", new Effect()
 310, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 7, "Stormwind Champion", CardType.Minion, new MinionFactory().setPower(6).setHitPoints(6)
-667, CardSet.Basic, Rarity.Free, HeroClass.Druid, 6, "Starfire", new Effect()
 636, CardSet.Basic, Rarity.Free, HeroClass.Shaman, 6, "Fire Elemental", CardType.Minion, new MinionFactory().setPower(6).setHitPoints(5)
 568, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 5, "Assassinate", new Effect()
 77486, CardSet.Basic, Rarity.Free, HeroClass.Mage, 5, "Polymorph: ???", new Effect()
