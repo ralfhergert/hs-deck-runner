@@ -14,12 +14,12 @@ import java.util.List;
  * This effect causes spell-damage to be inflicted to a target {@link Character}.
  * The damage is effected by the active player's spell damage modifier.
  */
-public class SpellDamageCharacterEffect implements TargetedEffect {
+public class DamageCharacterBySpellEffect implements TargetedEffect {
 
 	private final int damage;
 	private final TargetFinder targetFinder;
 
-	public SpellDamageCharacterEffect(int damage, TargetFinder targetFinder) {
+	public DamageCharacterBySpellEffect(int damage, TargetFinder targetFinder) {
 		this.damage = damage;
 		this.targetFinder = targetFinder;
 	}

@@ -20,7 +20,7 @@ import de.ralfhergert.hearthstone.game.effect.FreezeCharacterEffect;
 import de.ralfhergert.hearthstone.game.effect.ModifyAllOtherFriendlyMinionAttackEffect;
 import de.ralfhergert.hearthstone.game.effect.ModifyAttackEffect;
 import de.ralfhergert.hearthstone.game.effect.ModifyHealthEffect;
-import de.ralfhergert.hearthstone.game.effect.SpellDamageCharacterEffect;
+import de.ralfhergert.hearthstone.game.effect.DamageCharacterBySpellEffect;
 import de.ralfhergert.hearthstone.game.effect.SpellDamageEffect;
 import de.ralfhergert.hearthstone.game.effect.TauntEffect;
 import de.ralfhergert.hearthstone.game.effect.WheneverThisCharacterAttacks;
@@ -360,7 +360,7 @@ public final class CardRepository {
 			}
 		})),
 		new MinionCardEntry(519, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 3, "Ironfur Grizzly", CardType.Minion, new MinionFactory().setMinionType(MinionType.Beast).setPower(3).setHitPoints(3).addEffect(new TauntEffect())),
-		new AbilityCardEntry(522, CardSet.Basic, Rarity.Free, HeroClass.Mage, 4, "Fireball", new SpellDamageCharacterEffect(6, new AnyNonElusiveCharacter())),
+		new AbilityCardEntry(522, CardSet.Basic, Rarity.Free, HeroClass.Mage, 4, "Fireball", new DamageCharacterBySpellEffect(6, new AnyNonElusiveCharacter())),
 		new MinionCardEntry(527, CardSet.Classic, Rarity.Free, HeroClass.Neutral, 1, "Whelp", CardType.Token, new MinionFactory().setMinionType(MinionType.Dragon).setPower(1).setHitPoints(1)),
 		new MinionCardEntry(535, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 2, "River Crocolisk", CardType.Minion, new MinionFactory().setMinionType(MinionType.Beast).setPower(2).setHitPoints(3)),
 		new MinionCardEntry(545, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 6, "Archmage", CardType.Minion, new MinionFactory().setPower(4).setHitPoints(7).addEffect(new SpellDamageEffect(1))),
@@ -437,7 +437,7 @@ public final class CardRepository {
 		}),
 		new MinionCardEntry(659, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 4, "Ogre Magi", CardType.Minion, new MinionFactory().setPower(4).setHitPoints(4).addEffect(new SpellDamageEffect(1))),
 		new MinionCardEntry(663, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 2, "Frostwolf Grunt", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(2).addEffect(new TauntEffect())),
-		new AbilityCardEntry(667, CardSet.Basic, Rarity.Free, HeroClass.Druid, 6, "Starfire", new SpellDamageCharacterEffect(5, new AnyNonElusiveCharacter()) {
+		new AbilityCardEntry(667, CardSet.Basic, Rarity.Free, HeroClass.Druid, 6, "Starfire", new DamageCharacterBySpellEffect(5, new AnyNonElusiveCharacter()) {
 			@Override
 			public HearthstoneGameState applyOn(HearthstoneGameState state, TargetRef targetRef) {
 				HearthstoneGameState nextState = super.applyOn(state, targetRef);
