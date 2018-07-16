@@ -20,6 +20,7 @@ import de.ralfhergert.hearthstone.game.effect.FreezeCharacterEffect;
 import de.ralfhergert.hearthstone.game.effect.ModifyAllOtherFriendlyMinionAttackEffect;
 import de.ralfhergert.hearthstone.game.effect.ModifyAttackEffect;
 import de.ralfhergert.hearthstone.game.effect.ModifyHealthEffect;
+import de.ralfhergert.hearthstone.game.effect.SpellDamageCharacterEffect;
 import de.ralfhergert.hearthstone.game.effect.SpellDamageEffect;
 import de.ralfhergert.hearthstone.game.effect.TauntEffect;
 import de.ralfhergert.hearthstone.game.effect.WheneverThisCharacterAttacks;
@@ -43,6 +44,7 @@ import de.ralfhergert.hearthstone.game.model.Rarity;
 import de.ralfhergert.hearthstone.game.model.TargetRef;
 import de.ralfhergert.hearthstone.game.model.Weapon;
 import de.ralfhergert.hearthstone.game.model.WeaponCard;
+import de.ralfhergert.hearthstone.game.target.AnyNonElusiveCharacter;
 import de.ralfhergert.hearthstone.game.weapon.WeaponFactory;
 
 import java.util.ArrayList;
@@ -358,6 +360,7 @@ public final class CardRepository {
 			}
 		})),
 		new MinionCardEntry(519, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 3, "Ironfur Grizzly", CardType.Minion, new MinionFactory().setMinionType(MinionType.Beast).setPower(3).setHitPoints(3).addEffect(new TauntEffect())),
+		new AbilityCardEntry(522, CardSet.Basic, Rarity.Free, HeroClass.Mage, 4, "Fireball", new SpellDamageCharacterEffect(6, new AnyNonElusiveCharacter())),
 		new MinionCardEntry(527, CardSet.Classic, Rarity.Free, HeroClass.Neutral, 1, "Whelp", CardType.Token, new MinionFactory().setMinionType(MinionType.Dragon).setPower(1).setHitPoints(1)),
 		new MinionCardEntry(535, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 2, "River Crocolisk", CardType.Minion, new MinionFactory().setMinionType(MinionType.Beast).setPower(2).setHitPoints(3)),
 		new MinionCardEntry(545, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 6, "Archmage", CardType.Minion, new MinionFactory().setPower(4).setHitPoints(7).addEffect(new SpellDamageEffect(1))),
@@ -474,7 +477,6 @@ public final class CardRepository {
 325, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 5, "Stormpike Commando", CardType.Minion, new MinionFactory().setPower(4).setHitPoints(2)
 162, CardSet.Basic, Rarity.Free, HeroClass.Hunter, 5, "Tundra Rhino", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(5)
 29, CardSet.Basic, Rarity.Free, HeroClass.Paladin, 4, "Blessing of Kings", new Effect()
-522, CardSet.Basic, Rarity.Free, HeroClass.Mage, 4, "Fireball", new Effect()
 350, CardSet.Basic, Rarity.Free, HeroClass.Paladin, 4, "Hammer of Wrath", new Effect()
 270, CardSet.Basic, Rarity.Free, HeroClass.Shaman, 4, "Hex", new Effect()
 595, CardSet.Basic, Rarity.Free, HeroClass.Mage, 4, "Polymorph", new Effect()

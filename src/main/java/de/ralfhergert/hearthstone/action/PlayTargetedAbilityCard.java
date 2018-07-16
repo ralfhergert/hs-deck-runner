@@ -59,4 +59,8 @@ public class PlayTargetedAbilityCard implements Action<HearthstoneGameState> {
 		return card instanceof AbilityCard &&
 			player.getAvailableMana() >= card.getManaCost();
 	}
+
+	public TargetRef getTargetRef() {
+		return targetRef;
+	}
 }
