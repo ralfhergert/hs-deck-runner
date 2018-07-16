@@ -264,6 +264,13 @@ public final class CardRepository {
 		}),
 		new MinionCardEntry(340, CardSet.Basic,   Rarity.Free, HeroClass.Warlock, 1, "Voidwalker", CardType.Minion, new MinionFactory().setMinionType(MinionType.Demon).setPower(1).setHitPoints(3).addEffect(new TauntEffect())),
 		new MinionCardEntry(346, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 4, "Mogu'shan Warden", CardType.Minion, new MinionFactory().setPower(1).setHitPoints(7).addEffect(new TauntEffect())),
+		new AbilityCardEntry(350, CardSet.Basic, Rarity.Free, HeroClass.Paladin, 4, "Hammer of Wrath", new DamageCharacterBySpellEffect(3, new AnyNonElusiveCharacter()) {
+			@Override
+			public HearthstoneGameState applyOn(HearthstoneGameState state, TargetRef targetRef) {
+				HearthstoneGameState nextState = super.applyOn(state, targetRef);
+				return new DrawCardsAction(state.getPlayerOrdinal(state.getActivePlayer()), 1).apply(nextState);
+			}
+		}),
 		new MinionCardEntry(362, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 3, "Magma Rager", CardType.Minion, new MinionFactory().setMinionType(MinionType.Elemental).setPower(5).setHitPoints(1)),
 		new MinionCardEntry(369, CardSet.Basic,   Rarity.Common, HeroClass.Hunter, 3, "Huffer", CardType.Token, new MinionFactory().setMinionType(MinionType.Beast).setPower(4).setHitPoints(2).addEffect(new ChargeEffect())),
 		new AbilityCardEntry(378, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 3, "Fan of Knives", new GeneralEffect() {
@@ -485,7 +492,6 @@ public final class CardRepository {
 325, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 5, "Stormpike Commando", CardType.Minion, new MinionFactory().setPower(4).setHitPoints(2)
 162, CardSet.Basic, Rarity.Free, HeroClass.Hunter, 5, "Tundra Rhino", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(5)
 29, CardSet.Basic, Rarity.Free, HeroClass.Paladin, 4, "Blessing of Kings", new Effect()
-350, CardSet.Basic, Rarity.Free, HeroClass.Paladin, 4, "Hammer of Wrath", new Effect()
 270, CardSet.Basic, Rarity.Free, HeroClass.Shaman, 4, "Hex", new Effect()
 595, CardSet.Basic, Rarity.Free, HeroClass.Mage, 4, "Polymorph", new Effect()
 620, CardSet.Basic, Rarity.Free, HeroClass.Druid, 4, "Swipe", new Effect()
