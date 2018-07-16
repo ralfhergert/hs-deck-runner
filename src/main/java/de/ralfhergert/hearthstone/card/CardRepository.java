@@ -263,6 +263,13 @@ public final class CardRepository {
 				return nextState;
 			}
 		}),
+		new AbilityCardEntry(332, CardSet.Basic, Rarity.Free, HeroClass.Warlock, 3, "Drain Life", new DamageCharacterBySpellEffect(2, new AnyNonElusiveCharacter()) {
+			@Override
+			public HearthstoneGameState applyOn(HearthstoneGameState state, TargetRef targetRef) {
+				HearthstoneGameState nextState = super.applyOn(state, targetRef);
+				return new HealCharacterAtomic(state.getActivePlayer().getTargetRef(), 2).apply(nextState);
+			}
+		}),
 		new MinionCardEntry(340, CardSet.Basic,   Rarity.Free, HeroClass.Warlock, 1, "Voidwalker", CardType.Minion, new MinionFactory().setMinionType(MinionType.Demon).setPower(1).setHitPoints(3).addEffect(new TauntEffect())),
 		new MinionCardEntry(346, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 4, "Mogu'shan Warden", CardType.Minion, new MinionFactory().setPower(1).setHitPoints(7).addEffect(new TauntEffect())),
 		new AbilityCardEntry(350, CardSet.Basic, Rarity.Free, HeroClass.Paladin, 4, "Hammer of Wrath", new DamageCharacterBySpellEffect(3, new AnyNonElusiveCharacter()) {
@@ -512,7 +519,6 @@ public final class CardRepository {
 274, CardSet.Basic, Rarity.Free, HeroClass.Mage, 4, "Water Elemental", CardType.Minion, new MinionFactory().setPower(3).setHitPoints(6)
 151, CardSet.Basic, Rarity.Free, HeroClass.Shaman, 4, "Windspeaker", CardType.Minion, new MinionFactory().setPower(3).setHitPoints(3)
 77495, CardSet.Basic, Rarity.Free, HeroClass.Warrior, 3, "Blazing Longsword", new WeaponFactory().setAttack(2).setDurability(3)
-332, CardSet.Basic, Rarity.Free, HeroClass.Warlock, 3, "Drain Life", new Effect()
 258, CardSet.Basic, Rarity.Free, HeroClass.Druid, 3, "Healing Touch", new Effect()
 488, CardSet.Basic, Rarity.Free, HeroClass.Hunter, 3, "Kill Command", new Effect()
 77487, CardSet.Basic, Rarity.Free, HeroClass.Druid, 3, "Nature's Champion", new Effect()
