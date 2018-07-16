@@ -60,7 +60,7 @@ public class HeroPower implements GameEventListener<HearthstoneGameState> {
 	/**
 	 * If the hero power is applicable to targets this method should identify all of them.
 	 */
-	public List<Target> getPossibleTargets(HearthstoneGameState state) {
+	public List<TargetRef> getPossibleTargets(HearthstoneGameState state) {
 		return (effect instanceof TargetedEffect) ? ((TargetedEffect)effect).getPossibleTargets(state) : new ArrayList<>();
 	}
 

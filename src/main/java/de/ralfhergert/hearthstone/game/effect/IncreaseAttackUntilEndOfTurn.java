@@ -7,7 +7,6 @@ import de.ralfhergert.hearthstone.event.GameEventListener;
 import de.ralfhergert.hearthstone.game.model.Character;
 import de.ralfhergert.hearthstone.game.model.HearthstoneGameState;
 import de.ralfhergert.hearthstone.game.model.PlayerOrdinal;
-import de.ralfhergert.hearthstone.game.model.Target;
 import de.ralfhergert.hearthstone.game.model.TargetFinder;
 import de.ralfhergert.hearthstone.game.model.TargetRef;
 
@@ -33,7 +32,7 @@ public class IncreaseAttackUntilEndOfTurn implements TargetedEffect, GameEventLi
 	@Override
 	public HearthstoneGameState applyOn(HearthstoneGameState state, final TargetRef targetRef) {
 		Character target = state.findTarget(targetRef);
-		if (target != null && getPossibleTargets(state).contains(target)) {
+		if (target != null && getPossibleTargets(state).contains(targetRef)) {
 			target.setPower(increase + target.getAttack());
 			target.addEffect(this);
 		}
@@ -62,7 +61,7 @@ public class IncreaseAttackUntilEndOfTurn implements TargetedEffect, GameEventLi
 	}
 
 	@Override
-	public List<Target> getPossibleTargets(HearthstoneGameState state) {
+	public List<TargetRef> getPossibleTargets(HearthstoneGameState state) {
 		return targetFinder.findPossibleTargets(state);
 	}
 

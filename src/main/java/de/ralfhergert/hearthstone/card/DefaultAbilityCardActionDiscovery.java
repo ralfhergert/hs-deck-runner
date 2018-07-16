@@ -10,7 +10,7 @@ import de.ralfhergert.hearthstone.effect.TargetedEffect;
 import de.ralfhergert.hearthstone.game.model.AbilityCard;
 import de.ralfhergert.hearthstone.game.model.HearthstoneGameState;
 import de.ralfhergert.hearthstone.game.model.Player;
-import de.ralfhergert.hearthstone.game.model.Target;
+import de.ralfhergert.hearthstone.game.model.TargetRef;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,8 +31,8 @@ public class DefaultAbilityCardActionDiscovery implements ActionDiscovery<Abilit
 			if (effect instanceof GeneralEffect) {
 				actions.add(new PlayAbilityCard(card.getCardRef()));
 			} else if (effect instanceof TargetedEffect) {
-				for (Target target : ((TargetedEffect)effect).getPossibleTargets(state)) {
-					actions.add(new PlayTargetedAbilityCard(card.getCardRef(), target.getTargetRef()));
+				for (TargetRef targetRef : ((TargetedEffect)effect).getPossibleTargets(state)) {
+					actions.add(new PlayTargetedAbilityCard(card.getCardRef(), targetRef));
 				}
 			}
 		}

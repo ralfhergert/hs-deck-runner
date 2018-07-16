@@ -42,6 +42,8 @@ public class Player extends Character<Player> implements GameEventListener<Heart
 
 	private int currentFatigueDamage;
 
+	private int spellDamage;
+
 	public Player() {}
 
 	/**
@@ -62,6 +64,7 @@ public class Player extends Character<Player> implements GameEventListener<Heart
 		heroPower = player.heroPower != null ? new HeroPower(player.heroPower) : null;
 		weapon = player.weapon != null ? new Weapon(player.weapon) : null;
 		currentFatigueDamage = player.currentFatigueDamage;
+		spellDamage = player.spellDamage;
 	}
 
 	public int getNumberOfTurns() {
@@ -223,6 +226,14 @@ public class Player extends Character<Player> implements GameEventListener<Heart
 
 	public void setCurrentFatigueDamage(int currentFatigueDamage) {
 		this.currentFatigueDamage = currentFatigueDamage;
+	}
+
+	public int getSpellDamage() {
+		return spellDamage;
+	}
+
+	public void setSpellDamage(int spellDamage) {
+		this.spellDamage = spellDamage;
 	}
 
 	@Override

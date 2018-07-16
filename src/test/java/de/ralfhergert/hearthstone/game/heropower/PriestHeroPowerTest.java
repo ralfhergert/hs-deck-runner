@@ -2,7 +2,6 @@ package de.ralfhergert.hearthstone.game.heropower;
 
 import de.ralfhergert.generic.game.model.Action;
 import de.ralfhergert.hearthstone.action.ActionFactory;
-import de.ralfhergert.hearthstone.action.EndTurnAction;
 import de.ralfhergert.hearthstone.action.PlayTargetedHeroPower;
 import de.ralfhergert.hearthstone.game.model.GameOutcome;
 import de.ralfhergert.hearthstone.game.model.HearthstoneGameState;
@@ -16,6 +15,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * This test ensures that the priest hero power works correctly.
@@ -43,13 +43,14 @@ public class PriestHeroPowerTest {
 		// ask the action factory for all possible plays.
 		List<Action<HearthstoneGameState>> actions = new ActionFactory().createAllApplicableActions(startState);
 		Assert.assertNotNull("actions should not be null", actions);
-		Assert.assertEquals("number of found actions", 2, actions.size());
-		// filter the EndTurnAction and return the remaining action.
-		Action<HearthstoneGameState> foundAction = actions.stream().filter(action -> !(action instanceof EndTurnAction)).findFirst().get();
-		Assert.assertNotNull("found action should not be null", foundAction);
-		Assert.assertEquals("found action should by of type", PlayTargetedHeroPower.class, foundAction.getClass());
+		// find the action which heals player 1.
+		Optional<Action<HearthstoneGameState>> foundAction = actions.stream()
+			.filter(action -> action instanceof PlayTargetedHeroPower)
+			.filter(action -> ((PlayTargetedHeroPower)action).getTargetRef().equals(player1.getTargetRef()))
+			.findAny();
+		Assert.assertTrue("action should have been found", foundAction.isPresent());
 		// play the hero power.
-		HearthstoneGameState afterState = foundAction.apply(startState);
+		HearthstoneGameState afterState = foundAction.get().apply(startState);
 		Assert.assertNotNull("after state should not be null", afterState);
 		Assert.assertEquals("after state should still be undecided", GameOutcome.Undecided, afterState.getOutcome());
 		Assert.assertEquals("player one should have 20 hitPoints", 20, afterState.getPlayer(PlayerOrdinal.One).getCurrentHitPoints());
@@ -73,13 +74,18 @@ public class PriestHeroPowerTest {
 		// ask the action factory for all possible plays.
 		List<Action<HearthstoneGameState>> actions = new ActionFactory().createAllApplicableActions(startState);
 		Assert.assertNotNull("actions should not be null", actions);
-		Assert.assertEquals("number of found actions", 2, actions.size());
-		// filter the EndTurnAction and return the remaining action.
-		Action<HearthstoneGameState> foundAction = actions.stream().filter(action -> !(action instanceof EndTurnAction)).findFirst().get();
-		Assert.assertNotNull("found action should not be null", foundAction);
-		Assert.assertEquals("found action should by of type", PlayTargetedHeroPower.class, foundAction.getClass());
+		Assert.assertEquals("no action for the elusive minion should exist", 0, actions.stream()
+			.filter(action -> action instanceof PlayTargetedHeroPower)
+			.filter(action -> ((PlayTargetedHeroPower)action).getTargetRef().equals(player2.getBattlefield().get(1).getTargetRef()))
+			.count());
+		// find the action which heals the first minion.
+		Optional<Action<HearthstoneGameState>> foundAction = actions.stream()
+			.filter(action -> action instanceof PlayTargetedHeroPower)
+			.filter(action -> ((PlayTargetedHeroPower)action).getTargetRef().equals(player2.getBattlefield().get(0).getTargetRef()))
+			.findAny();
+		Assert.assertTrue("action healing the first minion should have been found", foundAction.isPresent());
 		// play the hero power.
-		HearthstoneGameState afterState = foundAction.apply(startState);
+		HearthstoneGameState afterState = foundAction.get().apply(startState);
 		Assert.assertNotNull("after state should not be null", afterState);
 		Assert.assertEquals("after state should still be undecided", GameOutcome.Undecided, afterState.getOutcome());
 		Assert.assertEquals("minion one of player two should have 3 hitPoints", 3, afterState.getPlayer(PlayerOrdinal.Two).getBattlefield().get(0).getCurrentHitPoints());

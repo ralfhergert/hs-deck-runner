@@ -9,7 +9,7 @@ import de.ralfhergert.hearthstone.game.model.Minion;
 import de.ralfhergert.hearthstone.game.model.Player;
 import de.ralfhergert.hearthstone.game.model.PlayerOrdinal;
 import de.ralfhergert.hearthstone.game.model.StartingHandState;
-import de.ralfhergert.hearthstone.game.model.Target;
+import de.ralfhergert.hearthstone.game.model.TargetRef;
 import de.ralfhergert.hearthstone.game.model.Turn;
 
 import java.util.ArrayList;
@@ -50,8 +50,8 @@ public class ActionFactory {
 				heroPower.isApplicableTo(state) &&
 				player.getAvailableMana() >= heroPower.getManaCost()) {
 				if (heroPower.isTargeted()) {
-					for (Target target : heroPower.getPossibleTargets(state)) {
-						foundActions.add(new PlayTargetedHeroPower(target.getTargetRef()));
+					for (TargetRef targetRef : heroPower.getPossibleTargets(state)) {
+						foundActions.add(new PlayTargetedHeroPower(targetRef));
 					}
 				} else {
 					foundActions.add(new PlayHeroPower());

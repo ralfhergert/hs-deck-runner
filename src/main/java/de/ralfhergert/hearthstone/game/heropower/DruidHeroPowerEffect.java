@@ -18,7 +18,7 @@ public class DruidHeroPowerEffect implements GeneralEffect {
 		// increment druid's armor by 1.
 		owner.setArmor(1 + owner.getArmor());
 		// increment druid's attack by 1 until end of turn.
-		return new IncreaseAttackUntilEndOfTurn(state.getPlayerOrdinal(owner), 1, gameState -> Collections.singletonList(owner))
+		return new IncreaseAttackUntilEndOfTurn(state.getPlayerOrdinal(owner), 1, gameState -> Collections.singletonList(owner.getTargetRef()))
 			.applyOn(state, owner.getTargetRef());
 	}
 

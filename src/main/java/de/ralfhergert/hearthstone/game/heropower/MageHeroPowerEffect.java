@@ -7,9 +7,10 @@ import de.ralfhergert.hearthstone.game.model.HearthstoneGameState;
 import de.ralfhergert.hearthstone.game.model.Minion;
 import de.ralfhergert.hearthstone.game.model.Player;
 import de.ralfhergert.hearthstone.game.model.Target;
+import de.ralfhergert.hearthstone.game.model.TargetFinder;
 import de.ralfhergert.hearthstone.game.model.TargetRef;
+import de.ralfhergert.hearthstone.game.target.AnyNonElusiveCharacter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,6 +18,7 @@ import java.util.List;
  */
 public class MageHeroPowerEffect implements TargetedEffect {
 
+	private static final TargetFinder TARGET_FINDER = new AnyNonElusiveCharacter();
 	private final int inflictDamage = 1;
 
 	@Override
@@ -31,25 +33,8 @@ public class MageHeroPowerEffect implements TargetedEffect {
 	}
 
 	@Override
-	public List<Target> getPossibleTargets(HearthstoneGameState state) {
-		final List<Target> targets = new ArrayList<>();
-		final Player owner = state.getOwner(this);
-		targets.add(owner);
-		for (Minion minion : owner.getBattlefield()) {
-			if (!minion.isElusive()) {
-				targets.add(minion);
-			}
-		}
-		final Player opponent = state.getOpposingPlayer(state.getOwner(this));
-		if (!opponent.isElusive()) {
-			targets.add(opponent);
-		}
-		for (Minion minion : opponent.getBattlefield()) {
-			if (!minion.isElusive()) {
-				targets.add(minion);
-			}
-		}
-		return targets;
+	public List<TargetRef> getPossibleTargets(HearthstoneGameState state) {
+		return TARGET_FINDER.findPossibleTargets(state);
 	}
 
 	public int getInflictDamage() {

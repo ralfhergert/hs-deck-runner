@@ -7,5 +7,5 @@ import java.util.List;
  */
 public interface TargetFinder {
 
-	List<Target> findPossibleTargets(HearthstoneGameState state);
+	List<TargetRef> findPossibleTargets(HearthstoneGameState state);
 }
