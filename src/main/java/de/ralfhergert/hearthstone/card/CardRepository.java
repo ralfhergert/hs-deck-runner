@@ -70,7 +70,7 @@ public final class CardRepository {
 		new AbilityCardEntry(1, CardSet.Basic, Rarity.Free, HeroClass.Warrior, 2, "Heroic Strike", new GeneralEffect() {
 			@Override
 			public HearthstoneGameState applyTo(HearthstoneGameState state) {
-				return new ModifyAttackEffect(state.getActivePlayer().getTargetRef(), 4, new UntilEndOfTurn<>()).applyTo(state);
+				return new ModifyAttackEffect(4, new UntilEndOfTurn<>()).applyOn(state, state.getActivePlayer().getTargetRef());
 			}
 		}),
 		new MinionCardEntry(15, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 4, "Oasis Snapjaw", CardType.Minion, new MinionFactory().setMinionType(MinionType.Beast).setPower(2).setHitPoints(7)),
@@ -242,7 +242,7 @@ public final class CardRepository {
 			public HearthstoneGameState applyTo(HearthstoneGameState state) {
 				HearthstoneGameState nextState = state;
 				for (Minion minion : state.getActivePlayer().getBattlefield()) {
-					nextState = new ModifyAttackEffect(minion.getTargetRef(), 3, new UntilEndOfTurn<>()).applyTo(nextState);
+					nextState = new ModifyAttackEffect(3, new UntilEndOfTurn<>()).applyOn(nextState, minion.getTargetRef());
 				}
 				return nextState;
 			}
@@ -289,7 +289,7 @@ public final class CardRepository {
 			public HearthstoneGameState applyTo(HearthstoneGameState state) {
 				HearthstoneGameState nextState = state;
 				for (Character character : state.getActivePlayer().getAllCharactersInOrderOfPlay()) {
-					nextState = new ModifyAttackEffect(character.getTargetRef(), 2, new UntilEndOfTurn<>()).applyTo(nextState);
+					nextState = new ModifyAttackEffect(2, new UntilEndOfTurn<>()).applyOn(nextState, character.getTargetRef());
 				}
 				return nextState;
 			}
@@ -451,8 +451,8 @@ public final class CardRepository {
 				final int friendlyMinions = (int)owner.getBattlefield().stream()
 					.filter(minion -> !minion.getTargetRef().equals(targetRef))
 					.count();
-				HearthstoneGameState nextState = new ModifyAttackEffect(targetRef, friendlyMinions).applyTo(state);
-				return new ModifyHealthEffect(targetRef, friendlyMinions).applyTo(nextState);
+				HearthstoneGameState nextState = new ModifyAttackEffect(friendlyMinions).applyOn(state, targetRef);
+				return new ModifyHealthEffect(friendlyMinions).applyOn(nextState, targetRef);
 			}
 		})),
 		new MinionCardEntry(611, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 3, "Silverback Patriarch", CardType.Minion, new MinionFactory().setMinionType(MinionType.Beast).setPower(1).setHitPoints(4).addEffect(new TauntEffect())),
@@ -471,7 +471,7 @@ public final class CardRepository {
 		new MinionCardEntry(624, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 5, "Gurubashi Berserker", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(7).addEffect(new WheneverThisMinionTakesDamage() {
 			@Override
 			public HearthstoneGameState applyTo(HearthstoneGameState state) {
-				return new ModifyAttackEffect(state.getEffectOwner(this).getTargetRef(), 3).applyTo(state);
+				return new ModifyAttackEffect(3).applyOn(state, state.getEffectOwner(this).getTargetRef());
 			}
 		})),
 		new WeaponCardEntry(632, CardSet.Basic, Rarity.Free, HeroClass.Warrior, 3, "Fiery War Axe", new WeaponFactory().setAttack(3).setDurability(2)),
