@@ -33,7 +33,7 @@ public class PlayMinionCard implements Action<HearthstoneGameState> {
 			player.setCrystalsLockedNextTurn(player.getCrystalsLockedNextTurn() + minionCard.getOverloadCost());
 			player.removeFromHand(minionCard);
 			player.addToPlayedCards(minionCard);
-			final Minion minion = minionCard.getMinionFactory().create();
+			final Minion minion = minionCard.createMinion();
 			nextState.getActivePlayer().addToBattlefield(minion, position);
 			return nextState.onEvent(new MinionEntersBattlefieldEvent(minion.getMinionRef()));
 		}
@@ -49,5 +49,9 @@ public class PlayMinionCard implements Action<HearthstoneGameState> {
 		Card card = player.findInHand(minionCardRef);
 		return card instanceof MinionCard &&
 			player.getAvailableMana() >= card.getManaCost();
+	}
+
+	public int getPosition() {
+		return position;
 	}
 }

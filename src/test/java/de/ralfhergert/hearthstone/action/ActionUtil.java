@@ -5,6 +5,7 @@ import de.ralfhergert.hearthstone.game.model.HearthstoneGameState;
 import org.junit.Assert;
 
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
@@ -31,6 +32,16 @@ public final class ActionUtil {
 			.filter(action -> action instanceof EndTurnAction)
 			.findFirst()
 			.orElseThrow(() -> new AssertionError("EndOfTurn action was not present"))
+			.apply(state);
+	}
+
+	public static HearthstoneGameState playAction(HearthstoneGameState state, Predicate<? super Action<HearthstoneGameState>> predicate) {
+		List<Action<HearthstoneGameState>> actions = new ActionFactory().createAllApplicableActions(state);
+		Assert.assertNotNull("actions should not be null", actions);
+		return actions.stream()
+			.filter(predicate)
+			.findFirst()
+			.orElseThrow(() -> new AssertionError("action was not present"))
 			.apply(state);
 	}
 }

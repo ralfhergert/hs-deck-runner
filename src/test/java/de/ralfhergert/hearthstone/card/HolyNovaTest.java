@@ -42,8 +42,8 @@ public class HolyNovaTest {
 			.addToHand(CardRepository.createByName("Holy Nova"));
 		final Player player2 = new Player()
 			.setHitPoints(30)
-			.addToBattlefield(((MinionCard)CardRepository.createByName("Knife Juggler")).getMinionFactory().create())
-			.addToBattlefield(((MinionCard)CardRepository.createByName("Imp Gang Boss")).getMinionFactory().create());
+			.addToBattlefield(((MinionCard)CardRepository.createByName("Knife Juggler")).createMinion())
+			.addToBattlefield(((MinionCard)CardRepository.createByName("Imp Gang Boss")).createMinion());
 		final HearthstoneGameState startState = new HearthstoneGameState(null, null).setPlayers(player1, player2);
 		startState.setTurn(Turn.Player1Turn);
 		// ask the action factory for all possible plays.

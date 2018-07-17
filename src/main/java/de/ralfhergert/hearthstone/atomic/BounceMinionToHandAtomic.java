@@ -2,6 +2,7 @@ package de.ralfhergert.hearthstone.atomic;
 
 import de.ralfhergert.generic.game.model.Action;
 import de.ralfhergert.hearthstone.event.MinionDestroyedEvent;
+import de.ralfhergert.hearthstone.event.MinionLeavesBattlefieldEvent;
 import de.ralfhergert.hearthstone.game.model.Character;
 import de.ralfhergert.hearthstone.game.model.HearthstoneGameState;
 import de.ralfhergert.hearthstone.game.model.Minion;
@@ -31,6 +32,7 @@ public class BounceMinionToHandAtomic implements Action<HearthstoneGameState> {
 			return nextState;
 		}
 		Minion minion = (Minion)character;
+		nextState = nextState.onEvent(new MinionLeavesBattlefieldEvent(minion.getMinionRef()));
 		Player owner = nextState.getOwner(minion);
 		if (owner.getHand().size() < 10) {
 			owner.removeFromBattlefield(minion);

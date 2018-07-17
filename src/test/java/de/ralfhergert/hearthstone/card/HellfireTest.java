@@ -27,7 +27,7 @@ public class HellfireTest {
 			.setHitPoints(30)
 			.setAvailableMana(4)
 			.addToHand(CardRepository.createByName("Hellfire"))
-			.addToBattlefield(((MinionCard)CardRepository.createByName("Gurubashi Berserker")).getMinionFactory().create());
+			.addToBattlefield(((MinionCard)CardRepository.createByName("Gurubashi Berserker")).createMinion());
 		final Player player2 = new Player()
 			.setHitPoints(30)
 			.addToBattlefield(new Minion().setHitPoints(3));

@@ -16,6 +16,7 @@ import de.ralfhergert.hearthstone.effect.GeneralEffect;
 import de.ralfhergert.hearthstone.game.effect.AfterYouSummonAMinion;
 import de.ralfhergert.hearthstone.game.effect.ApplyBuffEffect;
 import de.ralfhergert.hearthstone.game.effect.BattlecryEffect;
+import de.ralfhergert.hearthstone.game.effect.BlankTargetedEffect;
 import de.ralfhergert.hearthstone.game.effect.ChargeEffect;
 import de.ralfhergert.hearthstone.game.effect.DestroyMinionEffect;
 import de.ralfhergert.hearthstone.game.effect.FreezeCharacterEffect;
@@ -24,6 +25,7 @@ import de.ralfhergert.hearthstone.game.effect.ModifyAllOtherFriendlyMinionAttack
 import de.ralfhergert.hearthstone.game.effect.ModifyAttackEffect;
 import de.ralfhergert.hearthstone.game.effect.ModifyHealthEffect;
 import de.ralfhergert.hearthstone.game.effect.DamageCharacterBySpellEffect;
+import de.ralfhergert.hearthstone.game.effect.ModifyOthersEffect;
 import de.ralfhergert.hearthstone.game.effect.SpellDamageEffect;
 import de.ralfhergert.hearthstone.game.effect.TauntEffect;
 import de.ralfhergert.hearthstone.game.effect.WheneverThisCharacterAttacks;
@@ -48,6 +50,8 @@ import de.ralfhergert.hearthstone.game.model.TargetFinder;
 import de.ralfhergert.hearthstone.game.model.TargetRef;
 import de.ralfhergert.hearthstone.game.model.Weapon;
 import de.ralfhergert.hearthstone.game.model.WeaponCard;
+import de.ralfhergert.hearthstone.game.modifier.AttackModifier;
+import de.ralfhergert.hearthstone.game.modifier.HealthModifier;
 import de.ralfhergert.hearthstone.game.target.AnyNonElusiveCharacter;
 import de.ralfhergert.hearthstone.game.target.AnyNonElusiveFriendlyCharacter;
 import de.ralfhergert.hearthstone.game.target.AnyNonElusiveMinion;
@@ -274,6 +278,7 @@ public final class CardRepository {
 				return new HealCharacterAtomic(state.getEffectOwner(this).getTargetRef(), 2).apply(state);
 			}
 		})),
+		new MinionCardEntry(310, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 7, "Stormwind Champion", CardType.Minion, new MinionFactory().setPower(6).setHitPoints(6).addEffect(new ModifyOthersEffect(new AttackModifier(1), new HealthModifier(1)))),
 		new AbilityCardEntry(315, CardSet.Basic, Rarity.Free, HeroClass.Priest, 2, "Shadow Word: Pain", new DestroyMinionEffect(new TargetFinder() {
 			@Override
 			public List<TargetRef> findPossibleTargets(HearthstoneGameState state) {
@@ -323,6 +328,12 @@ public final class CardRepository {
 					nextState = new DamageCharacterAtomic(minion.getTargetRef(), 1).apply(nextState);
 				}
 				return new DrawCardsAction(nextState.getPlayerOrdinal(nextState.getActivePlayer()), 1).apply(nextState);
+			}
+		}),
+		new AbilityCardEntry(385, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 2, "Sap", new BlankTargetedEffect(new AnyNonElusiveOpposingMinion()) {
+			@Override
+			public HearthstoneGameState applyOn(HearthstoneGameState state, TargetRef targetRef) {
+				return new BounceMinionToHandAtomic(targetRef).apply(state);
 			}
 		}),
 		new MinionCardEntry(388, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 3, "Dalaran Mage", CardType.Minion, new MinionFactory().setPower(1).setHitPoints(4).addEffect(new SpellDamageEffect(1))),
@@ -561,7 +572,6 @@ public final class CardRepository {
 		new MinionCardEntry(14642, CardSet.Blackrock, Rarity.Free, HeroClass.Warlock, 1, "Imp", CardType.Token, new MinionFactory().setMinionType(MinionType.Demon).setPower(1).setHitPoints(1))
 /* Cards which effects are not yet implemented.
 401, CardSet.Basic, Rarity.Free, HeroClass.Priest, 10, "Mind Control", new Effect()
-310, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 7, "Stormwind Champion", CardType.Minion, new MinionFactory().setPower(6).setHitPoints(6)
 636, CardSet.Basic, Rarity.Free, HeroClass.Shaman, 6, "Fire Elemental", CardType.Minion, new MinionFactory().setPower(6).setHitPoints(5)
 77486, CardSet.Basic, Rarity.Free, HeroClass.Mage, 5, "Polymorph: ???", new Effect()
 325, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 5, "Stormpike Commando", CardType.Minion, new MinionFactory().setPower(4).setHitPoints(2)
@@ -582,7 +592,6 @@ public final class CardRepository {
 77484, CardSet.Basic, Rarity.Free, HeroClass.Hunter, 2, "Deadeye", new Effect()
 554, CardSet.Basic, Rarity.Free, HeroClass.Priest, 2, "Divine Spirit", new Effect()
 77490, CardSet.Basic, Rarity.Free, HeroClass.Priest, 2, "Generous Spirit", new Effect()
-385, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 2, "Sap", new Effect()
 164, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 2, "Shiv", new Effect()
 282, CardSet.Basic, Rarity.Free, HeroClass.Druid, 2, "Wild Growth", new Effect()
 146, CardSet.Basic, Rarity.Free, HeroClass.Shaman, 2, "Windfury", new Effect()

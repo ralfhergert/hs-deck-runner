@@ -27,15 +27,6 @@ public class MinionCard extends Card<MinionCard> {
 		}
 	}
 
-	public MinionFactory getMinionFactory() {
-		return minionFactory;
-	}
-
-	public MinionCard setMinionFactory(MinionFactory minionFactory) {
-		this.minionFactory = minionFactory;
-		return this;
-	}
-
 	public Minion createMinion() {
 		return minionFactory.create().setCardSupplier(() -> this);
 	}

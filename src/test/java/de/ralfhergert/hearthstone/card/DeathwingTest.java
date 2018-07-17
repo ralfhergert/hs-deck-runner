@@ -30,7 +30,7 @@ public class DeathwingTest {
 			.addToHand(CardRepository.createByName("Deathwing"))
 			.addToHand(CardRepository.createByName("Hellfire"))
 			.addToHand(CardRepository.createByName("Vanish"))
-			.addToBattlefield(((MinionCard)CardRepository.createByName("Gurubashi Berserker")).getMinionFactory().create());
+			.addToBattlefield(((MinionCard)CardRepository.createByName("Gurubashi Berserker")).createMinion());
 		final Player player2 = new Player()
 			.setHitPoints(30)
 			.addToBattlefield(new Minion().setHitPoints(3));

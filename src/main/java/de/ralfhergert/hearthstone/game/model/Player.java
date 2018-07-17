@@ -181,8 +181,9 @@ public class Player extends Character<Player> implements GameEventListener<Heart
 		return numberOfManaCrystals;
 	}
 
-	public void setNumberOfManaCrystals(int numberOfManaCrystals) {
+	public Player setNumberOfManaCrystals(int numberOfManaCrystals) {
 		this.numberOfManaCrystals = numberOfManaCrystals;
+		return this;
 	}
 
 	public int getAvailableMana() {
