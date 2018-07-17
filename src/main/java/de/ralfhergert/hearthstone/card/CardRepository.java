@@ -345,6 +345,7 @@ public final class CardRepository {
 			}
 		}),
 		new MinionCardEntry(388, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 3, "Dalaran Mage", CardType.Minion, new MinionFactory().setPower(1).setHitPoints(4).addEffect(new SpellDamageEffect(1))),
+		new AbilityCardEntry(394, CardSet.Basic, Rarity.Free, HeroClass.Paladin, 1, "Blessing of Might", new ApplyBuffEffect(new AnyNonElusiveMinion(), new ModifyAttackEffect(3))),
 		new AbilityCardEntry(407, CardSet.Basic, Rarity.Free, HeroClass.Hunter, 4, "Multi-Shot", new GeneralEffect() {
 			/** Deal 3 damage to two random enemy minions. */
 			@Override
@@ -608,7 +609,6 @@ public final class CardRepository {
 208, CardSet.Basic, Rarity.Free, HeroClass.Warlock, 2, "Succubus", CardType.Minion, new MinionFactory().setPower(4).setHitPoints(3)
 183, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 1, "Wicked Knife", new WeaponFactory().setAttack(1).setDurability(2)
 589, CardSet.Basic, Rarity.Free, HeroClass.Mage, 1, "Arcane Missiles", new Effect()
-394, CardSet.Basic, Rarity.Free, HeroClass.Paladin, 1, "Blessing of Might", new Effect()
 646, CardSet.Basic, Rarity.Free, HeroClass.Warrior, 1, "Charge", new Effect()
 532, CardSet.Basic, Rarity.Free, HeroClass.Druid, 1, "Claw", new Effect()
 252, CardSet.Basic, Rarity.Free, HeroClass.Warlock, 1, "Corruption", new Effect()
