@@ -80,6 +80,16 @@ public final class CardRepository {
 			}
 		}),
 		new MinionCardEntry(15, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 4, "Oasis Snapjaw", CardType.Minion, new MinionFactory().setMinionType(MinionType.Beast).setPower(2).setHitPoints(7)),
+		new AbilityCardEntry(22, CardSet.Basic, Rarity.Free, HeroClass.Hunter, 1, "Hunter's Mark", new BlankTargetedEffect(new AnyNonElusiveMinion()) {
+			@Override
+			public HearthstoneGameState applyOn(HearthstoneGameState state, TargetRef targetRef) {
+				Character character = state.findTarget(targetRef);
+				if (character != null) {
+					character.setHitPoints(1);
+				}
+				return state;
+			}
+		}),
 		new MinionCardEntry(24, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 1, "Shieldbearer", CardType.Minion, new MinionFactory().setPower(0).setHitPoints(4).addEffect(new TauntEffect())),
 		new MinionCardEntry(27, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 5, "Booty Bay Bodyguard", CardType.Minion, new MinionFactory().setPower(5).setHitPoints(4).addEffect(new TauntEffect())),
 		new MinionCardEntry(31, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 4, "Chillwind Yeti", CardType.Minion, new MinionFactory().setPower(4).setHitPoints(5)),
@@ -233,6 +243,16 @@ public final class CardRepository {
 				return new DamageCharacterAtomic(state.getPassivePlayer().getTargetRef(), 3).apply(state);
 			}
 		})),
+		new AbilityCardEntry(189, CardSet.Basic, Rarity.Free, HeroClass.Paladin, 1, "Humility", new BlankTargetedEffect(new AnyNonElusiveMinion()) {
+			@Override
+			public HearthstoneGameState applyOn(HearthstoneGameState state, TargetRef targetRef) {
+				Character character = state.findTarget(targetRef);
+				if (character != null) {
+					character.setPower(1);
+				}
+				return state;
+			}
+		}),
 		new MinionCardEntry(194, CardSet.Classic, Rarity.Legendary, HeroClass.Hunter, 9, "King Krush", CardType.Minion, new MinionFactory().setMinionType(MinionType.Beast).setPower(8).setHitPoints(8).addEffect(new ChargeEffect())),
 		new AbilityCardEntry(227, CardSet.Basic, Rarity.Free, HeroClass.Warrior, 2, "Execute", new DestroyMinionEffect(new TargetFinder() {
 			@Override
@@ -622,8 +642,6 @@ public final class CardRepository {
 87, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 1, "Deadly Poison", new Effect()
 499, CardSet.Basic, Rarity.Free, HeroClass.Paladin, 1, "Hand of Protection", new Effect()
 77489, CardSet.Basic, Rarity.Free, HeroClass.Paladin, 1, "Hand of Salvation", new Effect()
-189, CardSet.Basic, Rarity.Free, HeroClass.Paladin, 1, "Humility", new Effect()
-22, CardSet.Basic, Rarity.Free, HeroClass.Hunter, 1, "Hunter's Mark", new Effect()
 438, CardSet.Basic, Rarity.Free, HeroClass.Priest, 1, "Mind Vision", new Effect()
 30, CardSet.Basic, Rarity.Free, HeroClass.Mage, 1, "Mirror Image", new Effect()
 43, CardSet.Basic, Rarity.Free, HeroClass.Warlock, 1, "Mortal Coil", new Effect()
