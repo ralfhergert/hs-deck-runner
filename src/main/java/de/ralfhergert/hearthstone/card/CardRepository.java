@@ -122,7 +122,7 @@ public final class CardRepository {
 			public HearthstoneGameState applyTo(HearthstoneGameState state) {
 				HearthstoneGameState nextState = state;
 				for (Minion minion : state.getOpposingPlayer(state.getActivePlayer()).getBattlefield()) {
-					nextState = new FreezeCharacterEffect(minion.getTargetRef()).applyTo(nextState);
+					nextState = new FreezeCharacterEffect().applyOn(nextState, minion.getTargetRef());
 				}
 				return nextState;
 			}
@@ -209,7 +209,7 @@ public final class CardRepository {
 		new AbilityCardEntry(177, CardSet.Basic, Rarity.Free, HeroClass.Mage, 2, "Frostbolt", new DamageCharacterBySpellEffect(3, new AnyNonElusiveCharacter()) {
 			@Override
 			public HearthstoneGameState applyOn(HearthstoneGameState state, TargetRef targetRef) {
-				return new FreezeCharacterEffect(targetRef).applyTo(super.applyOn(state, targetRef));
+				return new FreezeCharacterEffect().applyOn(super.applyOn(state, targetRef), targetRef);
 			}
 		}),
 		new WeaponCardEntry(182, CardSet.Basic,   Rarity.Free, HeroClass.Warrior, 5, "Arcanite Reaper", new WeaponFactory().setAttack(5).setDurability(2)),
