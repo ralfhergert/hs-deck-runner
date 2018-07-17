@@ -49,6 +49,7 @@ import de.ralfhergert.hearthstone.game.model.TargetRef;
 import de.ralfhergert.hearthstone.game.model.Weapon;
 import de.ralfhergert.hearthstone.game.model.WeaponCard;
 import de.ralfhergert.hearthstone.game.target.AnyNonElusiveCharacter;
+import de.ralfhergert.hearthstone.game.target.AnyNonElusiveFriendlyCharacter;
 import de.ralfhergert.hearthstone.game.target.AnyNonElusiveMinion;
 import de.ralfhergert.hearthstone.game.target.AnyNonElusiveOpposingCharacter;
 import de.ralfhergert.hearthstone.game.target.AnyNonElusiveOpposingMinion;
@@ -402,6 +403,7 @@ public final class CardRepository {
 				return new DrawCardsAction(state.getPlayerOrdinal(state.getActivePlayer()), 2).apply(state);
 			}
 		}),
+		new AbilityCardEntry(491, CardSet.Basic, Rarity.Free, HeroClass.Shaman, 2, "Rockbiter Weapon", new ApplyBuffEffect(new AnyNonElusiveFriendlyCharacter(), new ModifyAttackEffect(3, new UntilEndOfTurn<>()))),
 		new AbilityCardEntry(493, CardSet.Basic, Rarity.Free, HeroClass.Warrior, 3, "Shield Block", new GeneralEffect() {
 			/** Gain 5 Armor. Draw a card. */
 			@Override
@@ -580,7 +582,6 @@ public final class CardRepository {
 77484, CardSet.Basic, Rarity.Free, HeroClass.Hunter, 2, "Deadeye", new Effect()
 554, CardSet.Basic, Rarity.Free, HeroClass.Priest, 2, "Divine Spirit", new Effect()
 77490, CardSet.Basic, Rarity.Free, HeroClass.Priest, 2, "Generous Spirit", new Effect()
-491, CardSet.Basic, Rarity.Free, HeroClass.Shaman, 2, "Rockbiter Weapon", new Effect()
 385, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 2, "Sap", new Effect()
 164, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 2, "Shiv", new Effect()
 282, CardSet.Basic, Rarity.Free, HeroClass.Druid, 2, "Wild Growth", new Effect()
