@@ -121,6 +121,16 @@ public final class CardRepository {
 				return nextState;
 			}
 		}),
+		new AbilityCardEntry(43, CardSet.Basic, Rarity.Free, HeroClass.Warlock, 1, "Mortal Coil", new DamageCharacterBySpellEffect(1, new AnyNonElusiveMinion()) {
+			@Override
+			public HearthstoneGameState applyOn(HearthstoneGameState state, TargetRef targetRef) {
+				HearthstoneGameState nextState = super.applyOn(state, targetRef);
+				if (nextState.findTarget(targetRef) == null) {
+					return new DrawCardsAction(nextState.getPlayerOrdinal(nextState.getActivePlayer())).apply(nextState);
+				}
+				return nextState;
+			}
+		}),
 		new AbilityCardEntry(44, CardSet.Basic, Rarity.Free, HeroClass.Mage, 7, "Flamestrike", new GeneralEffect() {
 			/** Deal 4 damage to all enemy minions. */
 			@Override
@@ -644,7 +654,6 @@ public final class CardRepository {
 77489, CardSet.Basic, Rarity.Free, HeroClass.Paladin, 1, "Hand of Salvation", new Effect()
 438, CardSet.Basic, Rarity.Free, HeroClass.Priest, 1, "Mind Vision", new Effect()
 30, CardSet.Basic, Rarity.Free, HeroClass.Mage, 1, "Mirror Image", new Effect()
-43, CardSet.Basic, Rarity.Free, HeroClass.Warlock, 1, "Mortal Coil", new Effect()
 431, CardSet.Basic, Rarity.Free, HeroClass.Priest, 1, "Power Word: Shield", new Effect()
 205, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 1, "Sinister Strike", new Effect()
 77491, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 1, "Smoke Bomb", new Effect()
