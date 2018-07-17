@@ -367,6 +367,7 @@ public final class CardRepository {
 				return nextState;
 			}
 		}),
+		new AbilityCardEntry(409, CardSet.Basic, Rarity.Free, HeroClass.Priest, 1, "Holy Smite", new DamageCharacterBySpellEffect(2, new AnyNonElusiveCharacter())),
 		new MinionCardEntry(414, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 6, "Lord of the Arena", CardType.Minion, new MinionFactory().setPower(6).setHitPoints(5).addEffect(new TauntEffect())),
 		new AbilityCardEntry(415, CardSet.Basic, Rarity.Free, HeroClass.Priest, 2, "Mind Blast", new GeneralEffect() {
 			/** Deal 5 damage to the enemy hero. */
@@ -621,7 +622,6 @@ public final class CardRepository {
 87, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 1, "Deadly Poison", new Effect()
 499, CardSet.Basic, Rarity.Free, HeroClass.Paladin, 1, "Hand of Protection", new Effect()
 77489, CardSet.Basic, Rarity.Free, HeroClass.Paladin, 1, "Hand of Salvation", new Effect()
-409, CardSet.Basic, Rarity.Free, HeroClass.Priest, 1, "Holy Smite", new Effect()
 189, CardSet.Basic, Rarity.Free, HeroClass.Paladin, 1, "Humility", new Effect()
 22, CardSet.Basic, Rarity.Free, HeroClass.Hunter, 1, "Hunter's Mark", new Effect()
 438, CardSet.Basic, Rarity.Free, HeroClass.Priest, 1, "Mind Vision", new Effect()
