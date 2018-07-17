@@ -217,6 +217,7 @@ public final class CardRepository {
 				return new DrawCardsAction(nextState.getPlayerOrdinal(nextState.getActivePlayer())).apply(nextState);
 			}
 		}),
+		new AbilityCardEntry(167, CardSet.Basic, Rarity.Free, HeroClass.Hunter, 1, "Arcane Shot", new DamageCharacterBySpellEffect(2, new AnyNonElusiveCharacter())),
 		new MinionCardEntry(173, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 7, "Core Hound", CardType.Minion, new MinionFactory().setMinionType(MinionType.Beast).setPower(9).setHitPoints(5)),
 		new MinionCardEntry(174, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 3, "Wolfrider", CardType.Minion, new MinionFactory().setPower(3).setHitPoints(1).addEffect(new ChargeEffect())),
 		new AbilityCardEntry(177, CardSet.Basic, Rarity.Free, HeroClass.Mage, 2, "Frostbolt", new DamageCharacterBySpellEffect(3, new AnyNonElusiveCharacter()) {
@@ -607,7 +608,6 @@ public final class CardRepository {
 208, CardSet.Basic, Rarity.Free, HeroClass.Warlock, 2, "Succubus", CardType.Minion, new MinionFactory().setPower(4).setHitPoints(3)
 183, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 1, "Wicked Knife", new WeaponFactory().setAttack(1).setDurability(2)
 589, CardSet.Basic, Rarity.Free, HeroClass.Mage, 1, "Arcane Missiles", new Effect()
-167, CardSet.Basic, Rarity.Free, HeroClass.Hunter, 1, "Arcane Shot", new Effect()
 394, CardSet.Basic, Rarity.Free, HeroClass.Paladin, 1, "Blessing of Might", new Effect()
 646, CardSet.Basic, Rarity.Free, HeroClass.Warrior, 1, "Charge", new Effect()
 532, CardSet.Basic, Rarity.Free, HeroClass.Druid, 1, "Claw", new Effect()
