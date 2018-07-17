@@ -18,6 +18,7 @@ import de.ralfhergert.hearthstone.game.effect.BattlecryEffect;
 import de.ralfhergert.hearthstone.game.effect.ChargeEffect;
 import de.ralfhergert.hearthstone.game.effect.DestroyMinionEffect;
 import de.ralfhergert.hearthstone.game.effect.FreezeCharacterEffect;
+import de.ralfhergert.hearthstone.game.effect.HealCharacterEffect;
 import de.ralfhergert.hearthstone.game.effect.ModifyAllOtherFriendlyMinionAttackEffect;
 import de.ralfhergert.hearthstone.game.effect.ModifyAttackEffect;
 import de.ralfhergert.hearthstone.game.effect.ModifyHealthEffect;
@@ -239,6 +240,7 @@ public final class CardRepository {
 				return nextState;
 			}
 		}),
+		new AbilityCardEntry(258, CardSet.Basic, Rarity.Free, HeroClass.Druid, 3, "Healing Touch", new HealCharacterEffect(8, new AnyNonElusiveCharacter())),
 		new AbilityCardEntry(260, CardSet.Basic, Rarity.Free, HeroClass.Paladin, 4, "Consecration", new GeneralEffect() {
 			@Override
 			public HearthstoneGameState applyTo(HearthstoneGameState state) {
@@ -561,7 +563,6 @@ public final class CardRepository {
 274, CardSet.Basic, Rarity.Free, HeroClass.Mage, 4, "Water Elemental", CardType.Minion, new MinionFactory().setPower(3).setHitPoints(6)
 151, CardSet.Basic, Rarity.Free, HeroClass.Shaman, 4, "Windspeaker", CardType.Minion, new MinionFactory().setPower(3).setHitPoints(3)
 77495, CardSet.Basic, Rarity.Free, HeroClass.Warrior, 3, "Blazing Longsword", new WeaponFactory().setAttack(2).setDurability(3)
-258, CardSet.Basic, Rarity.Free, HeroClass.Druid, 3, "Healing Touch", new Effect()
 77487, CardSet.Basic, Rarity.Free, HeroClass.Druid, 3, "Nature's Champion", new Effect()
 41, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 3, "Ironforge Rifleman", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(2)
 47, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 3, "Razorfen Hunter", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(3)
