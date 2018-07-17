@@ -243,6 +243,12 @@ public final class CardRepository {
 					.collect(Collectors.toList());
 			}
 		})),
+		new AbilityCardEntry(233, CardSet.Basic, Rarity.Free, HeroClass.Shaman, 1, "Frost Shock", new DamageCharacterBySpellEffect(1, new AnyNonElusiveOpposingCharacter()) {
+			@Override
+			public HearthstoneGameState applyOn(HearthstoneGameState state, TargetRef targetRef) {
+				return new FreezeCharacterEffect().applyOn(super.applyOn(state, targetRef), targetRef);
+			}
+		}),
 		new MinionCardEntry(238, CardSet.Basic,   Rarity.Free, HeroClass.Druid, 8, "Ironbark Protector", CardType.Minion, new MinionFactory().setPower(8).setHitPoints(8).addEffect(new TauntEffect())),
 		new MinionCardEntry(246, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 4, "Gnomish Inventor", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(4).addEffect(new BattlecryEffect() {
 			@Override
@@ -613,7 +619,6 @@ public final class CardRepository {
 532, CardSet.Basic, Rarity.Free, HeroClass.Druid, 1, "Claw", new Effect()
 252, CardSet.Basic, Rarity.Free, HeroClass.Warlock, 1, "Corruption", new Effect()
 87, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 1, "Deadly Poison", new Effect()
-233, CardSet.Basic, Rarity.Free, HeroClass.Shaman, 1, "Frost Shock", new Effect()
 499, CardSet.Basic, Rarity.Free, HeroClass.Paladin, 1, "Hand of Protection", new Effect()
 77489, CardSet.Basic, Rarity.Free, HeroClass.Paladin, 1, "Hand of Salvation", new Effect()
 409, CardSet.Basic, Rarity.Free, HeroClass.Priest, 1, "Holy Smite", new Effect()
