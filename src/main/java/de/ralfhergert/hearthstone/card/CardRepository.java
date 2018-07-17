@@ -190,6 +190,7 @@ public final class CardRepository {
 				return new DrawCardsAction(state.getPlayerOrdinal(state.getActivePlayer()), 1).apply(state);
 			}
 		})),
+		new AbilityCardEntry(108, CardSet.Basic, Rarity.Free, HeroClass.Paladin, 2, "Holy Light", new HealCharacterEffect(6, new AnyNonElusiveCharacter())),
 		new AbilityCardEntry(122, CardSet.Basic, Rarity.Free, HeroClass.Warlock, 4, "Hellfire", new GeneralEffect() {
 			@Override
 			public HearthstoneGameState applyTo(HearthstoneGameState state) {
@@ -577,7 +578,6 @@ public final class CardRepository {
 77484, CardSet.Basic, Rarity.Free, HeroClass.Hunter, 2, "Deadeye", new Effect()
 554, CardSet.Basic, Rarity.Free, HeroClass.Priest, 2, "Divine Spirit", new Effect()
 77490, CardSet.Basic, Rarity.Free, HeroClass.Priest, 2, "Generous Spirit", new Effect()
-108, CardSet.Basic, Rarity.Free, HeroClass.Paladin, 2, "Holy Light", new Effect()
 480, CardSet.Basic, Rarity.Free, HeroClass.Druid, 2, "Mark of the Wild", new Effect()
 491, CardSet.Basic, Rarity.Free, HeroClass.Shaman, 2, "Rockbiter Weapon", new Effect()
 385, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 2, "Sap", new Effect()
