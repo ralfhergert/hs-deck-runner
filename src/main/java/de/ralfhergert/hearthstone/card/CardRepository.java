@@ -14,6 +14,7 @@ import de.ralfhergert.hearthstone.atomic.SummonTokenAtomic;
 import de.ralfhergert.hearthstone.effect.Effect;
 import de.ralfhergert.hearthstone.effect.GeneralEffect;
 import de.ralfhergert.hearthstone.game.effect.AfterYouSummonAMinion;
+import de.ralfhergert.hearthstone.game.effect.ApplyBuffEffect;
 import de.ralfhergert.hearthstone.game.effect.BattlecryEffect;
 import de.ralfhergert.hearthstone.game.effect.ChargeEffect;
 import de.ralfhergert.hearthstone.game.effect.DestroyMinionEffect;
@@ -385,6 +386,7 @@ public final class CardRepository {
 		})),
 		new MinionCardEntry(476, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 5, "Fen Creeper", CardType.Minion, new MinionFactory().setPower(3).setHitPoints(6).addEffect(new TauntEffect())),
 		new MinionCardEntry(479, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 2, "Kobold Geomancer", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(2).addEffect(new SpellDamageEffect(1))),
+		new AbilityCardEntry(480, CardSet.Basic, Rarity.Free, HeroClass.Druid, 2, "Mark of the Wild", new ApplyBuffEffect(new AnyNonElusiveMinion(), new TauntEffect(), new ModifyAttackEffect(2), new ModifyHealthEffect(2))),
 		new AbilityCardEntry(488, CardSet.Basic, Rarity.Free, HeroClass.Hunter, 3, "Kill Command", new DamageCharacterBySpellEffect(3, new AnyNonElusiveCharacter()) {
 			/* Deal 3 damage. If the owner has at least one beast deal 5 damage instead. */
 			@Override
@@ -578,7 +580,6 @@ public final class CardRepository {
 77484, CardSet.Basic, Rarity.Free, HeroClass.Hunter, 2, "Deadeye", new Effect()
 554, CardSet.Basic, Rarity.Free, HeroClass.Priest, 2, "Divine Spirit", new Effect()
 77490, CardSet.Basic, Rarity.Free, HeroClass.Priest, 2, "Generous Spirit", new Effect()
-480, CardSet.Basic, Rarity.Free, HeroClass.Druid, 2, "Mark of the Wild", new Effect()
 491, CardSet.Basic, Rarity.Free, HeroClass.Shaman, 2, "Rockbiter Weapon", new Effect()
 385, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 2, "Sap", new Effect()
 164, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 2, "Shiv", new Effect()

@@ -23,4 +23,14 @@ public final class ActionUtil {
 		// filter the given action class and return the remaining actions.
 		return actions.stream().filter(action -> !(action.getClass().equals(actionClass))).collect(Collectors.toList());
 	}
+
+	public static HearthstoneGameState endTheTurn(HearthstoneGameState state) {
+		List<Action<HearthstoneGameState>> actions = new ActionFactory().createAllApplicableActions(state);
+		Assert.assertNotNull("actions should not be null", actions);
+		return actions.stream()
+			.filter(action -> action instanceof EndTurnAction)
+			.findFirst()
+			.orElseThrow(() -> new AssertionError("EndOfTurn action was not present"))
+			.apply(state);
+	}
 }
