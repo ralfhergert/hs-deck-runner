@@ -210,6 +210,13 @@ public final class CardRepository {
 		new MinionCardEntry(124, CardSet.Classic, Rarity.Epic, HeroClass.Shaman, 5, "Earth Elemental", CardType.Minion, new MinionFactory().setMinionType(MinionType.Elemental).setPower(7).setHitPoints(8).addEffect(new TauntEffect())).setOverloadCost(3),
 		new MinionCardEntry(130, CardSet.Basic,   Rarity.Free, HeroClass.Warrior, 4, "Kor'kron Elite", CardType.Minion, new MinionFactory().setPower(4).setHitPoints(3).addEffect(new ChargeEffect())),
 		new WeaponCardEntry(152, CardSet.Classic, Rarity.Common, HeroClass.Shaman, 2, "Stormforged Axe", new WeaponFactory().setAttack(2).setDurability(3)).setOverloadCost(1),
+		new AbilityCardEntry(164, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 2, "Shiv", new DamageCharacterBySpellEffect(1, new AnyNonElusiveCharacter()) {
+			@Override
+			public HearthstoneGameState applyOn(HearthstoneGameState state, TargetRef targetRef) {
+				HearthstoneGameState nextState = super.applyOn(state, targetRef);
+				return new DrawCardsAction(nextState.getPlayerOrdinal(nextState.getActivePlayer())).apply(nextState);
+			}
+		}),
 		new MinionCardEntry(173, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 7, "Core Hound", CardType.Minion, new MinionFactory().setMinionType(MinionType.Beast).setPower(9).setHitPoints(5)),
 		new MinionCardEntry(174, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 3, "Wolfrider", CardType.Minion, new MinionFactory().setPower(3).setHitPoints(1).addEffect(new ChargeEffect())),
 		new AbilityCardEntry(177, CardSet.Basic, Rarity.Free, HeroClass.Mage, 2, "Frostbolt", new DamageCharacterBySpellEffect(3, new AnyNonElusiveCharacter()) {
@@ -592,7 +599,6 @@ public final class CardRepository {
 77484, CardSet.Basic, Rarity.Free, HeroClass.Hunter, 2, "Deadeye", new Effect()
 554, CardSet.Basic, Rarity.Free, HeroClass.Priest, 2, "Divine Spirit", new Effect()
 77490, CardSet.Basic, Rarity.Free, HeroClass.Priest, 2, "Generous Spirit", new Effect()
-164, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 2, "Shiv", new Effect()
 282, CardSet.Basic, Rarity.Free, HeroClass.Druid, 2, "Wild Growth", new Effect()
 146, CardSet.Basic, Rarity.Free, HeroClass.Shaman, 2, "Windfury", new Effect()
 390, CardSet.Basic, Rarity.Free, HeroClass.Shaman, 2, "Flametongue Totem", CardType.Minion, new MinionFactory().setPower(0).setHitPoints(3)
