@@ -21,6 +21,7 @@ import de.ralfhergert.hearthstone.game.effect.ChargeEffect;
 import de.ralfhergert.hearthstone.game.effect.DestroyMinionEffect;
 import de.ralfhergert.hearthstone.game.effect.FreezeCharacterEffect;
 import de.ralfhergert.hearthstone.game.effect.HealCharacterEffect;
+import de.ralfhergert.hearthstone.game.effect.IncreaseAttackUntilEndOfTurn;
 import de.ralfhergert.hearthstone.game.effect.ModifyAllOtherFriendlyMinionAttackEffect;
 import de.ralfhergert.hearthstone.game.effect.ModifyAttackEffect;
 import de.ralfhergert.hearthstone.game.effect.ModifyHealthEffect;
@@ -61,6 +62,7 @@ import de.ralfhergert.hearthstone.game.weapon.WeaponFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -313,6 +315,16 @@ public final class CardRepository {
 					nextState = new DamageCharacterAtomic(character.getTargetRef(), 2).apply(nextState);
 				}
 				return nextState;
+			}
+		}),
+		new AbilityCardEntry(266, CardSet.Classic, Rarity.Rare, HeroClass.Druid, 4, "Bite", new GeneralEffect() {
+			/** Give your hero +4 Attack this turn. Gain 4 Armor. */
+			@Override
+			public HearthstoneGameState applyTo(HearthstoneGameState state) {
+				final Player player = state.getActivePlayer();
+				player.setArmor(player.getArmor() + 4);
+				return new IncreaseAttackUntilEndOfTurn(state.getPlayerOrdinal(player), 4, gameState -> Collections.singletonList(player.getTargetRef()))
+					.applyOn(state, player.getTargetRef());
 			}
 		}),
 		new MinionCardEntry(273, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 0, "Wisp", CardType.Minion, new MinionFactory().setPower(1).setHitPoints(1)),
@@ -766,7 +778,6 @@ public final class CardRepository {
 389, CardSet.Classic, Rarity.Rare, HeroClass.Neutral, 5, "Stampeding Kodo", CardType.Minion, new MinionFactory().setPower(3).setHitPoints(5)
 338, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 5, "Stranglethorn Tiger", CardType.Minion, new MinionFactory().setPower(5).setHitPoints(5)
 509, CardSet.Classic, Rarity.Common, HeroClass.Neutral, 5, "Venture Co. Mercenary", CardType.Minion, new MinionFactory().setPower(7).setHitPoints(6)
-266, CardSet.Classic, Rarity.Rare, HeroClass.Druid, 4, "Bite", new Effect()
 244, CardSet.Classic, Rarity.Rare, HeroClass.Rogue, 4, "Blade Flurry", new Effect()
 26, CardSet.Classic, Rarity.Common, HeroClass.Mage, 4, "Cone of Cold", new Effect()
 249, CardSet.Classic, Rarity.Rare, HeroClass.Priest, 4, "Mass Dispel", new Effect()
