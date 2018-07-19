@@ -280,6 +280,13 @@ public final class CardRepository {
 			}
 		}),
 		new MinionCardEntry(238, CardSet.Basic,   Rarity.Free, HeroClass.Druid, 8, "Ironbark Protector", CardType.Minion, new MinionFactory().setPower(8).setHitPoints(8).addEffect(new TauntEffect())),
+		new AbilityCardEntry(239, CardSet.Classic, Rarity.Common, HeroClass.Hunter, 3, "Deadly Shot", new GeneralEffect() {
+			@Override
+			public HearthstoneGameState applyTo(HearthstoneGameState state) {
+				List<Minion> enemyMinions = state.getPassivePlayer().getAllMinionsInOrderOfPlay();
+				return new DestroyMinionAtomic(enemyMinions.get(state.getRandom().nextInt(enemyMinions.size()))).apply(state);
+			}
+		}),
 		new MinionCardEntry(246, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 4, "Gnomish Inventor", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(4).addEffect(new BattlecryEffect() {
 			@Override
 			public HearthstoneGameState applyTo(HearthstoneGameState state) {
@@ -421,6 +428,13 @@ public final class CardRepository {
 				return new DrawCardsAction(state.getPlayerOrdinal(state.getOwner(this)), 1).apply(state);
 			}
 		})),
+		new AbilityCardEntry(431, CardSet.Basic, Rarity.Free, HeroClass.Priest, 1, "Power Word: Shield", new ApplyBuffEffect(new AnyNonElusiveMinion(), new ModifyHealthEffect(2)) {
+			@Override
+			public HearthstoneGameState applyOn(HearthstoneGameState state, TargetRef targetRef) {
+				HearthstoneGameState nextState = super.applyOn(state, targetRef);
+				return new DrawCardsAction(nextState.getPlayerOrdinal(nextState.getActivePlayer())).apply(nextState);
+			}
+		}),
 		new WeaponCardEntry(433, CardSet.Basic,   Rarity.Free, HeroClass.Rogue, 5, "Assassin's Blade", new WeaponFactory().setAttack(3).setDurability(4)),
 		new MinionCardEntry(474, CardSet.Classic, Rarity.Legendary, HeroClass.Neutral, 10, "Deathwing", CardType.Minion, new MinionFactory().setMinionType(MinionType.Dragon).setPower(12).setHitPoints(12).addEffect(new BattlecryEffect() {
 			/** Battlecry: Destroy all other minions and discard your hand.
@@ -654,7 +668,6 @@ public final class CardRepository {
 77489, CardSet.Basic, Rarity.Free, HeroClass.Paladin, 1, "Hand of Salvation", new Effect()
 438, CardSet.Basic, Rarity.Free, HeroClass.Priest, 1, "Mind Vision", new Effect()
 30, CardSet.Basic, Rarity.Free, HeroClass.Mage, 1, "Mirror Image", new Effect()
-431, CardSet.Basic, Rarity.Free, HeroClass.Priest, 1, "Power Word: Shield", new Effect()
 205, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 1, "Sinister Strike", new Effect()
 77491, CardSet.Basic, Rarity.Free, HeroClass.Rogue, 1, "Smoke Bomb", new Effect()
 529, CardSet.Basic, Rarity.Free, HeroClass.Warlock, 1, "Soulfire", new Effect()
@@ -773,7 +786,6 @@ public final class CardRepository {
 82, CardSet.Classic, Rarity.Rare, HeroClass.Rogue, 3, "Perdition's Blade", new WeaponFactory.setAttack(2).setDurability(2)
 567, CardSet.Classic, Rarity.Epic, HeroClass.Paladin, 3, "Sword of Justice", new WeaponFactory.setAttack(1).setDurability(5)
 531, CardSet.Classic, Rarity.Rare, HeroClass.Mage, 3, "Counterspell", new Effect()
-239, CardSet.Classic, Rarity.Common, HeroClass.Hunter, 3, "Deadly Shot", new Effect()
 581, CardSet.Classic, Rarity.Rare, HeroClass.Paladin, 3, "Divine Favor", new Effect()
 107, CardSet.Classic, Rarity.Epic, HeroClass.Shaman, 3, "Far Sight", new Effect()
 214, CardSet.Classic, Rarity.Rare, HeroClass.Shaman, 3, "Feral Spirit", new Effect()
