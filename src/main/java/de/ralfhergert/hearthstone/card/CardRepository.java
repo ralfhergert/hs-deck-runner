@@ -516,6 +516,17 @@ public final class CardRepository {
 				return new SummonTokenAtomic(state.getPlayerOrdinal(state.getActivePlayer()), state.randomlyOneOf(Arrays.asList("Huffer", "Leokk", "Misha"))).apply(state);
 			}
 		}),
+		new AbilityCardEntry(581, CardSet.Classic, Rarity.Rare, HeroClass.Paladin, 3, "Divine Favor", new GeneralEffect() {
+			/** Draw cards until you have as many in hand as your opponent. */
+			@Override
+			public HearthstoneGameState applyTo(HearthstoneGameState state) {
+				HearthstoneGameState nextState = state;
+				while (nextState.getActivePlayer().getHand().size() < nextState.getPassivePlayer().getHand().size()) {
+					nextState = new DrawCardsAction(nextState.getPlayerOrdinal(nextState.getActivePlayer())).apply(nextState);
+				}
+				return nextState;
+			}
+		}),
 		new MinionCardEntry(593, CardSet.Basic,   Rarity.Common, HeroClass.Hunter, 3, "Misha", CardType.Token, new MinionFactory().setMinionType(MinionType.Beast).setPower(4).setHitPoints(4).addEffect(new TauntEffect())),
 		new MinionCardEntry(603, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 4, "Stormwind Knight", CardType.Minion, new MinionFactory().setPower(2).setHitPoints(5).addEffect(new ChargeEffect())),
 		new MinionCardEntry(604, CardSet.Basic,   Rarity.Free, HeroClass.Neutral, 5, "Frostwolf Warlord", CardType.Minion, new MinionFactory().setPower(4).setHitPoints(4).addEffect(new BattlecryEffect() {
@@ -786,7 +797,6 @@ public final class CardRepository {
 82, CardSet.Classic, Rarity.Rare, HeroClass.Rogue, 3, "Perdition's Blade", new WeaponFactory.setAttack(2).setDurability(2)
 567, CardSet.Classic, Rarity.Epic, HeroClass.Paladin, 3, "Sword of Justice", new WeaponFactory.setAttack(1).setDurability(5)
 531, CardSet.Classic, Rarity.Rare, HeroClass.Mage, 3, "Counterspell", new Effect()
-581, CardSet.Classic, Rarity.Rare, HeroClass.Paladin, 3, "Divine Favor", new Effect()
 107, CardSet.Classic, Rarity.Epic, HeroClass.Shaman, 3, "Far Sight", new Effect()
 214, CardSet.Classic, Rarity.Rare, HeroClass.Shaman, 3, "Feral Spirit", new Effect()
 135, CardSet.Classic, Rarity.Rare, HeroClass.Rogue, 3, "Headcrack", new Effect()
