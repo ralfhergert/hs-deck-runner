@@ -43,6 +43,7 @@ import de.ralfhergert.hearthstone.game.model.HearthstoneGameState;
 import de.ralfhergert.hearthstone.game.model.HeroClass;
 import de.ralfhergert.hearthstone.game.model.Minion;
 import de.ralfhergert.hearthstone.game.model.MinionCard;
+import de.ralfhergert.hearthstone.game.model.MinionRef;
 import de.ralfhergert.hearthstone.game.model.MinionType;
 import de.ralfhergert.hearthstone.game.model.Player;
 import de.ralfhergert.hearthstone.game.model.PlayerOrdinal;
@@ -341,6 +342,21 @@ public final class CardRepository {
 				return new HealCharacterAtomic(state.getEffectOwner(this).getTargetRef(), 2).apply(state);
 			}
 		})),
+		new AbilityCardEntry(297, CardSet.Classic, Rarity.Epic, HeroClass.Warrior, 5, "Brawl", new GeneralEffect() {
+			@Override
+			public HearthstoneGameState applyTo(HearthstoneGameState state) {
+				HearthstoneGameState nextState = state;
+				final List<Minion> minions = state.getAllMinionInOrderOfPlay();
+				if (minions.size() > 1) {
+					// remove one surviving minion.
+					minions.remove(state.getRandom().nextInt(minions.size()));
+					for (Minion minion : minions) {
+						nextState = new DestroyMinionAtomic(minion).apply(nextState);
+					}
+				}
+				return nextState;
+			}
+		}),
 		new MinionCardEntry(310, CardSet.Basic, Rarity.Free, HeroClass.Neutral, 7, "Stormwind Champion", CardType.Minion, new MinionFactory().setPower(6).setHitPoints(6).addEffect(new ModifyOthersEffect(new AttackModifier(1), new HealthModifier(1)))),
 		new AbilityCardEntry(315, CardSet.Basic, Rarity.Free, HeroClass.Priest, 2, "Shadow Word: Pain", new DestroyMinionEffect(new TargetFinder() {
 			@Override
@@ -760,7 +776,6 @@ public final class CardRepository {
 172, CardSet.Classic, Rarity.Epic, HeroClass.Shaman, 5, "Doomhammer", new WeaponFactory.setAttack(2).setDurability(8)
 670, CardSet.Classic, Rarity.Epic, HeroClass.Warlock, 5, "Bane of Doom", new Effect()
 7, CardSet.Classic, Rarity.Rare, HeroClass.Paladin, 5, "Blessed Champion", new Effect()
-297, CardSet.Classic, Rarity.Epic, HeroClass.Warrior, 5, "Brawl", new Effect()
 114, CardSet.Classic, Rarity.Rare, HeroClass.Hunter, 5, "Explosive Shot", new Effect()
 237, CardSet.Classic, Rarity.Epic, HeroClass.Druid, 5, "Force of Nature", new Effect()
 355, CardSet.Classic, Rarity.Rare, HeroClass.Paladin, 5, "Holy Wrath", new Effect()
